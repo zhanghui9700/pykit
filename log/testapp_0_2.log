@@ -1,0 +1,72 @@
+2012-03-12 00:02:32,843 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:02:32,843 INFO log <module> 28 --hello world!--
+2012-03-12 00:02:42,854 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:02:42,854 INFO log <module> 28 --hello world!--
+2012-03-12 00:02:52,865 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:02:52,865 INFO log <module> 28 --hello world!--
+2012-03-12 00:03:02,872 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:03:02,872 INFO log <module> 28 --hello world!--
+2012-03-12 00:03:12,877 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:03:12,877 INFO log <module> 28 --hello world!--
+2012-03-12 00:03:22,882 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:03:22,883 INFO log <module> 28 --hello world!--
+2012-03-12 00:03:32,888 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:03:32,889 INFO log <module> 28 --hello world!--
+2012-03-12 00:03:42,894 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:03:42,894 INFO log <module> 28 --hello world!--
+2012-03-12 00:03:52,896 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:03:52,896 INFO log <module> 28 --hello world!--
+2012-03-12 00:04:02,897 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:04:02,898 INFO log <module> 28 --hello world!--
+2012-03-12 00:04:12,901 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:04:12,901 INFO log <module> 28 --hello world!--
+2012-03-12 00:04:22,905 ERROR log <module> 27 integer division or modulo by zero
+Traceback (most recent call last):
+  File "log.py", line 25, in <module>
+    r = 1/0
+ZeroDivisionError: integer division or modulo by zero
+2012-03-12 00:04:22,906 INFO log <module> 28 --hello world!--

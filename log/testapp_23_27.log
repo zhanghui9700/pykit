@@ -1,0 +1,6 @@
+2012-03-11 23:27:51,465 ERROR <module> integer division or modulo by zero
+2012-03-11 23:27:51,466 INFO <module> hello world!
+2012-03-11 23:28:01,476 ERROR <module> integer division or modulo by zero
+2012-03-11 23:28:01,476 INFO <module> hello world!
+2012-03-11 23:28:11,487 ERROR <module> integer division or modulo by zero
+2012-03-11 23:28:11,487 INFO <module> hello world!
