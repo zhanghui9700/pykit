@@ -1,6 +1,0 @@
-2012-03-11 23:30:53,556 ERROR log <module> 27 integer division or modulo by zero
-2012-03-11 23:30:53,556 INFO log <module> 28 --hello world!--
-2012-03-11 23:31:03,567 ERROR log <module> 27 integer division or modulo by zero
-2012-03-11 23:31:03,567 INFO log <module> 28 --hello world!--
-2012-03-11 23:31:13,572 ERROR log <module> 27 integer division or modulo by zero
-2012-03-11 23:31:13,572 INFO log <module> 28 --hello world!--

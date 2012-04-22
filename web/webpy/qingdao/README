@@ -1,0 +1,28 @@
+this is my first web.py project
+
+just like you see,web.py is a cleanly web framework
+
+so this project name is "qingdao",a very cleanly city in china!
+
+welcome to qingdao!
+
+**************************************************************
+import web
+
+urls = (
+	'/(.*)', 'hello'
+)
+
+app = web.application(urls, globals())
+
+class hello:        
+	def GET(self, name):
+		if not name: 
+			name = 'World'
+		
+		return 'Hello, ' + name + '!'
+
+if __name__ == "__main__":
+	app.run()
+
+***********************************************************
