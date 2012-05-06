@@ -1,6 +1,21 @@
 #!/bin/bash python
 # -*- coding=utf-8 -*-
 
+'''
+http://www.velocityreviews.com/forums/t671713-python-dictionary-size-entry-limit.html
+>> On a 32-bit system, the dictionary can have up to 2**31 slots,
+>> meaning that the maximum number of keys is slightly smaller
+>> (about 2**30).
+>
+> Which, in practice, means that the size is limited by the available memory.
+
+Right. Each slot takes 12 bytes, so the storage for the slots alone
+would consume all available address space.
+
+From that point of view, you can't possibly have more than 314M slots
+in a 32-bit address space (roughly 2**2.
+
+'''
 from timeit import Timer
 
 LIST_LENGTH = 1000000
