@@ -1,0 +1,8 @@
+1 Proxy 的设置
+2 Timeout 设置
+3 在 HTTP Request 中加入特定的 Header
+4 Redirect
+5 Cookie
+6 使用 HTTP 的 PUT 和 DELETE 方法
+7 得到 HTTP 的返回码
+8 Debug Log
