@@ -76,39 +76,7 @@ class Chessboard(object):
 
     def get_actived(self):
         return self.actived
-        
-    def find_path(self,src,target):
-        if self.found:
-            return True
-        self.path.append(src)
-        #print self.n,len(self.path)
-        self.n += 1
-        #self.print_xx()
-        import time
-        #time.sleep(1)
-        #for item in self.path:print item, 
-        if src == target:
-            self.found = True
-        else:
-            #print '-'*30
-            childs = [node for node in src.get_childs(self) if node not in self.path]
-            #print '-'*30
-            
-            for node in childs:
-                if node == target:
-                    #print 'find----------:',src
-                    self.found = True
-                    self.path.append(target)
-                    break
-            
-            if not self.found:
-                for node in childs:
-                    self.found = self.find_path(node,target)
-                    if not self.found:
-                        self.path.pop()
-
-        return self.found
-
+         
 class PathUtility(object):
     '''
     寻路工具类
@@ -131,7 +99,8 @@ class PathUtility(object):
         if source == self.target:
             self.found = True
         else:
-            childs = [chess for chess in source.get_childs(self.chessboard) if chess not in self.path]
+            childs = [chess for chess in source.get_childs(self.chessboard) \
+                                                if chess not in self.path]
             for chess in childs:
                 if chess == self.target:
                     self.found = True
@@ -146,7 +115,8 @@ class PathUtility(object):
         return self.found
 
     def print_path(self):
-        screen = [['-+-' for y in range(self.chessboard.dim)] for x in range(self.chessboard.dim)]
+        screen = [['-+-' for y in range(self.chessboard.dim)] \
+                            for x in range(self.chessboard.dim)]
         i = 1
         for item in self.path:
             screen[item.x][item.y] = '%3s'%i
