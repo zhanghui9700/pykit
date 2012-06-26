@@ -1,0 +1,4 @@
+create database nova;
+grant all previleges on nova.* to 'novadbadmin'@'%' identified by 'passwd!@#2012';
+
+
