@@ -1,3 +1,5 @@
+git-howto:http://linux.yyz.us/git-howto.html
+
 Git 系列之四：Git 进阶功能
 
 【TIP】在我们的《Windows 下 Git 配置与使用指南》 中，有介绍大家使用 $ git go 命令。其实，这并非 Git 的原生命令，它是我们自定义的一个 alias（别名），由 $git add、$git commit、$git push 和 $git pull 四个命令组合而成。待熟悉之后，你可以直接使用这些原生命令，或者自定义更适合自己的 alias。
