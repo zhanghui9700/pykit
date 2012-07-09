@@ -4,6 +4,8 @@ find
 |---find / -name nginx.conf
 |---find /usr/local -name '*nginx*'
 |---find /usr/local/ -name nginx.conf -ls
+fdisk
+|--fdisk -l
 grep
 |---grep -Rn 'OpLog' ./
 |---find -name '*.py'|xargs grep -rn 'OpLog'
