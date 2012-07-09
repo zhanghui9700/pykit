@@ -1,3 +1,5 @@
+dd 
+|--dd if=/dev/cdrom of=/home/sunky/mydisk.iso
 find
 |---find / -name nginx.conf
 |---find /usr/local -name '*nginx*'
@@ -5,4 +7,6 @@ find
 grep
 |---grep -Rn 'OpLog' ./
 |---find -name '*.py'|xargs grep -rn 'OpLog'
-
+mount
+|--mount [-t vfstype] [-o options] device dir
+|--mount -o loop -t iso9660 /opt/nfs/cdrom/testmt.iso /mnt/cdrom
