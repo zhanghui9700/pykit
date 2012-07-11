@@ -12,3 +12,9 @@ grep
 mount
 |--mount [-t vfstype] [-o options] device dir
 |--mount -o loop -t iso9660 /opt/nfs/cdrom/testmt.iso /mnt/cdrom
+VBoxManage
+|--VBoxManage list vms
+|--VBoxManage list runningvms
+|--VBoxManage startvm "eayunos-0625" --type=headless
+|--VBoxManage controlvm "eayunos-0625" poweroff
+
