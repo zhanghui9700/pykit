@@ -1,0 +1,9 @@
+<domain type="kvm">
+	<memory>1024000</memory>
+	<vcpu>16</vcpu>
+	<device>
+		<disk type="cdrom" file="block">
+			<source src=""/>
+		</disk>
+	</device>
+</domain>
