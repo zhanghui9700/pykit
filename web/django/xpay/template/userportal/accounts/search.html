@@ -1,0 +1,264 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%} 交易查询 {%endblock%}
+
+{%block resource%}
+	{{block.super}}
+    <link href="/static/css/style.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/jquery.fancybox.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-timepicker.css" media="screen" />
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="/static/js/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui-timepicker-zh-CN.js"></script>
+	<style>
+		.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{width:40%;}
+	</style>
+    <script>
+        $(document).ready(function () {
+            $('.selector').datetimepicker({ showOn:'focus',changeMonth:true,changeYear:true, maxDate:new Date(),
+			monthNamesShort:["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+			'timeFormat':'hh:mm:ss'});
+        });
+        
+        $(document).ready(function() {
+            $('.fancybox').fancybox({
+			'showCloseButton':false});
+        });
+    </script>
+
+{%endblock%}
+
+{%block header%}
+<div class="header">
+	<div class="navigation">
+	   <ul class="global">
+		<li><a href="/report">资金报告</a></li>
+		<li class="selected"><a href="/tradelist">交易查询</a></li>
+		<li> <a href="/account">我的账户</a></li>
+	   </ul>
+	</div>
+	{%include "userportal/base/account_header.html"%}
+</div>
+{%endblock%}
+
+{%block container%}
+<div class="container">
+    <div id="NerRong">
+        <div class="ba"></div>
+        <div class="TiaoJian">
+            <img src="/static/images/TiaoJian.jpg"/>
+        </div>
+        <div class="TiaoJian_k">
+
+            <form method="GET" action="/tradelist">
+                <table width="849" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="84" height="35" align="right" valign="middle">交易时段：</td>
+                        <td width="61" height="35" align="left" valign="middle">
+                            <input name="t1" type="text" class="selector inputs" readonly="readonly" value="{{date1}}"/>
+                        </td>
+                        <td width="21" height="35" align="center" valign="middle">到</td>
+                        <td width="63" height="35" align="left" valign="middle">
+                            <input name="t2" type="text" class="selector inputs" readonly="readonly" value="{{date2}}"/>
+                        </td>
+						
+						<td width="73" height="35" align="right" valign="middle">交易金额：</td>
+                        <td width="78" height="35" align="left" valign="middle">
+                            <input name="m" type="text" maxlength="10" style="ime-mode:disabled" 
+							id="kuang_2" title="请输入数字或小数点" 
+							{%ifnotequal money 0%}value="{{money|floatformat:2}}" {%endifnotequal%}/>
+                        </td>
+                        <!--td width="73" height="35" align="right" valign="middle">交易状态：</td>
+                        <td width="78" height="35" align="left" valign="middle">
+                            <select name="s" id="select4">
+			
+                            <option {%ifequal status "所有交易"%} selected="selected" {%endifequal%}>所有交易</option>
+                            <option {%ifequal status "交易成功"%} selected="selected" {%endifequal%}>交易成功</option>
+                            <option {%ifequal status "交易失败"%} selected="selected" {%endifequal%}>交易失败</option>
+                            </select>
+                        </td-->
+                        <td width="106" rowspan="2" align="left" valign="middle">
+                            <input type="submit" id="an_cx" value="查询"/>
+                        </td>
+                        <td width="103" height="35">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="113" height="35" align="right" valign="middle">交易检索号：</td>
+                        <td width="147" height="35" align="left" valign="middle">
+                            <input name="idx" type="text" class="inputs" value="{{index}}" maxlength="14"
+							title="仅能输入数字" style="ime-mode:disabled"/>
+                        </td>
+                        <td width="83" height="35" align="right" valign="middle">交易卡号：</td>
+                        <td width="146" height="35" align="left" valign="middle">
+                            <input name="cd" type="text" class="inputs" value="{{card}}" 
+							style="ime-mode:disabled" maxlength="19" title="仅能输入数字"/>
+                        </td>
+                        
+                        <td width="103" height="35">&nbsp;</td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <!--------------------------------搜索的详细的头---------------------------------------------------->
+        <div class="ba"></div>
+        <div class="Jiao_xx">
+        </div>
+
+        <!--------------------------------搜索的内容---------------------------------------------------->
+        <div id="Jiao_nr">
+            <table width="849" border="0" cellspacing="0" cellpadding="0">
+                {%for record in records.object_list %}
+                <tr>
+                    <td width="122" height="30" align="center" valign="middle">{{record.orig.syssn}}</td>
+                    <td width="159" height="30" align="center" valign="middle">{{record.orig.sysdtm|date:"Y-m-d H:i:s"}}</td>
+                    <td width="110" height="30" align="center" valign="middle">{{record.card_alter}}</td>
+                    <td width="80" height="30" align="center" valign="middle">
+                        {%ifequal record.orig.busicd "000000"%}交易消费{%endifequal%}
+                        {%ifequal record.orig.busicd "400000"%}卡对卡转账{%endifequal%}
+                        {%ifequal record.orig.busicd "210000"%}信用卡还款{%endifequal%}
+                        {%ifequal record.orig.busicd "300000"%}查询余额{%endifequal%}
+                        {%ifequal record.orig.busicd "200000"%}退货交易{%endifequal%}
+                        {%ifequal record.orig.busicd "180300"%}冲正交易{%endifequal%}
+                        {%ifequal record.orig.busicd "180100"%}存根上传{%endifequal%}
+                        {%ifequal record.orig.busicd "180200"%}交易统计{%endifequal%}
+						{%ifequal record.orig.busicd "201000"%}消费撤销{%endifequal%}
+
+                    </td>
+                    <td width="72" height="30" align="right" valign="middle"><span class="ren">¥</span>{{record.trade_count|floatformat:2}}</td>
+                    <td width="95" height="30" align="right" valign="middle">{{record.orig.sysdtm|date:"Y-m-d"}}</td>
+                    <td width="80" height="30" align="right" valign="middle"><span class="ren">¥</span>{{record.trade_count|floatformat:2 }}</td>
+                    <td width="60" height="30" align="right" valign="middle">
+
+                        {%ifequal record.orig.status 0%} 交易失败 {%endifequal%}
+                        {%ifequal record.orig.status 1%} 交易成功 {%endifequal%}
+                        {%ifequal record.orig.status 2%} 交易失败 {%endifequal%}
+                        {%ifequal record.orig.status 3%} 交易失败 {%endifequal%}
+
+                    </td>
+                    <td width="71" height="30" align="center" valign="middle" id="lan">
+                        <a class="fancybox fancybox.iframe" href="/{{record.orig.syssn}}?cardno={{record.suffix_cardcd}}" id="trade"><font color="blue">查看详情</font></a>
+                        <!--a class="fancybox fancybox.iframe" href="trade?id={{record.orig.syssn}}" id="trade"><font color="blue">查看详情</font></a-->
+                    </td>
+                </tr>
+                {%endfor%}
+            </table>
+			
+			{%ifequal records.object_list|length 0%}
+			<p>没有查找到交易数据</p>
+			{%endifequal%}
+
+        </div>
+        <div class="pagination"> 
+            {%if records.has_previous%}
+	    <a class="page-next" href="/tradelist?t1={{date1}}&t2={{date2}}
+		&s={{status}}&idx={{index}}&cd={{card}}&m={{money}}&page=1"><span class="buttons">首页</span></a>
+            <a class="page-next" href="/tradelist?t1={{date1}}&t2={{date2}}
+		&s={{status}}&idx={{index}}&cd={{card}}&m={{money}}&page={{records.previous_page_number}}"><span class="buttons">上一页</span></a>
+            {%endif%}
+			
+			{%for page in pagenums%}
+				{% ifequal page records.number %}
+					<b>{{page}}</b>	
+				{% else %}
+					<a href="/tradelist?t1={{date1}}&t2={{date2}}
+				&s={{status}}&idx={{index}}&cd={{card}}&m={{money}}&page={{page}}"><font color="blue">{{page}}</font></a>
+				{% endifequal %}
+			{%endfor%}
+			{%if pagenums|length < records.paginator.num_pages %}
+			...
+			{%endif%}
+            {%if records.has_next%}
+            <a class="page-next" href="/tradelist?t1={{date1}}&t2={{date2}}
+			&s={{status}}&idx={{index}}&cd={{card}}&m={{money}}&page={{records.next_page_number}}"><span class="buttons">下一页</span></a>
+		<a class="page-next" href="/tradelist?t1={{date1}}&t2={{date2}}
+			&s={{status}}&idx={{index}}&cd={{card}}&m={{money}}&page={{records.paginator.num_pages}}"><span class="buttons">末页</span></a>
+
+            {%endif%}
+
+			<span class="current">
+				第{{records.number}}/{{records.paginator.num_pages}}页
+			</span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" >
+function indexOf(list, val){
+	for(var v in list)
+		if(list[v] == val)
+			return v
+	return -1;
+}
+var pageTradeList = {};
+	pageTradeList.evtCallback = (function(){ 
+		return { 
+			validateNumber : function(evt){
+				var keys = [8,9,13,108];
+				evt = evt || {'keyCode':0}
+				if(!evt.shiftKey
+				&&((evt.keyCode >= 48 && evt.keyCode <= 57)     //0~9
+				 ||(evt.keyCode >= 96 && evt.keyCode <= 10)
+				 ||(indexOf(keys, evt.keyCode)>= 0))
+				 )     //backspace,tab,enter
+					return true;
+				else
+					return false;
+			},
+			validateCurrency : function(evt){                   //货币只允许输入数字和小数点
+				evt = evt || {'keyCode':0}
+				if(pageTradeList.evtCallback.validateNumber(evt))
+					return true;
+				else{
+					if(evt.keyCode == 110 || evt.keyCode == 190){		//keyCode 110&190 is dot
+						var currency = $('input[name="m"]').val() || '';
+						if(currency.indexOf('.') >= 0)
+							return false;
+						else
+							return true;
+					}
+					else
+						return false; 
+				}
+			}
+		};
+	})();
+	$(document).ready(function(){
+		$('input[name="idx"]').keydown(pageTradeList.evtCallback.validateNumber);
+		$('input[name="cd"]').keydown(pageTradeList.evtCallback.validateNumber);
+		$('input[name="m"]').keydown(pageTradeList.evtCallback.validateCurrency);
+	});
+
+	function transform(strDate)
+	{
+		 var dateArray = strDate.split(' ');
+		 var year = dateArray[0].split('-');	
+		 var time = dateArray[1].split(':');
+		 var finishDate = new Date(year[0], year[1], year[2], time[0], time[1], time[2])
+
+		 return finishDate;
+	}
+	$('#an_cx').click(function(){
+		d1 = $('input[name="t1"]').val()
+		d2 = $('input[name="t2"]').val()
+		
+		if(d1.length==0 && d2.length!=0)
+		{	alert("请选择起始时段！"); return false; }
+		
+		if(d1.length!=0 && d2.length==0)
+		{ alert("请输入截止时段！"); return false; }
+
+		if(d1.length!=0 && d2.length!=0)
+		{
+			t1 = transform(d1).valueOf();
+			t2 = transform(d2).valueOf();
+			if((t2-t1)<=0)
+			{ alert("起始时间必须小于截止日期"); return false; }
+		}
+	});
+</script>
+
+{%endblock%}

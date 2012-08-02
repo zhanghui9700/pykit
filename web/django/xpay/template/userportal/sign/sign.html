@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]>   <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html>
+<head>
+    <title>查询收据</title>
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta name="description" content="钱方支付" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="qfpay" /> 
+    <meta name="copyright" content="qfpay Inc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon --> 
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="icon.png"/>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    {%block resource%}
+    <!-- CSS -->
+    <link href="/static/css/sign.css" media="screen, projection" rel="stylesheet" type="text/css" />  
+    {%endblock%}
+    <!--[if IE]>
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <link href="css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <![endif]-->
+	
+</head>
+<body>
+    {% if err %}
+	<div id="password-notification" class="notification">
+		<div class="shadow"></div>
+		<div class="arrow"></div>
+		<div class="text">您输入的卡号有误！</div>
+	</div>
+    {% endif %}
+	<div id="form">
+	  <div class="inner">
+	    <form action="" method="get">
+		  <div class="row">
+			<input type="text" name="cardno" placeholder="卡号后6位：" class="field creditcard">
+		  </div>
+		  <div class="row big">
+			<div class="left">
+				<span>还没有账号？</span><a href="/signup">注册</a>
+			</div>
+			<div class="right">
+				<input type="submit" value="查询">
+			</div>
+		  </div>
+	    </form>
+	  </div>
+	</div>
+	<div id="bg-gradient"></div>
+</body>
+</html>

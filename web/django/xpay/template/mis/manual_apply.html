@@ -1,0 +1,247 @@
+﻿{% extends 'mis/base.html' %}
+{%block externaljs %}
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+<style>
+	.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{		width:45%;
+	}
+	.list {
+    	width: 400px;
+    	padding: 20px;
+    }
+    .name {
+    	width:100px; 
+    	height: 30px;
+    	line-height: 30px;
+    	float:left; 
+    	display: block;
+    	text-align: right;
+    	margin-right: 20px;
+    }
+    input {
+    	width:250px; 
+    	height:24px; 
+    	padding:3px 5px; 
+    	line-height:24px; 
+    	float:left; 
+    	border: 1px solid #bababb;
+    	-o-border-radius: 4px;
+    	-moz-border-radius: 4px;
+    	-webkit-border-radius: 4px;
+    	border-radius: 4px;
+    	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+    	-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+    	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+    	border-right-color: #ccc;
+    	border-bottom-color: #ccc;
+    }
+</style>
+{%endblock%}
+{%block content %}
+<div class="content">
+<lable>商户类型</lable>
+<select id="user_type">
+    <option value="person" >个人</option>
+    <option value="sperson" >个体户</option>
+    <option value="merchant" >公司</option>
+</select>
+<hr />
+<div id="person" class="apply_form">
+    <form enctype="multipart/form-data" method="post" autocomplete="on" action="{{MY_URL}}">
+        <div ><span>必选参数</span></div>
+            <div class="list">
+                <span class="name">渠道</span>
+                <input type="text" class="required" name="src" value="钱方录入"/>
+            </div>
+            <div class="list" style="display:none;">
+                <span class="name">用户类型</span>
+                <input type="text" class="required" name="type" value="person" readonly/>
+            </div>
+            <div class="list">
+                <span class="name">品牌名称</span>
+                <input type="text" class="required" name="nickname" value=""/>
+            </div>
+            <div class="list">	
+                <span class="name">手机号</span>    
+                <input type="text" name="mobile" value="" class="required" />
+            </div>
+            <div class="list">
+                <span class="name">身份证</span>
+                <input type="text" name="idnumber" value="" class="required" />
+            </div>
+            <div class="list"> 
+                <span class="name">用户姓名</span>   
+                <input type="text" name="name" value="" class="required"/>
+            </div>
+            <div class="list"> 
+                <span class="name">地址</span>   
+                <input type="text" name="address" value="" class="required"/> 
+            </div>
+            <div class="list"> 
+                <span class="name">邮编</span>   
+                <input type="text" name="post" value="" class="required"/>
+            </div>
+            <div class="list">
+                <span class="name">银行</span>   
+                <input type="text" name="bankname" value="" class="required" />
+            </div>
+            <div class="list"> 
+                <span class="name">银行卡开户人</span>   
+                <input type="text" name="bankuser" value="" class="required"/>
+            </div>
+
+            <div class="list"> 
+                <span class="name">银行卡号</span>   
+                <input type="text" name="bankaccount" value="" class="required"/>
+            </div>
+            <!--div class="list">
+                <span class="name">身份证正面</span>   
+                <input type="file" name="idphoto1" class="required" />
+            </div>
+            <div class="list">
+                <span class="name">身份证反面</span>   
+                <input type="file" name="idphoto2" class="required" />
+            </div-->
+        <div>
+            <label>可选参数</label>
+            <div class="list">
+                <span class="name">身份证起始日期</span>   
+                <input type="text" name="idstatdate" class="datePicker" readonly value="2020-01-01"/>
+            </div>
+            <div class="list">
+                <span class="name">教育背景</span>   
+				<select name="edu">
+					<option value="1">小学</option>
+					<option value="2">初中</option>
+					<option value="3">高中</option>
+					<option value="4">大学</option>
+					<option value="5">研究生以上</option>
+				</select>
+            </div>
+        </div>
+        <input type="submit"  value="提交"  style="float:none;"/>
+    </form>
+</div>
+<div id="sperson" class="apply_form" style="display:none;">
+<form enctype="multipart/form-data" method="post" action="{{MY_URL}}" autocomplete="on">
+    	<div class="list"> <span class="name">渠道</span> <input type="text" name="src" value="钱方录入"/> </div>
+    	<div class="list" style="display:none;"> <span class="name">用户类型</span> <input type="text" name="type" value="sperson" readonly/></div>
+    	<div class="list">
+            <span class="name">品牌名称</span>
+            <input type="text" class="required" name="nickname" value=""/>
+        </div>
+        <div class="list"> <span class="name">手机号</span> <input type="text" name="mobile" value=""/> </div>
+    	<div class="list"> <span class="name">身份证号码</span> <input type="text" name="idnumber" value=""/> </div>
+    	<div class="list"> <span class="name">法人代表姓名</span> <input type="text" name="legalperson" value=""/> </div>
+		<div class="list"> <span class="name">联系人姓名</span> <input type="text" name="contact" value=""/> </div>
+    	<div class="list"> <span class="name">营业执照号</span> <input type="text" name="licensenumber" value=""/>  </div>
+    	<div class="list"> <span class="name">营业执照有效期</span> <input type="text" name="licenseend_date" value="" class="datePicker" readonly/> </div>
+    	<div class="list"> <span class="name">字号</span> <input type="text" name="name" value=""/> </div>
+    	<div class="list"> <span class="name">经营地址</span> <input type="text" name="businessaddr" value=""/> </div>
+    	<div class="list"><span class="name">邮编</span> <input type="text" name="post" value=""/> </div>
+    	<div class="list"><span class="name">经验行业</span>
+		<select name="mcc">
+			<option>宾馆、餐饮、娱乐、珠宝金饰、工艺美术品类</option>
+			<option>房地产、汽车销售、批发类</option>
+			<option>航空售票、加油、超市类</option>									
+			<option>公立医院、公立学校类</option>
+			<option>新兴行业</option>
+			<option>其他一般行业</option>
+		</select>
+		</div>
+    	<div class="list"> <span class="name">开户行</span> <input type="text" name="bankname" value=""/> </div>
+        <div class="list"> 
+                <span class="name">银行卡开户人</span>   
+                <input type="text" name="bankuser" value="" class="required"/>
+        </div>
+
+    	<div class="list"> <span class="name">银行卡号</span> <input type="text" name="bankaccount" value=""/> </div>
+    	<div class="list"> <span class="name">身份证起始日期</span>  <input type="text" name="idstatdate" value="" class="datePicker" readonly/> </div>
+    	<!--div class="list"> <span class="name">营业执照照片</span> <input type="file" name="licensephoto"/> </div>
+    	<div class="list"> <span class="name">税务证照片</span> <input type="file" name="taxphoto"/> </div>
+    	<div class="list"> <span class="name">身份证正面</span>  <input type="file" name="idphoto1"/> </div>
+    	<div class="list"> <span class="name">身份证反面</span> <input type="file" name="idphoto2"/> </div-->
+		<div class="list"> <span class="name">税务号</span> <input type="text" name="taxnumber"/> </div>     
+		<input type="submit"  value="提交" style="float:none;" />
+    </form>
+</div>
+<div id="merchant" class="apply_form" style="display:none;">
+<form enctype="multipart/form-data" method="post" action="{{MY_URL}}" autocomplete="on">
+    	<div> <label>必选参数</label>
+    	<div class="list"> <span class="name">渠道</span> <input type="text" name="src" value="钱方录入"/> </div>
+    	<div class="list" style="display:none;"> <span class="name">用户类型</span>  <input type="text" name="type" value="company" readonly/> </div>
+        <div class="list">
+            <span class="name">品牌名称</span>
+            <input type="text" class="required" name="nickname" value="" />
+        </div>
+    	<div class="list"> <span class="name">手机号</span> <input type="text" name="mobile" value=""/> </div>
+    	<div class="list"> <span class="name">身份证号</span> <input type="text" name="idnumber" value=""/> </div>
+    	<div class="list"> <span class="name">法人代表姓名</span> <input type="text" name="legalperson" value=""/> </div>
+    	<div class="list"> <span class="name">营业执照号</span> <input type="text" name="licensenumber" value=""/> </div>
+    	<div class="list"> <span class="name">营业执照有效期</span>  <input type="text" name="licenseend_date" value="" class="datePicker" readonly/> </div>
+    	<div class="list"> <span class="name">公司名</span> <input type="text" name="name" value=""/> </div>
+    	<div class="list"> <span class="name">税务号</span>  <input type="text" name="taxnumber" value=""/></div>
+    	<div class="list"> <span class="name">住址 </span>  <input type="text" name="address" value=""/>  </div>
+        <div class="list"> <span class="name">联系人</span><input type="text" name="contact" value=""/> </div>
+    	<div class="list"> <span class="name">经营地址</span>   <input type="text" name="businessaddr" value=""/></div>
+    	<div class="list"> <span class="name">邮编</span> <input type="text" name="post" value=""/> </div>
+    	<div class="list"> <span class="name">经营行业</span> 
+		<select name="mcc">
+			<option>宾馆、餐饮、娱乐、珠宝金饰、工艺美术品类</option>
+			<option>房地产、汽车销售、批发类</option>
+			<option>航空售票、加油、超市类</option>									
+			<option>公立医院、公立学校类</option>
+			<option>新兴行业</option>
+			<option>其他一般行业</option>
+		</select>
+		</div>
+    	<div class="list"> <span class="name">开户行</span> <input type="text" name="bankname" value=""/>  </div>
+        <div class="list"> 
+                <span class="name">银行卡开户人</span>   
+                <input type="text" name="bankuser" value="" class="required"/>
+            </div>
+    	<div class="list"> <span class="name">银行卡号</span> <input type="text" name="bankaccount" value=""/> </div>
+     <!--div class="list"> <span class="name">税务证</span><input type="file" name="taxphoto"/> </div>
+     <div class="list"> <span class="name">身份证正面</span><input type="file" name="idphoto1"/> </div>
+     <div class="list"> <span class="name">身份证反面</span><input type="file" name="idphoto2"/> </div>
+     <div class="list"> <span class="name">营业执照图片</span><input type="file" name="licensephoto"/> </div-->
+   </div>
+     <div> <label>可选参数</label>
+     	<div class="list"> <span class="name">身份证起始日期</span>  <input type="text" name="idstatdate" value="2020-01-01" class="datePicker" readonly/> </div>
+     	<div class="list"> <span class="name">身份证截止日期</span>  <input type="text" name="idenddate" value="2020-01-01" class="datePicker" readonly/> </div>
+     	<div class="list"> <span class="name">信用卡开户行</span>  <input type="text" name="creditbank" value=""/> </div>
+     	<div class="list"> <span class="name">信用卡卡号</span>  <input type="text" name="creditcard" value=""/> </div>
+     	<div class="list"> <span class="name">固定电话</span>  <input type="text" name="telephone" value=""/> </div> 
+    	<div class="list"> <span class="name">行业编号</span><input type="text" name="orgcode" value=""/> </div>
+    	<div class="list"> <span class="name">税务证有效期</span><input type="text" name="taxenddate" value="2020-01-01" class="datePicker" readonly/> </div>
+    </div>
+    <input type="submit"  value="提交" style="float:none;"/>
+    </form> 
+</div>
+<hr />
+{%endblock %}
+{%block script%}
+<script type="text/javascript">
+var page = {"__doc__":"手工录入商户申请信息"}
+page.func = (function(){
+    return {
+        pageInit:function(){
+            $(".datePicker").datepicker({changeMonth:true,changeYear:true});
+			$("#user_type").change(function(){
+                var targetId = $(this).val();
+                var targetDiv = $("#"+targetId);
+                if(targetDiv.length > 0){
+                    $('.apply_form').hide();
+                    targetDiv.show();
+                }
+                else{
+                    ;//target div selector error!
+                }
+            });
+        }
+    };
+})();
+page.func.pageInit();
+</script>
+{%endblock%}

@@ -1,0 +1,235 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%}忘记密码{%endblock%}
+
+{%block resource%}
+{{block.super}}
+<link href="/static/css/style.css" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="/static/js/jquery.password.js"></script>
+{%endblock%}
+
+{%block header%}
+<div class="header">
+			<a class="logo" href="#"></a>
+			<div class="navigation">
+			   <ul class="global">
+			   </ul>
+			</div>
+			<div class="help">
+				<a href="http://www.qfpay.com/how.html" target="_blank">帮助中心</a> 
+				<!--a href="#">下载客户端</a-->
+			</div>
+</div>
+{%endblock%}
+
+{%block container%}
+	<div class="container">
+			
+			<p class="wangjimima">忘记密码</p>
+			<div class="clearfix">
+			  <form class="clearfix mt_20" method="post" action="/resetpwd">
+	      <div class="clearfix verify">
+						<label class="clearfix">
+							<span class="input_title">绑定的手机</span>
+							{{resetpwdform.mobile}}
+                        </label>
+						<a class="verifyCodeBtn fl">获取验证码</a>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+                        <span class="errors">{{resetpwdform.errors.mobile.as_text}}</span>
+					</div>
+					<div class="clearfix verify">
+						<label class="clearfix">
+							<span class="input_title">验证码</span>
+							{{resetpwdform.verifycode}}
+						</label>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+                        <span class="errors">{{resetpwdform.errors.verifycode.as_text}}</span>
+					</div>
+<script type="text/javascript">
+$(function(){
+    $(".holding input").live("paste cut keydown keyup focus", 
+    function() {
+        $.trim($(this).val()) != "" && $(this).parent().addClass("hasome")
+    }),
+    $(".holding input").live("blur",function() {
+        $.trim($(this).val()) == "" && $(this).parent().removeClass("hasome")
+    })
+                $('#id_password').live("paste cut focus blur", function(){
+                       $.trim($(this).val()) != "" ? $('.score').show() && $(this).password() : $('.sidetip .tip').addClass('active').siblings().removeClass('active') && $('.score').hide();
+                })
+})
+</script>
+            <div class="clearfix verify password">
+                <div class="holding" data-fieldname="password">
+                  <div class="sidetip">
+                    <p class="perfect isaok">密码很完美 </p>
+                    <p class="ok isaok">密码复杂度还可以</p>
+                    <p class="weak isaok">密码强度还可以更高</p>
+                    <p class="weak isaok" role="alert">密码不够安全</p>
+                    <p class="obvious isaok" role="alert">密码太明显啦</p>
+                    <p class="invalid error" role="alert">密码至少是六位，不能含有空格</p>
+                    <p class="blank error" role="alert">密码不能为空</p>
+                  </div>
+                  <label class="clearfix">
+                    <span class="input_title">设置密码</span>
+                    {{resetpwdform.password}}
+                  </label> 
+                </div>
+                <div class="score"><span><b></b></span></div>
+				<span class="tipImg"></span>
+				<span class="errTip">输入不能为空</span>
+                <span class="errors">{{resetpwdform.errors.password.as_text}}</span>
+				</div>
+				
+				<div class="clearfix verify">	
+                        <label class="clearfix">
+							<span class="input_title">确认密码</span>
+							{{resetpwdform.repassword}}
+						</label>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+                        <span class="errors">{{resetpwdform.errors.repassword.as_text}}</span>
+					</div>
+                <p class="form_btm mt_20"><input class="submit button" type="submit" value="提交申请"/></p>
+				</form>
+			</div>
+		</div>
+    <script type="text/javascript">
+		function verify_mobile(obj) {
+            if (obj.val().match(/^0{0,1}(13[0-9]|15[0-9]|18[6-9]|180)[0-9]{8}$/)) {
+                return true;
+            } else {
+                return false;
+            }
+        }        
+        $("#id_mobile").add_verify_listener(verify_mobile, "您输入的手机号码格式有误");
+		
+		//验证验证码的格式
+		function verify_verifycode(obj) {
+        if (obj.val().match(/^\d{6}$/)) {
+            return true;
+        } else {
+            return false;
+        }
+		}
+		$("#id_verifycode").add_verify_listener(verify_verifycode,"您输入的邀请码格式有误，请重新输入");
+		
+		//验证密码长度
+		function verify_password(obj){
+		if (obj.val().length >= 6) {
+				return true;
+		} else {
+				return false;
+			}
+		}
+		$("#id_password").add_verify_listener(verify_password,"密码至少是六位，不能含有空格");
+		//验证两次密码的输入是否一样
+		$("#id_repassword").add_verify_listener(verify_repassword,"您两次输入的密码不一致，请重新输入");
+		function verify_repassword(obj) {
+        if (obj.val()==$("#id_password").val()) {
+            return true;
+        } else {
+            return false;
+        }
+		}
+		
+		//实时验证密码和验证码
+				
+		function show_msg(obj, has_error, msg){
+		tipImg = obj.parent().nextAll(".tipImg");
+			tipMsg = obj.parent().nextAll(".errTip");
+			if(has_error){
+				tipImg.css({backgroundPosition : "left -26px"}).show();
+				tipMsg.show().html(msg);
+				}
+			else{
+				tipImg.css({display: "inline-block",backgroundPosition : "left top" }).show();
+				tipMsg.show().html("");
+				}
+		}
+		not_registered = true;
+		$("#id_mobile").blur(function(){
+		obj = $("#id_mobile");
+		if (verify_mobile(obj))
+			$.post("/validate", {type:'mobile', mobile:obj.val()}, function(data){
+			 show_msg(obj, data.ret, "未注册的手机号");//未注册的手机号	
+			 if(!data.ret) not_registered=false;
+			},"json");
+		else
+			show_msg(obj, true, "您输入的手机号码格式有误，请重新输入");
+		});
+
+		$("#id_verifycode").blur(function(){
+			mobile_obj = $("#id_mobile");
+			code_obj = $("#id_verifycode");
+			
+			if(!verify_mobile(mobile_obj))
+			{
+				show_msg(mobile_obj,true,"请输入有效的手机号");
+				return ;
+			}
+			if(verify_verifycode(code_obj))
+				$.post("/validate", {type:'verifycode','mobile':mobile_obj.val(),'code':code_obj.val()},
+				function(data){
+				show_msg(code_obj, !data.ret, data.msg);
+				}, "json");
+				else
+					show_msg(code_obj, true, "验证码只能为六位的数字字符串");
+		});
+
+		$(".verifyCodeBtn").click(function(){
+				$(this).send_code(60);
+			});
+			(function($){
+				var time_array = []; //用以存放多个定时数值，与每个按钮一一对应
+				
+				$.fn.send_code = function(time){
+					if(!this.hasClass("disabledVCBtn")) {
+						mobile = $("#id_mobile").val();
+
+						if( mobile.length <= 0) { alert("请输入手机号！"); return ; }
+					        if (!mobile.match(/^0{0,1}(13[0-9]|15[0-9]|18[6-9]|180)[0-9]{8}$/)) {
+					            return;
+					        } else {
+							if(not_registered)
+							{
+								alert("未注册的手机号");
+								return ;
+							}
+					            $.ajax({
+					                type:"POST",
+					                url:"/sendmobilecode",
+					                data:{mobile:mobile,type:"forget"}
+					            }).done(function (msg) {
+                                    alert("验证码已发送成功，请查收。")
+					            },"json");
+								var $this = $(this);
+								var idx = $(".verifyCodeBtn").index($this);
+								time_array[idx] = time;
+								
+								$this.addClass("disabledVCBtn");
+								refresh_timer(idx, $this);
+								
+								var send_code_timer = setInterval(function(){
+									refresh_timer(idx, $this);
+									if(time_array[idx] < 0) {
+										clearInterval(send_code_timer);
+										$this.text("获取验证码");
+										$this.removeClass("disabledVCBtn");
+									}
+								}, 1000);
+							}
+						} else {return;}
+					}
+					
+					
+					function refresh_timer(idx, obj){
+						obj.text(time_array[idx] + "秒后可重发")
+						time_array[idx] --;
+					}								
+			})(jQuery);	
+    </script>				
+
+{%endblock%}

@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="imagetoolbar" content="no"/>
+		<meta name="description" content="钱方支付"/>
+		<meta name="keywords" content=""/>
+		<meta name="author" content="qfpay"/>
+		<meta name="copyright" content="qfpay Inc"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+		<link rel="apple-touch-icon" href="icon.png"/>
+		<link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+		<title>{%block title%} {%endblock%}</title>
+		
+		{%block resource%}
+		<link type="text/css" rel="stylesheet" href="/static/css/base.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/css/common.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/css/jquery.PCT_select.css"/>
+		<script type="text/javascript" charset="utf-8" src="/static/js/jquery-1.7.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/static/js/jquery.verify.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/static/js/jquery.PCT_select.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/static/js/jquery.qfverify.js"></script>
+		{%endblock%}
+	</head>
+
+	<body>
+    {% load qf_tags %}	
+	{%block header%}
+	
+    {% qf_tags_header user request.session.group %}
+	
+	{%endblock%}
+	{%block container%}
+	{%endblock%}
+
+	{%block script%}
+	<script type="text/javascript">
+	function showTipBox(obj){
+		$("#tipBox #tipContent").text(obj.attr("tip"));	
+		$("#tipBox").css({
+			top : obj.offset().top - $("#tipBox").outerHeight() + 8,
+			left : obj.offset().left
+		}).show();
+	}
+	function hideTipBox(){
+		$("#tipBox").hide();
+	}
+	function hideErrTip(obj){		
+		$(".errTip, .tipImg", obj).hide();
+	}
+	$("#id_telephoneregion").keyup(function(){
+		obj = $(this);
+		if (obj.val().length == 3){
+			if (obj.val()=="010"||obj.val()=="020"||obj.val()=="021"||obj.val()=="022"||obj.val()=="023"||obj.val()=="024"||obj.val()=="025"||obj.val()=="027"||obj.val()=="028"||obj.val()=="029"){
+			$("#id_telephone").focus();
+		}
+		}
+		if (obj.val().length == 4){
+			$("#id_telephone").focus();
+		}
+	
+	}).focus(function(){
+		var $thisBlock = $(this).parentsUntil(".verify_tip").parent();
+		showTipBox($(this));
+		hideErrTip($thisBlock)
+	}).blur(function(){
+		hideTipBox();
+		obj1 = $("#id_telephoneregion")
+		obj2 = $("#id_telephone")
+		obj2.focus();
+		return;
+		if (obj1.val().length==0 && obj2.val().length==0)
+		{ 
+			obj2 = obj2.parent();
+			tipImg = obj2.nextAll('.tipImg');
+			tipMsg = obj2.nextAll('.errTip');
+			tipImg.hide();
+			tipMsg.show().html("");
+		}
+		else{
+			if(obj1.val().match(/^(\d{2,3}-)?(\d{3}|\d{4})$/))
+			{	
+				if (obj1.val()=="010"||obj1.val()=="020"||obj1.val()=="021"||obj1.val()=="022"||obj1.val()=="023"||obj1.val()=="024"||obj1.val()=="025"||obj1.val()=="027"||obj1.val()=="028"||obj1.val()=="029")
+				{
+					if(obj2.val().length==0)
+					{
+						$.show_msg(obj2,true,true,'格式为***-********，请重新输入');
+					}
+					else
+					{
+						if(obj2.val().match(/^(\d{7,10})(-\d+)*$/))
+						{	
+							$.show_msg(obj2,true,false,'');
+						}
+						else
+						{
+							$.show_msg(obj2,true,true,'格式为***—********，请重新输入');
+						}
+					}
+				}
+				else
+				{
+					if(obj1.val().match(/^\d{3}$/))
+					{
+						$.show_msg(obj2,true,true,'格式为***—********，请重新输入');
+					}
+					else{
+						if(obj2.val().length==0)
+						{
+							$.show_msg(obj2,true,true,'格式为***—********，请重新输入');
+						}
+						else
+						{
+							if(obj2.val().match(/^(\d{7,10})(-\d+)*$/))
+							{	
+								$.show_msg(obj2,true,false,'');
+							}
+							else
+							{
+								$.show_msg(obj2,true,true,'格式为***—********，请重新输入');
+							}
+						}
+					
+					}
+				}
+			}
+			else
+			{
+				$.show_msg(obj2,true,true,'格式为***—********，请重新输入');
+			}
+			
+		}
+	})
+
+
+	$("#id_telephone").focus(function(){
+		obj = $("#id_telephone")
+		var $thisBlock = obj.parentsUntil(".verify_tip").parent();
+		showTipBox(obj);
+		hideErrTip($thisBlock)
+	}).blur(function(){
+		hideTipBox();
+		obj1 = $("#id_telephoneregion")
+		obj2 = $("#id_telephone")
+		if (obj1.val().length==0 && obj2.val().length==0)
+		{ 
+			obj2 = obj2.parent();
+			tipImg = obj2.nextAll('.tipImg');
+			tipMsg = obj2.nextAll('.errTip');
+			tipImg.hide();
+			tipMsg.show().html("");
+		}
+		else{
+			if(obj1.val().match(/^(\d{2,3}-)?(\d{3}|\d{4})$/) && obj2.val().match(/^(\d{7,10})(-\d+)*$/))
+			{	
+				$.show_msg(obj2,true,false,'');
+			}
+			else
+			{
+				$.show_msg(obj2,true,true,'格式为***—********，请重新输入');
+			}
+			
+		}
+	});
+
+	
+	</script>
+	{%endblock%}
+	<div id="tipBox" class="{{request.session.group}}">
+    <p id="tipContent">
+        请仔细填写内容
+    </p>
+    <p id="tipArrow">
+        <span></span>
+    </p>
+	</div>
+
+	{%include "userportal/base/footer.html"%}
+	<script type="text/javascript">
+	try{
+		window.history.forward(1);
+	}
+	catch(err){
+		//console.log(err.description);	
+	}
+	</script>
+	</body>
+</html>

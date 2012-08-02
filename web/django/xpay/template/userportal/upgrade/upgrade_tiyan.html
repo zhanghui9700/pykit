@@ -1,0 +1,62 @@
+﻿{%extends "userportal/upgrade/upgrade_base.html"%}           
+		{%block account%}
+			   	<li class="selected"><a href="/account">我的账户</a></li>
+		{%endblock%}
+		
+     <!---------------------------内容--------->       
+
+{%block progress%}  "/static/images/zh_dj.png" {%endblock%}
+{%block level%}体验级{%endblock%}
+{%block uplimit%} {{currentUserLevel.monthamount}} {%endblock%}
+{%block deadtime%} {{prime.deaddate}} {%endblock%}
+{%block fee%} {{prime.debitfeeratio}} {%endblock%}
+{%block monthfee%} {{prime.monthfee}} {%endblock%}
+{%block freecount%} {{prime.freecount}} {%endblock%}
+<!----------------------基本--------------------------> 
+
+	{%block content%}
+    {% if user.user_level < 2 %}
+	<div class="waikuang">
+        	<div class="jieshao">
+            <ul>
+            	<li class="cu">补齐证件免费上升到基本级,增加交易权限</li>
+                {% if user.user_type == 1 %}
+                <li>基本级需要的证件：个人身份证；</li>
+                {% endif %}
+                {% if user.user_type == 2 %}
+                <li>基本级需要的证件：法人身份证、营业执照、税务登记证、租赁合同；</li>
+                {% endif %}
+                {% if user.user_type == 3 %}
+                <li>基本级需要的证件：法人身份证、营业执照、税务登记证、组织机构代码证、租赁合同；</li>
+                {% endif %}
+               <li>升级后的交易权限：1.交易限额达到{{basic.monthamount}}元/2.到账时间为{{basic.deaddate}}天/手续费为每笔交易额的{{basic.debitfeeratio}}%；</li>      
+            </ul>
+            </div>
+            <div class="jieshao_1">
+            	<input name="baiyin" type="button" id="sj" 
+                {%if can_upgrade %}
+                value="我要升级基本级"
+                {%endif %}
+				{%if not can_upgrade%}
+                value = "等待审核中"
+                disabled="disabled"	
+                {%endif%}
+				onclick="javascript:window.location.href='/upgrade/upload/';">
+            </div>
+    </div>
+    {% endif %}
+<!-----------------------黄金--------------------------> 
+	<div class="huangjing">
+        	<div class="zuobian">
+            <ul>
+            	<li class="lan">想上升到黄金级，需要补齐全部证件</li>
+                <li>黄金级需要补齐的证件：企业法人执照、法人身份证、对公账户证件、税务登记证、租凭合同、有效信用卡刷卡证明、收款需求证件图片！</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;黄金级的交易权限：交易额限上升到{{gold.monthfee}}元！</li>      
+            </ul>	
+            </div>
+            <div class="zuobian_1">
+            	<input name="gold" type="button" id="sj_1" value="暂未开通" disabled="disabled" onclick="javascript:void(0);"/>
+            </div>
+    </div>
+
+{%endblock%}

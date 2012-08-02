@@ -1,0 +1,249 @@
+{%extends "userportal/base/qfpay_base.html" %}
+
+{%block title%}钱方-注册第三步:凭证上传{%endblock%}
+
+{%block resource%}
+	{{block.super}}
+	<script type="text/javascript" charset="utf-8" src="/static/js/jquery.ui.widget.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="/static/js/jquery.iframe-transport.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="/static/js/jquery.fileupload.js"> </script>
+{%endblock%}
+
+{%block container%}	
+	<div class="container">
+	<div class="clearfix">
+	  <div class="process" id="process3"></div>
+	  <form class="clearfix mt_20" enctype="multipart/form-data" method="post" action="" autocomplete="off" onsubmit="javascript:return Page.func.onSubmit();">
+	     <!-- 身份证正面-->
+        <div class="clearfix verify">
+            <label class="clearfix">
+                <span class="input_title">法人代表身份证(正面)：</span>
+                <div class="fakeupload">
+                    <input type="text" class="required" id="id_front_fake" name="fakeupload" readonly="readonly" /> 
+                </div>
+                <input type="file" name="id_front" id="id_id_front_realupload" class="realupload" />
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div > <img src="" id="id_front_small" class="img_preview" /> </div>
+            <span class="tipImg"></span>
+            <span class="errTip">输入不能为空</span>
+        </div>
+        <!-- 身份证反面-->
+        <div class="clearfix verify">
+            <label class="clearfix">
+                <span class="input_title">法人代表身份证(反面)：</span>
+                <div class="fakeupload">
+                    <input type="text" class="required" id="id_back_fake" name="fakeupload" readonly="readonly" /> 
+                </div>
+                <input type="file" name="id_back" id="id_id_back_realupload" class="realupload"/>
+            </label>
+            <span id="id_back_progress" class="img_progress" > {{apply.errors.id_back.as_text}}</span>
+            <div> <img src="" id="id_back_small" class="img_preview"/></div>
+            <span class="tipImg"></span>
+            <span class="errTip">输入不能为空</span>
+        </div>
+        <!--营业执照-->
+        <div class="clearfix verify">
+		    <label class="clearfix">
+				<span class="input_title">企业工商营业执照：</span>
+				<div class="fakeupload">
+				    <input type="text" class="required" name="fakeupload" readonly="readonly" id="license_fake" value=""/>
+				</div>
+				<input type="file" name="license" id="id_license_realupload" class="realupload"/>
+		   	</label>
+		   	<span id="license_progress" class="img_progress"  style="color:red">{{apply.errors.license.as_text}} </span>
+			<div > <img src="" id="license_small" class="img_preview" style="display:none"/> </div>
+			<span class="tipImg"></span>
+			<span class="errTip">输入不能为空</span>
+		</div>
+        <!-- 租赁合同 -->
+        <div class="clearfix verify">
+            <label class="clearfix">
+                <span class="input_title">租赁协议凭证：</span>
+                <div class="fakeupload">
+                    <input type="text" id="contract_fake" class="required" name="fakeupload" readonly="readonly" /> 
+                </div>
+                <input type="file" name="contract" id="id_contract_realupload" class="realupload"/>
+                </label>
+                <span id="contract_progress" class="img_progress" style="color:red"> {{apply.errors.contract.as_text}}</span>
+            <div> <img src="" id="contract_small" class="img_preview"/> </div>
+
+            <span class="tipImg"></span>
+            <span class="errTip">输入不能为空</span>
+        </div>
+        <div class="clearfix verify">
+            <label class="clearfix">
+                <span class="input_title">营业证明照片：</span>
+                <div class="fakeupload">
+                    <input type="text" id="contract_fake" class="required" name="fakeupload" readonly="readonly" /> 
+                </div>
+                <input type="file" name="contract" id="id_contract_realupload" class="realupload"/>
+                </label>
+                <span id="contract_progress" class="img_progress" style="color:red"> {{apply.errors.contract.as_text}}</span>
+            <div> <img src="" id="contract_small" class="img_preview"/> </div>
+
+            <span class="tipImg"></span>
+            <span class="errTip">输入不能为空</span>
+        </div>
+        <div class="clearfix verify">
+            <label class="clearfix">
+                <span class="input_title">税务登记证：</span>
+                <div class="fakeupload">
+                    <input type="text" id="contract_fake" class="required" name="fakeupload" readonly="readonly" /> 
+                </div>
+                <input type="file" name="contract" id="id_contract_realupload" class="realupload"/>
+                </label>
+                <span id="contract_progress" class="img_progress" style="color:red"> {{apply.errors.contract.as_text}}</span>
+            <div> <img src="" id="contract_small" class="img_preview"/> </div>
+
+            <span class="tipImg"></span>
+            <span class="errTip">输入不能为空</span>
+        </div>
+        <div class="clearfix verify">
+            <label class="clearfix">
+                <span class="input_title">组织机构代码证：</span>
+                <div class="fakeupload">
+                    <input type="text" id="contract_fake" class="required" name="fakeupload" readonly="readonly" /> 
+                </div>
+                <input type="file" name="contract" id="id_contract_realupload" class="realupload"/>
+                </label>
+                <span id="contract_progress" class="img_progress" style="color:red"> {{apply.errors.contract.as_text}}</span>
+            <div> <img src="" id="contract_small" class="img_preview"/> </div>
+
+            <span class="tipImg"></span>
+            <span class="errTip">输入不能为空</span>
+        </div>
+        <div class="clearfix verify">
+            <label class="clearfix">
+                <span class="input_title">其他信用凭证(照片)：</span>
+                <div class="fakeupload">
+                    <input type="text" id="contract_fake" class="required" name="fakeupload" readonly="readonly" /> 
+                </div>
+                <input type="file" name="contract" id="id_contract_realupload" class="realupload"/>
+                </label>
+                <span id="contract_progress" class="img_progress" style="color:red"> {{apply.errors.contract.as_text}}</span>
+            <div> <img src="" id="contract_small" class="img_preview"/> </div>
+
+            <span class="tipImg"></span>
+            <span class="errTip">输入不能为空</span>
+        </div>
+
+        <!--done-->
+        <p class="form_btm mt_20"><input class="button" type="submit" value="提交申请"/></p>
+        </form>
+        </div>
+</div>
+{%endblock%}	
+
+{%block script%}
+<script type="text/javascript">
+var Page = {'__doc__':'用户凭证上传页面','__author__':'zhangh','__version__':'v1.0'}
+Page.func = (function(){
+	var SUPPORTED_IMG = ['.jpg','.jpeg','.png'];
+	var isSupportedImg = function(file){
+		file = file || '';
+		var lastDotIndex = file.lastIndexOf('.');
+		var fileExt = file.substring(lastDotIndex);
+		if(fileExt && SUPPORTED_IMG.indexOf(fileExt.toLowerCase()) >= 0)
+			return true;
+		else
+			return false;
+	};
+	var show_msg = function(isError,tipImg,tipMsg, msg){
+		if(isError){
+			tipImg.css({backgroundPosition : "left -26px"}).show();
+			tipMsg.show().html(msg);
+		}
+		else{
+			tipImg.css({display: "inline-block",backgroundPosition : "left top" }).show();
+			tipMsg.show().html("");
+		}
+	};
+
+	var hide_msg = function(tipImg,tipMsg){
+		tipImg.hide();
+		tipMsg.hide();
+	};
+	var canUpgrade = function(fileup,uploadData){
+		var result = false;
+		var fileName = fileup.val();
+		var div = fileup.parent().parent();
+		var tipImg = $('.tipImg',$(div));
+		var tipMsg = $('.errTip',$(div));
+		var fileup_fake = $('.required',$(div))
+		//debuggelr
+		fileup_fake.val()
+		if(!isSupportedImg(fileName)){
+			show_msg(true,tipImg,tipMsg,"支持的图片类型："+SUPPORTED_IMG.join('|'))
+		}
+		else if(uploadData && uploadData.files[0].size > 5000000){
+			show_msg(true,tipImg,tipMsg,"上传图片文件不能超过5M")
+		}
+		else{			
+			fileup_fake.val(fileName);
+			hide_msg(tipImg,tipMsg);
+			result = true;
+		}
+		return result;
+	}
+    return {
+		init : function(){
+			$('.realupload').each(function(){
+				var fileup = $(this);
+                fileup.change(function(){
+                    return canUpgrade(fileup)
+                }).fileupload({
+					dataType:'json',
+					url:'/upgrade/upload/image/',
+					send:function(event,data){
+						return canUpgrade(fileup,data);
+					},
+
+					done: function(e, data){
+						progress_name = "#" + fileup.attr("name")+"_progress";
+						progress_obj= $(progress_name);
+						progress_obj.html("上传成功");			
+				
+						if(!data.result.succeed){
+							progress_obj.html(data.result.msg);
+							return false;
+						}
+						img_url = "/preview/{{user.id}}/small/"+data.result.msg;
+						img_name = "#" + fileup.attr("name")+"_small";
+						img_obj = $(img_name);
+						img_obj.attr('src',img_url);
+						img_obj.show();
+					},
+
+					progress: function(e,data){
+						progress_name = "#"+fileup.attr("name")+"_progress";
+						progress_obj= $(progress_name);
+						progress = parseInt(data.loaded/data.total*100, 10);
+						progress_obj.html("已完成:"+progress+"%");
+					}
+				});
+			});
+		},
+        onSubmit:function(){
+            var isOk = true;
+            $(".required").each(function(){
+				var div = $(this).parent().parent().parent();
+				var tipImg = $('.tipImg',$(div));
+				var tipMsg = $('.errTip',$(div));
+
+                if($(this).val().length == 0){
+                    isOk = false;
+					show_msg(true,tipImg,tipMsg,'请先上传凭证')
+				}
+				else
+					hide_msg(tipImg,tipMsg)
+            });
+            
+            return isOk;
+		}
+    };
+})();
+Page.func.init();
+</script>
+{%endblock%}
+

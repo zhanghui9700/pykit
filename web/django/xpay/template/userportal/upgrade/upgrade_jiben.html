@@ -1,0 +1,33 @@
+﻿{%extends "userportal/upgrade/upgrade_base.html"%}
+
+	{%block account%}
+	   	<li class="selected"><a href="/account">我的账户</a></li>
+	{%endblock%}
+    <!---------------------------内容--------->       
+	 <!-----------------------------------------------------------------------------------白银-------------------------->
+<!-----------------------------------------------------------------------------------黄金--------------------------> 
+
+{%block progress%}  "/static/images/zh_dj_1.png" {%endblock%}
+{%block level%}基础级{%endblock%}
+{%block uplimit%} {{basic.monthamount}} {%endblock%}
+{%block deadtime%} {{basic.deaddate}} {%endblock%}
+{%block fee%} {{basic.debitfeeratio}} {%endblock%}
+{%block monthfee%} {{basic.monthfee}} {%endblock%}
+{%block freecount%} {{basic.freecount}} {%endblock%}
+
+{%block content%}
+	<div class="huangjing">
+        	<div class="zuobian">
+            <ul>
+            	<li class="lan">想上升到黄金级，需要补齐全部证件</li>
+                <li>需要再次补齐的证件：税务登记证、租凭合同、有效信用卡、收款需求证件图片；</li>
+                <li>&nbsp;&nbsp;&nbsp;黄金级的交易权限：交易额限上升到{{gold.monthamount}}元！</li>      
+            </ul>	
+            </div>
+            <div class="zuobian_1">
+            	<input name="" type="button" id="sj_1" value="我要升级黄金" onclick="location='/upgold'">
+            </div>
+    </div>
+
+</div>
+{%endblock%}

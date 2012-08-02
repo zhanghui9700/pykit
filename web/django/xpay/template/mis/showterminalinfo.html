@@ -1,0 +1,125 @@
+﻿{%extends "mis/device_base.html"%}
+<!----------副标题------------>
+{%block submenu%}
+				<li class="yp"><a href="#">读卡器查询</a></li>
+                <li><a href="#">PASM查询</a></li>
+                <li><a href="#">读卡器入库</a></li>
+                <li><a href="#">PASM入库</a></li>
+{%endblock%}
+
+<!---------内容-------->
+{%block content%}
+<div class="content">
+
+<!---搜索条件框--->
+<form action="" method="get">
+<div id="se_suo">
+	<div class="se_s"><span>设置搜索条件</span></div>
+    <div class="se_a">
+    	<ul>
+		 	<li><label class="se90">设备编号：</label><input name="" class="text se" type="text" value="{{terminalid}}"></li>
+			<li><label class="se90">使用状态：</label><select class="text x1" name="used"><option{%ifequal used 0%} selected="selected" {%endifequal%} value =0>入库</option><option{%ifequal used 1%} selected="selected" {%endifequal%} value =1>已分配psam卡</option><option{%ifequal used 2%} selected="selected" {%endifequal%} value =2>已分配用户</option><option{%ifequal used 3%} selected="selected" {%endifequal%} value =3>发货中</option><option{%ifequal used 4%} selected="selected" {%endifequal%} value =4>发货成功</option></select></li>
+			<li><label class="se90">设备状态：</label><select class="text x2"name="state"><option{%ifequal state 0%} selected="selected" {%endifequal%} value =0>正常</option><option{%ifequal state 1%} selected="selected" {%endifequal%} value =1>维修中</option><option{%ifequal state 2%} selected="selected" {%endifequal%} value =2>报废</option></select></li>
+			<li><label class="se90">生产厂商：</label><select class="text x2" name="producer"><option{%ifequal producer "0001" %} selected="selected" {%endifequal%} value ="0001">艾创</option><option{%ifequal producer "0002" %} selected="selected" {%endifequal%} value ="0002">鼎合</option></select></li>
+			<li><input name="" type="submit" class="button_e" value=""></li>
+        </ul>
+    </div>
+</div>
+</form>
+
+
+
+
+<!----------list------->  
+<div class="list_info">
+ 	<ul>
+		<li class="l_a">设备编号</li>
+  		<li class="l_a">设备型号</li>
+  		<li class="l_a">TCK密文</li>
+   		<li class="l_a">使用状态</li>
+    	<li class="l_a">设备状态</li>
+    	<li class="l_a">最后变更日期</li>
+    	<li class="l_a">生产日期</li>
+    	<li class="l_a">最后变更人</li>
+    <ul>
+ </div>
+<!---------list_nei--------> 
+<div id="list_nei">
+	{%for record in records.object_list %}
+
+	<div class="list_content">
+    	<ul>
+        	<li class="c_c">{{record.terminalid}}</li>
+    		<li class="c_b">
+			{%ifequal record.model '0001'%}qpos{%endifequal%}
+
+			{%ifequal record.model '0002'%}ipos{%endifequal%}
+</li>
+    		<li class="c_b">{{record.tck}}</li>
+    		<li class="c_b">	
+			{%ifequal record.used 0%}入库{%endifequal%}
+                        
+			{%ifequal record.used 1%}已分配psam卡{%endifequal%}
+                        
+			{%ifequal record.used 2%}已分配用户{%endifequal%}
+			{%ifequal record.used 3%}发货中{%endifequal%}
+			{%ifequal record.used 4%}发货成功{%endifequal%} 
+		</li>
+    		<li class="c_a">
+			{%ifequal record.state 0%}正常{%endifequal%}
+                        
+			{%ifequal record.state 1%}维修中{%endifequal%}
+                        
+			{%ifequal record.state 2%}报废{%endifequal%}
+ </li>
+    		<li class="c_a">{{record.last_modify|date:"Y-m-d H:i:s"}}</li>
+    		<li class="c_a">{{record.produce_date|date:"Y-m-d"}}</li>
+    		<li class="c_a">{{record.last_admin}}</li>
+        </ul>
+    </div>
+
+   {%endfor%} 
+    
+</div> 
+  
+ <!--翻页--> 
+<div class="page">
+	<div class="page_a">
+	{%if records.has_previous%}
+
+		<a class="pp" href="/showterminalinfo?terminalid={{terminalid}}&used={{used}}
+&state={{state}}&producer={{producer}}&page=1">首页</a>
+            
+		<a class="pp" href="/showterminalinfo?terminalid={{terminalid}}&used={{used}}
+&state={{state}}&producer={{producer}}&page={{records.previous_page_number}}">上一页</a>
+ 
+ 	{% else %}
+        	<a class="pp">首页</a>
+        	<a class="pp">上一页</a>
+	{% endif %}
+	{%for page in pagenums%}
+		{% ifequal page records.number %}
+
+   
+       			 <a class="pp">{{page}}</a>
+		{% else %}
+			<a class="pp" href="/showterminalinfo?terminalid={{terminalid}}&used={{used}}
+&state={{state}}&producer={{producer}}&page={{page}}">{{page}}</a>
+
+		{% endifequal %}
+			
+	{%endfor%}
+
+	{%if records.has_next%}
+		<a class="pp" href="/showterminalinfo?terminalid={{terminalid}}&used={{used}}
+&state={{state}}&producer={{producer}}&page={{records.next_page_number}}">下一页</a>
+
+        {%else%}
+		<a class="pp">下一页</a>
+	{%endif%} 
+
+    </div>
+</div>
+      
+{%endblock%}
+

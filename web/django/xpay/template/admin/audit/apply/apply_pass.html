@@ -1,0 +1,133 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}{{ block.super }}
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+	<div class="breadcrumbs">
+		 <a href="/admin/">{% trans "Home" %}</a> &rsaquo;
+		 <a href="/admin/{{opts.app_label}}">{% trans opts.app_label %}</a> &rsaquo; 
+		 <a href="/admin/{{opts.app_label}}/{{opts.module_name}}">{{opts.verbose_name}}</a>&rsaquo;
+		 {% trans "设置用户度衡" %}
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>审核通过，设置交易信息</h1>
+<div id="content-main">
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="/admin/{{opts.app_label}}/{{opts.module_name}}/passed/" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+<p>设置交易度衡，绑定交易渠道，设置费率。</p>
+<div>
+<fieldset class="module aligned">
+<h2>设置交易度衡</h2>
+<div class="form-row">
+	{%if forms.errors.deposit_amount %}
+	<ul class="errorlist">
+		<li>{{forms.errors.deposit_amount.as_text}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>借记卡:</label>
+		<input type="text" name="deposit_amount" id="id_deposit_amount" value = "{% if usertype == 1%}50{%else%} 80 {%endif%}" maxlength="5"/>
+		<p class="help">必填。借记卡限额，只能用数字，范围(1~32767)，单位是：百元，如限额是1000元，只需输入10！</p>
+	</div>
+</div>
+<div class="form-row">
+	{%if forms.errors.credit_amount %}
+	<ul class="errorlist">
+		<li>{{forms.errors.credit_amount.as_text}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>信用卡:</label>
+		<input type="text" name="credit_amount" id="id_credit_amount" value = "{% if usertype == 1%}50{%else%} 80 {%endif%}" maxlength="5"/>
+		<p class="help">必填。信用卡限额，只能用数字，范围(1~32767)，单位是：百元，如限额是1000元，只需输入10！</p>
+	</div>
+</div>
+</fieldset>
+<fieldset class="module aligned">
+<h2>绑定交易渠道</h2>
+<div class="form-row">
+	<div>
+		<label>交易渠道:</label>
+		<select name="channel_name">
+			<option value="北京钱方银通">北京钱方银通</option>
+			<option value="北京智网宇通">北京智网宇通</option>
+		</select>
+	</div>
+</div>
+<div class="form-row">
+	{%if forms.errors.mcc %}
+	<ul class="errorlist">
+		<li>{{forms.errors.mcc.as_text}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>MCC:</label>
+		<input type="text" name="mcc" id="id_mcc" value = "5998" maxlength="4"/>
+		<p class="help">必填。数字类型！</p>
+	</div>
+</div>
+
+</fieldset>
+<fieldset class="module aligned">
+<h2>设置费率</h2>
+<div class="form-row">
+	{%if forms.errors.deposit_rate %}
+	<ul class="errorlist">
+		<li>{{forms.errors.deposit_rate.as_text}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>借记卡:</label>
+		<input type="text" name="deposit_rate" id="id_deposit_rate" value = "1" />%&nbsp;
+		<p class="help">必填。借记卡费率，只能用数字。</p>
+	</div>
+</div>
+<div class="form-row">
+	{%if forms.errors.credit_rate %}
+	<ul class="errorlist">
+		<li>{{forms.errors.credit_rate.as_text}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>信用卡:</label>
+		<input type="text" name="credit_rate" id="id_credit_rate" value = "1" />%&nbsp;
+		<p class="help">必填。信用卡费率，只能用数字。</p>
+	</div>
+</div>
+<div class="form-row">
+	{%if forms.errors.fee_max %}
+	<ul class="errorlist">
+		<li>{{forms.errors.fee_max.as_text}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>封顶额度:</label>
+		<input type="text" name="fee_max" id="id_fee_max" value = "-1" />(手续费封顶)
+		<p class="help">必填。封顶额度只能用数字，封顶额度填写-1表示无封顶，单位:元，如果是25元，请输入25!可以保留到小数点后两位！</p>
+	</div>
+</div>
+
+</fieldset>
+{%for item in queryset %}
+<input type="hidden" name="queryset" value="{{item.user}}" />
+{%endfor%}
+<div class="submit-row">
+	<input class="defalult" type="submit" value="保 存"/>
+</div>
+</div>
+</form>
+<script type="text/javascript">
+</script>
+</div>
+{% endblock %}

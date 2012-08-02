@@ -1,0 +1,37 @@
+﻿{%extends "userportal/upgrade/upgrade_base.html"%}   
+   <!-----------------------------账户------------->
+   
+		{%block account%}
+			   	<li class="selected"><a href="/account">我的账户</a></li>
+		{%endblock%}
+		
+     <!---------------------------内容--------->       
+{%block progress%}  "/static/images/zh_dj_2.png" {%endblock%}
+{%block level%}黄金级{%endblock%}
+{%block uplimit%} {{gold.monthamount}} {%endblock%}
+{%block deadtime%} {{gold.deaddate}} {%endblock%}
+{%block fee%} {{gold.debitfeeratio}} {%endblock%}
+{%block monthfee%} {{gold.monthfee}} {%endblock%}
+{%block freecount%} {{gold.freecount}} {%endblock%}
+
+
+{%block content%}
+          
+<!-----------------------------------------------------------------------------------白银-------------------------->
+<!-----------------------------------------------------------------------------------黄金--------------------------> 
+	<div class="baiyin">
+        	<div class="haocu">
+            <ul>
+            	<li class="lan">怎样升到白金级？拥有最高交易权限！</li>
+                <li>白金级交易权限100,000元</li>
+                <li>90天内符合以下条件，钱方会提醒您升级</li>   
+                <li>1.没有违规交易；</li>
+                <li>2.月平均交易额达到交易限额的85％以上；</li> 
+                <li>3.月交易笔数在10笔以上；</li>  
+                <li>4.3个月内没有降级记录。</li>
+            </ul>	
+            </div>
+
+    </div>
+
+{%endblock%}

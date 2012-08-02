@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="imagetoolbar" content="no"/>
+		<meta name="description" content="钱方支付"/>
+		<meta name="keywords" content=""/>
+		<meta name="author" content="qfpay"/>
+		<meta name="copyright" content="qfpay Inc"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+		<link rel="apple-touch-icon" href="icon.png"/>
+		<link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+		<title>{%block title%} {%endblock%}</title>
+		
+		{%block resource%}
+		<link type="text/css" rel="stylesheet" href="/static/css/base.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/css/common.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/css/jquery.PCT_select.css"/>
+		<script type="text/javascript" charset="utf-8" src="/static/js/jquery-1.7.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/static/js/jquery.verify.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/static/js/jquery.PCT_select.js"></script>
+		{%endblock%}
+	</head>
+
+	<body>
+	
+	{%block header%}
+	<div class="header">
+        <a class="logo_shenma" href="#">神州数码</a>
+        <p>小微商户移动支付系统</p>
+	</div>
+
+	{%endblock%}
+
+	{%block container%}
+
+	{%endblock%}
+
+	{%block script%}
+	{%endblock%}
+
+    <script type="text/javascript">
+    function showerror(element,errmsg){
+         //debugger
+         var containerDiv = $(element).parentsUntil(".verify");
+         containerDiv = containerDiv.parent();
+         qf.validate.showErrTip($(containerDiv),errmsg);
+     };
+
+    var page = page || {}
+    page.func = (function(){
+        return {
+            onsubmit:function(){
+                var result = true;
+                var fields = $(".required");
+                for(var i = 0,length=fields.length;i<length;i++){
+                    if(qf.validate.isNull(fields[i])){
+                        result = false;
+                        qf.validate.showError(fields[i],"输入不能为空");
+                    }
+					if (fields[i].attributes.id.nodeValue == "id_password")
+					{
+						if(qf.validate.isNull(fields[i]))
+						{
+							result = false;
+							showerror(fields[i],'输入不能为空')
+						}
+					}
+    				if (fields[i].attributes.id.nodeValue == "id_tradeaddr")
+					{
+						obj = $("#id_tradeaddr")
+						objcheck = $("#notaddr")
+						if(objcheck.attr("checked")=="checked"){
+							objaddr=$("#id_businessaddr")
+							if (objaddr.val()!=obj.val() || $("#tpro").val()!=$("#pro").val() || $("#tcity").val()!=$("#city").val())
+							{								
+								result = false;
+								showerror(fields[i],'两个地址不能相同')
+							}
+							else
+							{
+							}
+						}
+						else
+						{
+						}
+
+					}
+			    }
+                return result;
+            }
+        } 
+    })();
+    </script>
+	<script type="text/javascript">
+	try{
+		window.history.forward(1);
+	}
+	catch(err){
+		//console.log(err.description);	
+	}
+	</script>
+	<div id="tipBox">
+    <p id="tipContent">
+        请仔细填写内容
+    </p>
+    <p id="tipArrow">
+        <span></span>
+    </p>
+	</div>
+
+	{%include "userportal/signup/shenma/shenma_footer.html"%}
+	</body>
+</html>

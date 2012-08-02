@@ -1,0 +1,66 @@
+﻿{%extends 'mis/base.html'%}
+{%block content %}
+<!---------商户详细信息-------->
+<div class="content_pz">
+<div id="directory">
+    	<a href="/"><img src="/static/images/mis/home.jpg" /></a>><a href="/user/search/">商户信息</a>><a href="javascript:void(0);">绑定读卡器</a>
+</div>
+
+<div class="if">
+		<h3><span>绑定读卡器<span></h3>
+        <div class="if_ol">
+			<div class="if_le">
+				<ul name='__tab'>
+					<li class="if_z"><a href="javascript:void(0);" __target='div_basic'>基本信息</a></li>
+				</ul>
+			</div>
+			<!--基本信息-->
+			<div class="if_ri" name='div_basic'>
+				<form method="post" action="/user/bindterminal/{{core_user.user.id}}/" autocomplete="off" onsubmit="javascript:return page.func.onSubmit();"  >
+				<ul>
+					<li><span class="if_xx">商户编号：</span><span class="if_xp">{{core_user.user.id}}</span></li>
+					<li><span class="if_xx">商户名称：</span><span class="if_xp">{{core_user.username}}{{core_user.company}}</span></li>
+					<li><span class="if_xx">商户类型：</span><span class="if_xp">{{core_user.user.get_type_desc}}</span></li>
+					<li><span class="if_xx">申请方式：</span><span class="if_xp">{{core_user.user.get_source_desc}}</span></li>
+					<li><span class="if_xx">级别：</span><span class="if_xp">{{core_user.user.get_level_desc}}</span></li>
+					<li><span class="if_xx">状态：</span><span class="if_xp">{{core_user.user.get_state_desc}}</span></li>
+					<li><span class="if_xx">读卡器数量：</span><span class="if_xp">{{core_user.user.get_terminal_count}}</span></li>
+					<li><span class="if_xx">申请时间：</span><span class="if_xp">{{core_user.user.date_joined|date:"Y-m-d H:s"}}</span></li>
+					<li><span class="if_xx">读卡器编号：</span><span class="if_xp"><input type="text" name="terminalid" value="" maxlength="20"/></span></li>
+					<li><span class="if_xx">提交绑定：</span><span class="if_xp"><input type="submit" value="绑定"/></span></li>
+					<li><span class="if_xx"></span><span class="if_xp"><font color="red"><span id="error">{{errorMsg}}</span></font></span></li>
+				</ul>
+				</form>
+			</div>
+		</div>
+</div>
+{%endblock %}
+{%block script %}
+<script type='text/javascript'>
+var page = {};
+page.func = (function(){
+	return {
+		onSubmit : function(){
+			var result = false;
+			var terminal = $("input[name='terminalid']");
+			if (terminal.length == 1){
+				terminal = terminal[0];
+				var _id = terminal.value;
+				if (_id.length == 0)
+					$("#error").html("请输入读卡器编号！")
+				else{
+					result = true;
+				}
+			}
+			else{
+				$("#error").html("读卡器录入失败！")
+			}
+			if(result)
+				$("#error").html("").hide()
+
+			return result;
+		}
+	};
+})();
+</script>
+{%endblock%}

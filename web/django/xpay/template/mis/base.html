@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+
+<!--html-->
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> 
+<!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>钱方后台管理系统</title>
+<link rel="stylesheet" type="text/css" href="/static/css/mis/global.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/mis/style.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+{%block externaljs%}
+{%endblock %}
+</head>
+<body>
+<!---------头部-------->
+<div class="header">
+	<div class="header_a">
+    	<div class="header_a1">
+            <span class="s2"><a href="/logout/">退出</a></span>
+        	<span class="s1">管理员：<a href="javascript:void(0);">{{request.user}}</a></span>
+        </div>
+    </div>
+</div>
+<!---------NAV-------->
+<!--主导航-->
+<div class="nav">
+	<div class="mainMenu">
+    	<div id="mainMenu_a">
+        	<div class="logo"><img src="/static/images/mis/logo.png" /></div>
+            <div class="mainMenu_a1">
+            	<ul>
+                	<li class="ok"><a href="#">商户管理</a></li>
+                    <!--li><a href="#">报告管理</a></li-->
+                    <!--li><a href="#">系统管理</a></li-->
+                    <!--li><a href="#">终端管理</a></li-->
+                    <!--li><a href="#">交易管理</a></li-->
+                    <!--li><a href="#">设备管理</a></li-->
+                </ul>	
+            </div>
+        </div>
+    </div>
+    <!--次导航-->
+    <div class="subMenu">
+    	<div id="subMenu_a">
+             <div class="subMenu_a1">
+        	 <ul>
+				<li class="yp"><a href='/typist/list/'>凭证录入</a></li>
+            	<li><a href='/audit/result/'>人工审批</a></li>
+                <li><a href="/user/search/">商户信息</a></li>
+                <li><a href="/manual/apply/">商户录入</a></li>
+                <!--li><a href="#">等级管理</a></li-->
+                <!--li><a href="#">反馈管理</a></li-->
+            </ul>
+            </div>
+        </div>
+    </div>
+
+    <!---------内容-------->
+    {%block content%}
+
+    {%endblock%}  
+    <!---------版权-------->
+	<div class="footer">
+			<div class="copyright">Copyright © 2011-2012 北京钱方科技网络技术有限公司 京ICP证11044451号</div>
+	</div>
+	 <!---->   
+</div>
+{%block script %}
+
+{% endblock %}
+</body>
+</html>

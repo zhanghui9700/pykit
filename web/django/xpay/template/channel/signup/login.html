@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]>   <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+
+<html>
+<head>
+    <title>登录 - 钱方渠道管理网站</title>
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta name="description" content="钱方支付" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="qfpay" /> 
+    <meta name="copyright" content="qfpay Inc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon --> 
+    <link rel="icon" type="image/png" href="/static/images/favicon.png">
+    
+    <!-- CSS -->
+    <link href="/static/css/login.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <!-- Javascript -->
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery-1.7.min.js"></script>
+    
+    <!--[if IE]>
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <link href="css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <![endif]-->
+	
+</head>
+<body>
+	<div id="form">
+	  <div class="inner">
+	  	<h1>钱方支付渠道管理网站</h1>
+	    <form method="post" action="">
+		  <div class="row">
+			<input type="text" id="username" name="username" placeholder="渠道用户名" class="field phone" style="ime-mode:disabled" maxlength="11">
+			<span class="errors" id="mobileError">{{loginform.errors.username.as_text}}</span>
+		  </div>
+		  <div class="row">
+			<input type="password" id="password" name="password" placeholder="密码" class="field password" oncopy="return false;" onpaste="return false;" maxlength="24">
+			<span class="errors">{{loginform.errors.password.as_text}}</span>
+		  </div>
+		  <div class="forgot">
+			<!--a href="/resetpwd">忘记密码？</a-->
+		  </div>
+		  <div class="big">
+			<!--div class="left">
+				<span>还没有账号？</span><a href="/signup">注册</a>
+			</div-->
+			<div class="right">
+				<input type="submit" value="登录">
+			</div>
+		  </div>
+	    </form>
+	  </div>
+	</div>
+<script> 
+	$(document).ready(function(){
+		document.getElementById('username').focus();	
+	});
+</script>
+</body>
+</html>

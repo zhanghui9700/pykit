@@ -1,0 +1,70 @@
+﻿{% extends "mis/base.html"%}
+{%block externaljs %}
+{%endblock %}
+{%block content%}
+<!---------内容-------->
+<div class="content">
+<!---------分页-------->
+	<div id="content_header">
+    	<div class="content_header_a">
+        	<ul>
+            	<li><a href="/typist/list/">凭证录入</a></li>
+                <li class="liang"><a href="#">人工审批</a></li>
+                <!--li><a href="#">随即审核</a></li-->
+                <!--li><a href="#">渠道上传</a></li-->    
+            </ul>
+        </div>
+    </div>
+	<!----------list------->  
+	<div class="list">
+    	<ul>
+            <li class="list_a">商户编号</li>
+            <li class="list_a">申请方式</li>
+            <li class="list_b">商户名称</li>
+            <li class="list_a">申请时间</li>
+            <li class="list_a">申请级别</li>
+            <li class="list_a">账户类型</li>
+            <li class="list_a">进入操作</li>
+        </ul>
+    </div>
+	<!---------list_nei--------> 
+	<div id="list_nei">
+        {% for item in auditResult.object_list %}
+        <div class="list_content">
+            <ul>
+                <li class="list_a">{{item.uid}}</li>
+                <li class="list_a">{{item.up_source}}</li>
+                <li class="list_b">{{item.name}}</li>
+                <li class="list_a">{{item.submittime|date:"Y-m-d H:i"}}</li>
+                <li class="list_a">{{item.leveldesc}}</li>
+                <li class="list_a">{{item.typedesc}}</li>
+                <li class="list_c"><a href="/audit/manual/{{item.up_id}}/">人工审批</a></li>
+            </ul>
+        </div> 
+        {% empty %}
+        <h1>暂无数据，请稍后查询！</h1>
+        {% endfor %}
+    </div>
+	<!--翻页-->
+	{%if auditResult.object_list%}
+	<div class="page">
+        {%if audiResult and audiResult.num_pages > 1%}
+        <div class="page_a" mrel="{{audiResult.num_pages}}|{{audiResult.number}}">
+            {%if audiResult.has_previous %} 
+            <a class="pp" href="{{link}}&page=1">首页</a>
+            <a class="pp" href="{{link}}&page={{audiResult.previous_page_number}}">上一页</a>
+            {%endif %}
+            {%for pageIndex in pagenums %}
+            <a class="pp" href="{{link}}&page={{pageIndex}}">{{pageIndex}}</a>
+            {%endfor%}
+            {%if audiResult.has_next %}
+            <a class="pp" href="{{link}}&page={{audiResult.next_page_number}}">下一页</a>
+            <a class="pp" href="{{link}}&page={{audiResult.paginator.num_pages}}">末页</a>
+            {%endif %}
+
+        </div>
+        {%endif%}
+    </div>
+	{% endif %}
+</div>
+{% endblock %}

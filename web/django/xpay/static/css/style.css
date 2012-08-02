@@ -1,0 +1,142 @@
+body{font-size:12px;line-height:1.5;text-align:center;font-family:Tahoma,Helvetica,Arial,sans-serif}
+//ul,ol,li{list-style:none;}
+table{border-collapse:collapse}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+img{border:none}
+input{vertical-align:middle}
+input,select{font-size:12px}
+.dis{display:block}
+.undis{display:none}
+.disline{display:inline}
+.unline,.unline a,a{text-decoration:none}
+a:hover{text-decoration:underline}	
+/*------------------------------------最外面的大框----------------------------------*/
+#zuiwai{ background:url(../images/Z_BeiJing.jpg);}
+/*------------------------------------1003px的大框----------------------------------*/
+#zuiwai_1003{ width:1003px; margin:0 auto;}
+#an_YanZheng{cursor:pointer; width:84px; height:27px; border:none; background:url(../images/Yanzheng_button.jpg);color:#757575; margin-left:10px;
+}
+#an_YanZheng:hover{ background:url(../images/Yanzheng_h_button.jpg)}
+
+/*--------------------------------内容-------------------------------------------------*/
+#NerRong{ width:940px;margin:0 auto;}
+/*第一个*/
+.container {
+	background:#f9f9f9;
+	position: relative;
+}
+.BaoBiao{ height:220px; color:#696969;font-size:14px; font-weight:900;
+	padding-left: 45px;
+}
+.BaoBiao .BaoBiao_a{ width:262px; height:179px; float:left;
+	margin-top: 20px; background:url(../images/Ner_jr.jpg);
+	font-family: '\5FAE\8F6F\96C5\9ED1','\534E\6587\7EC6\9ED1',MingLiu}
+/*-------------*/
+.BaoBiao .BaoBiao_a ul{ margin-top:45px; text-align:left; margin-left:92px;}
+/*-------------*/
+.BaoBiao .BaoBiao_b{ width:262px; height:179px; float:left; margin-left:40px;margin-top:20px; background:url(../images/Ner_ben.jpg);font-family: '\5FAE\8F6F\96C5\9ED1','\534E\6587\7EC6\9ED1',MingLiu}
+.BaoBiao .BaoBiao_b ul{ margin-top:45px; text-align:left; margin-left:95px;}
+/*-------------*/
+.BaoBiao .BaoBiao_c{ width:262px; height:179px; float:left; margin-left:40px;margin-top:20px; background:url(../images/Ner_benyue.jpg);font-family: '\5FAE\8F6F\96C5\9ED1','\534E\6587\7EC6\9ED1',MingLiu}
+.BaoBiao .BaoBiao_c ul{ margin-top:45px; text-align:left; margin-left:94px;}
+.BaoBiao ul li{
+	display:block; 
+	height:22px; 
+	padding-top:8px;
+	padding-left: 10px;
+}
+
+/*------------------------------------搜索结算----------------------------------------*/
+#JieSuan{ width:860px; background:#FFF; margin:0 auto;}
+#jiesuan_list {
+	padding-left: 50px;
+}
+#jiesuan_list tr:nth-child(odd) {background: #e2e2e2}
+#Jiao_nr tr:nth-child(even) {background: #e2e2e2}
+.SouSu{ height:60px; border-bottom:1px solid #0097da;}
+.SouSu .SouSu_s{ width:478px; height:60px; line-height: 60px; float:left; font-size:14px;}
+.inputs {
+	height: 25px;
+	padding-left: 5px;
+}
+.SouSu .SouSu_z{ width:168px; height:60px; background:url(../images/Jiaoyi_jy.jpg); float:right;}
+.SouSu .SouSu_z p{ display:block; height:30px; color:#FFF; margin-left:75px; text-align:left; margin-top:23px; font-size:14px; font-weight:900;}
+/*搜索框*/
+.tou_bt{ background:#e2e2e2;}
+.ss_1{ font-size:14px; color:#404040;}
+
+/*---------------------------------------------搜索条件----------------------------------------------------------------*/
+.ba{ height:26px;}
+.TiaoJian{ width:849px; height:38px; margin:0 auto;background:url(../images/TiaoJian_xian.jpg);}
+.TiaoJian img{ float:left;}
+/**************************************************搜索的框*/
+.TiaoJian_k{ width:849px; height:73px; margin:0 auto; font-size:14px; background:url(../images/TiaoJian_k.jpg); color:#666; padding-top:10px;
+	position: relative;
+}
+.TiaoJian_k > input[type="text"] {
+	height: 25px;
+}
+#kuang{ width:55px; height:20px; border:1px solid #999; padding-top:3px}
+#kuang_2{ width:70px; height:20px; border:1px solid #999; padding-top:3px}
+#an_cx{ width:74px; height:55px; background:url(../images/CX_button.jpg);  color:#FFF; font-size:20px; border:none; margin-left:10px;
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+/*搜索出来的抬头*/
+.Jiao_xx{ height:48px; width:849px; margin:0 auto;background:url(../images/Jiao_xx.jpg);}
+#lan{
+	color: #0097da;
+}
+
+/*-----------------搜索出来的内容-----------------------------------------*/
+#Jiao_nr{ width:849px; height:332px; margin:0 auto; font-size: 12px; color:#707070;}
+.hei{ background:#FFF;}
+/*--------------------翻页---------------------------------------------------*/
+#Fanye{ height:30px;}
+#Fanye img{ float:right; padding-right:45px; padding-top:5px;}
+
+
+/*-----------------------------------------------基本信息--------------------------------------------------*/
+
+.jiben_aa{ width:487px; height:610px;}
+.jiben_aa .jiben_aa_tou{ height:50px; text-align:left;}
+.jiben_aa .jiben_aa_nei{ width:487px; height:520px; padding-top:40px; font-size:14px; color:#676767;}
+
+#kuang_xxmm{width:177px; height:23px; border:1px solid #999; font-size:14px; padding-top:5px;}
+#kuang_xxmmm{width:90px; height:23px; border:1px solid #999; font-size:14px; padding-top:5px;}
+#an_YanZheng_1{width:84px; height:27px; border:none; background:url(../images/Yanzheng_button.jpg);color:#757575;}
+#an_xia{cursor:pointer;  width:141px; height:31px; border:none; background:url(../images/Xiayibu_button.jpg); color:#FFF;font-size:14px;}
+
+div.pagination {
+	position: absolute;
+	right: 30px;
+	bottom: 10px;
+}
+div.pagination span.buttons {
+	padding: 6px 10px;
+	-webkit-border-radius: 2px 2px;
+	border: solid 1px rgb(153, 153, 153);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(rgb(221, 221, 221)));
+	color: #333;
+	text-decoration: none;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	text-shadow: 0px 1px 1px rgba(255,255,255,1);
+	line-height: 1;
+}
+div.pagination span:hover {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(248, 248, 248)), to(rgb(221, 221, 221)));
+	background: -moz-linear-gradient(90deg, rgb(248, 248, 248) 0%, rgb(221, 221, 221) 100%);
+	background: -o-linear-gradient(90deg, rgb(248, 248, 248) 0%, rgb(221, 221, 221) 100%);
+	background: -ms-linear-gradient(90deg, rgb(248, 248, 248) 0%, rgb(221, 221, 221) 100%);
+	background: linear-gradient(90deg, rgb(248, 248, 248) 0%, rgb(221, 221, 221) 100%);
+}
+div.pagination span:active {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(204, 204, 204)), to(rgb(221, 221, 221))); 
+	background: -moz-linear-gradient(90deg, rgb(204, 204, 204) 0%, rgb(221, 221, 221) 100%);
+	background: -o-linear-gradient(90deg, rgb(204, 204, 204) 0%, rgb(221, 221, 221) 100%);
+	background: -ms-linear-gradient(90deg, rgb(204, 204, 204) 0%, rgb(221, 221, 221) 100%);
+	background: linear-gradient(90deg, rgb(204, 204, 204) 0%, rgb(221, 221, 221) 100%);
+}

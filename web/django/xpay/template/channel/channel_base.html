@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>{%block title%}{%endblock%}</title>
+
+	<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/channel/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/channel/css/style.css">
+    <link rel="stylesheet" href="/static/channel/css/DT_bootstrap.css">
+    <script src="/static/channel/js/jquery.js" type="text/javascript"></script>
+    <script src="/static/channel/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="/static/channel/js/DT_bootstrap.js" type="text/javascript"></script>
+    <script src="/static/channel/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/static/channel/js/bootstrap-dropdown.js" type="text/javascript"></script>
+    {%block resource%}{%endblock%}
+    <script type="text/javascript">
+  	$(document).ready(function() {
+  	  $('.dropdown-toggle').dropdown()
+  	} );
+    </script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      	<ul class="nav pull-right">
+      	  <li><a href="#">您好，{{request.user.username}}</a></li>
+      	  <li class="divider-vertical"></li>
+      	  <li class="dropdown">
+      	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">消息<b class="caret"></b></a>
+      	  </li>
+      	  <li class="divider-vertical"></li>
+      	  <li><a href="/logout">退出</a></li>
+      	</ul>
+    </div>
+  </div>
+
+  <div class="wrapper">
+  	<div class="logo">
+  		<a href="">钱方支付</a>
+  		<span>| 渠道系统</span>
+  	</div>
+  	<ul class="nav nav-tabs">
+  	  <li class="active">
+  	    <a href="#">商户入网</a>
+  	  </li>
+  	  <li><a href="#">商户管理</a></li>
+  	  <li><a href="#">统计报表</a></li>
+  	</ul>
+  	<div class="container main">
+  		{%block container %}
+		{%endblock %}
+  	</div>
+  </div>
+  <div class="footer container">
+  	<p>技术支持: 北京钱方银通科技有限公司
+  	客服电话: 4000-360-180</p>
+  </div>
+{%block script%}
+{%endblock%}
+</body>
+</html>

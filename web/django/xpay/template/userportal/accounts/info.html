@@ -1,0 +1,111 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%}
+我的账户
+{%endblock%}
+
+{%block resource%}
+{{block.super}}
+<link href="/static/css/style.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/static/css/account.css" media="screen" rel="stylesheet" type="text/css" />
+{%endblock%}
+
+{%block header%}
+<div class="header">
+			<div class="navigation">
+			   <ul class="global">
+			   	<li><a href="/report">资金报告</a></li>
+			   	<li><a href="/tradelist">交易查询</a></li>
+			   	<li class="selected"><a href="/account">我的账户</a></li>
+			   </ul>
+			</div>
+			{%include "userportal/base/account_header.html"%}
+</div>
+{%endblock%}
+
+{%block container%}
+		<div class="container">
+			<div class="clearfix">
+			     <div class="tabs">
+			     	<ul>
+			     		<li class="selected"><a href="account">账户信息</a></li>
+			     		<li><a href="/modifypwd">修改密码</a></li>
+			     		<!--li><a href="upgrade">升级账户</a></li-->
+			     	</ul>
+			     </div>
+				 <div class="info">
+				     <dl>
+						{% ifequal user.user_type 1 %}
+				        <dt>姓名：</dt>
+				        <dd>&ensp;{{p.username}}</dd>
+				        <dt>身份证号：</dt>
+				        <dd>&ensp;{{p.id_number}}</dd>
+				        <dt>现居住地址：</dt>
+				        <dd>&ensp;{{p.address}}</dd>
+				        <dt>邮编：</dt>
+				        <dd>&ensp;{{p.post}}</dd>
+				        <dt>收款银行：</dt>
+				        <dd>&ensp;{{p.bank_name}}</dd>
+				        <dt>收款银行账号：</dt>
+						<dd>&ensp;{{p.bank_account}}</dd>
+						{%endifequal%}
+						
+
+						<!--个体户-->
+						{%ifequal user.user_type 2%}
+				        <dt>字号名称：</dt>
+				        <dd>&ensp;{{p.company}}</dd>
+				        <dt>经营者姓名：</dt>
+				        <dd>&ensp;{{p.legal_person}}</dd>
+				        <dt>经营者身份证号：</dt>
+				        <dd>&ensp;{{p.id_number}}</dd>
+				        <dt>经营地址：</dt>
+				        <dd>&ensp;{{p.business_addr}}</dd>
+				        <dt>邮编：</dt>
+				        <dd>&ensp;{{p.post}}</dd>
+				        <dt>固定电话号码：</dt>
+						<dd>&ensp;{{p.telephone}}</dd>
+				        <dt>营业执照注册号：</dt>
+						<dd>&ensp;{{p.license_number}} &ensp;&ensp;&ensp;
+						</dd>
+				        <dt>经营行业：</dt>
+						<dd>&ensp;{{p.mcc}}</dd>
+				        <dt>收款银行：</dt>
+						<dd>&ensp;{{p.bankname}}</dd>
+				        <dt>收款银行账号：</dt>
+						<dd>&ensp;{{p.bankaccount}}</dd>
+						{%endifequal%}
+
+						<!-- 公司账户信息-->
+						{%ifequal user.user_type 3%}
+						<dt>企业名称：</dt>
+				        <dd>&ensp;{{p.company}}</dd>
+				        <dt>注册地址：</dt>
+				        <dd>&ensp;{{p.business_addr}}</dd>
+				        <dt>邮编：</dt>
+				        <dd>&ensp;{{p.post}}</dd>
+				        <dt>法人代表：</dt>
+				        <dd>&ensp;{{p.legal_person}}</dd>
+				        <dt>企业法人身份照号：</dt>
+				        <dd>&ensp;{{p.id_number}}</dd>
+				        <dt>联系人：</dt>
+				        <dd>&ensp;{{p.contact}}</dd>
+				        <dt>联系人手机号：</dt>
+						<dd>&ensp;{{p.mobile}}</dd>
+				        <dt>固定电话号码：</dt>
+						<dd>&ensp;{{p.telephone}}</dd>
+				        <dt>营业执照号：</dt>
+						<dd>&ensp;{{p.license_number}}&ensp;&ensp;&ensp;</dd>
+				        <dt>经营行业：</dt>
+						<dd>&ensp;{{p.mcc}}</dd>
+				        <dt>收款银行：</dt>
+						<dd>&ensp;{{p.bankname}}</dd>
+				        <dt>收款银行账号：</dt>
+						<dd>&ensp;{{p.bankaccount}}</dd>
+				      {%endifequal%}
+				     </dl>
+				 </div>
+			</div>
+		</div>
+
+{%endblock%}

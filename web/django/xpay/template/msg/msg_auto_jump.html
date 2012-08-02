@@ -1,0 +1,26 @@
+{%extends "msg/base_msg.html"%}
+
+{%block script%}
+<script>
+		var page = {};
+		page.func = (function(){
+		var totalSeconds = 5;
+		return {
+			timeAndRedirect : function(){
+				var seconds = $("#jumpto");
+				seconds.html(--totalSeconds);
+				if(totalSeconds > 1)
+					window.setTimeout("page.func.timeAndRedirect()",1000);
+				else
+					window.location.href = "/account";
+			},
+			init : function(){
+				window.setTimeout("page.func.timeAndRedirect()",1000);
+			}
+		};
+
+	})();
+	
+	page.func.init();	
+</script>
+{%endblock%}

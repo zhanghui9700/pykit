@@ -1,0 +1,35 @@
+﻿ {%extends "userportal/upgrade/upgrade_base.html"%}   
+    <!-------------------------------------------------最上方的抬头----------------------------------->
+    <!-----------------------------账户------------->
+    
+		{%block account%}
+			   	<li class="selected"><a href="/account">我的账户</a></li>
+		{%endblock%}
+
+     <!---------------------------内容--------->       
+{%block progress%}  "/static/images/zh_dj_3.png" {%endblock%}
+{%block level%}白金级{%endblock%}
+{%block uplimit%} {{platinum.monthamount}} {%endblock%}
+{%block deadtime%} {{platinum.deaddate}} {%endblock%}
+{%block fee%} {{platinum.debitfeeratio}} {%endblock%}
+{%block monthfee%} {{platinum.monthfee}} {%endblock%}
+{%block freecount%} {{platinum.freecount}} {%endblock%}
+
+
+{%block content%}
+    <!-----------------------------------------------------------------------------------白银-------------------------->
+<!-----------------------------------------------------------------------------------黄金--------------------------> 
+	<div class="baiyin">
+        	<div class="haocu">
+            <ul>
+            	<li class="lan">您已经达到了最高交易限额</li>
+                <li>白金级交易权限{{platinum.monthamount}}元</li>
+                <li>您需要保持良好的交易记录，如果90天内平均交易额低</li>   
+                <li>于黄金用户限额，将会降级到黄金用户。</li>
+
+            </ul>	
+            </div>
+
+    </div>
+
+    {%endblock%}

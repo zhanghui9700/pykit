@@ -1,0 +1,287 @@
+﻿{% extends "mis/base.html" %}
+{%block externaljs %}
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link href="/static/css/jquery.jqzoom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="/static/js/jquery.jqzoom-core.js" ></script>
+<style>
+	.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{	
+		width:45%;
+	}
+</style>
+{%endblock%}
+{%block content%}
+<!---------大内容输入框-------->
+<div class="content_sp">
+   <div id="directory" tips="{{upAudit.owner}}|{{upAudit.up_id}}|{{upAudit.counter}}">
+    		<a href="/"><img src="/static/images/mis/home.jpg" /></a>><a href="{%url  mis_typist_list%}">凭证录入</a>><a href="{%url mis_typist_list %}">录入</a>
+    </div>
+    {%if upAudit %}
+        {%if upAudit.IDCardInfoForm and  upAudit.IDCardInfoForm|length > 0 %}
+        <!---------身份证1-------->
+        <div id="voucher_container" class="IDCardInfoFormDiv">
+            <!------凭证图片------->
+            <div class="voucher">
+            <div class="voucher_a">
+            <a class='jqzoom' rel='idcard' href='/preview/{{upAudit.owner}}/large/{{upAudit.IDCardInfoForm.0.name}}'><img src='/preview/{{upAudit.owner}}/middle/{{upAudit.IDCardInfoForm.0.name}}' /></a>
+            </div>
+            <div class="voucher_b">
+            <span>
+            <a class='zoomThumbActive' href='javascript:void(0);' rel="{gallery: 'idcard', smallimage: '/preview/{{upAudit.owner}}/middle/{{upAudit.IDCardInfoForm.0.name}}',largeimage:'/preview/{{upAudit.owner}}/large/{{upAudit.IDCardInfoForm.0.name}}'}"  ><img src='/preview/{{upAudit.owner}}/small/{{upAudit.IDCardInfoForm.0.name}}' /></a>
+            </span>
+            <span>
+            <a class='' href='javascript:void(0);' rel="{gallery: 'idcard', smallimage: '/preview/{{upAudit.owner}}/middle/{{upAudit.IDCardInfoForm.1.name}}',largeimage:'/preview/{{upAudit.owner}}/large/{{upAudit.IDCardInfoForm.1.name}}'}"  ><img src='/preview/{{upAudit.owner}}/small/{{upAudit.IDCardInfoForm.1.name}}' /></a>
+            </span>
+            </div>
+            </div>
+            <!--------需要录入的信息-------->
+            <div class="entry">
+                <ul>
+                    <h3>身份证</h3>
+                    <li><label>姓名：</label><input class="text a3" name="name" type="text" maxlength="30" /><span></span></li>
+                    <li>
+                        <label>性别：</label>
+                        <select class="text x1" name="gender">
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                            <option value="3">其他</option>
+                        </select>
+                        <label>民族：</label><input class="text a3" name="nation" type="text" maxlength='64' />
+                        <span></span>
+                    </li> 
+                    <li><label>住址：</label><input class="text a4" name="address" type="text" maxlength='64' /><span></span></li>
+                    <li><label>身份证号：</label><input class="text a2" name="idNumber" maxlength='20'  type="text" /><span></span></li>
+                    <li><label>签发机关：</label><input class="text a2" name="grant_org" type="text" maxlength='20' /><span></span></li>
+                    <li><label>有效期-始：</label><input class="text a2 datePicker" readonly  name="start_date" type="text" /><span></span></li>
+                    <li><label>有效期-止：</label><input class="text a2 datePicker" readonly  name="end_date" type="text" /><span></span></li>
+                    <li class="entry_button">
+                        <input name="" class="button_b async_submit" submitTo = "IDCardInfoForm"  type="button" value="确认提交" />
+                    </li>
+                </ul>
+            </div>
+        </div>   
+        <!---------身份证-------->
+        {%endif%}
+
+        {%if upAudit.TaxInfoForm and upAudit.TaxInfoForm|length > 0 %}
+        <!---------税务登记证2-------->
+        <div id="voucher_container_a" class="TaxInfoFormDiv">
+            <!------凭证图片------->
+            <div class="voucher">
+                <div class="voucher_c">
+                    <a class='jqzoom'  href='/preview/{{upAudit.owner}}/large/{{upAudit.TaxInfoForm.0.name}}'><img src='/preview/{{upAudit.owner}}/middle/{{upAudit.TaxInfoForm.0.name}}' /></a>
+                </div>
+            </div>
+            <!--------需要录入的信息-------->
+            <div class="entry">
+                <ul>
+                    <h3>税务登记证</h3>
+                    <li><label>字号：</label> <input class="text a4" name="number" type="text" /><span></span></li>
+                    <li><label>纳税人：</label> <input class="text a4" name="name" type="text" /><span></span></li>
+                    <li><label>法人：</label> <input class="text a4" name="legal_person" type="text" /><span></span></li>
+                    <li><label>地址：</label> <input class="text a4" name="address" type="text" /><span></span></li>
+                    <li><label>登记类型：</label> <input class="text a4" name="reg_type" type="text" /><span></span></li>
+                    <li><label>经营范围：</label> <input class="text a4" name="scope" type="text" /><span></span></li>
+                    <li><label>批准机关：</label> <input class="text a4" name="approved_org" type="text" /><span></span></li>
+                    <li><label>扣费义务：</label> <input class="text a4" name="obligation" type="text" /><span></span></li>
+                    <li><label>发证日期：</label> <input class="text a4 datePicker" readonly name="approved_date" type="text" /><span></span></li>
+
+                    <li class="entry_button"><input name="" class="button_b async_submit" submitTo="TaxInfoForm" type="button" value="确认提交" /></li>
+                </ul>
+            </div>
+        </div>
+        <!--------税务登记证------------->
+        {%endif%}
+        
+        {%if upAudit.ContractInfoForm and upAudit.ContractInfoForm|length > 0 %}
+        <!--------房屋租赁合同3-------->
+        <div id="voucher_container" class="ContractInfoFormDiv">
+            <!------凭证图片------->
+            <div class="voucher">
+                <div class="voucher_d">
+                    <a class='jqzoom' href='/preview/{{upAudit.owner}}/large/{{upAudit.ContractInfoForm.0.name}}'><img src='/preview/{{upAudit.owner}}/middle/{{upAudit.ContractInfoForm.0.name}}' /></a>
+                </div>
+            </div>
+            <!--------需要录入的信息-------->
+            <div class="entry">
+                <ul>
+                    <h3>房屋租赁合同</h3>
+                    <li><label>出租方：</label> <input class="text a4" name="lessor" type="text" /><span></span></li>
+                    <li><label>承租方：</label> <input class="text a4" name="lessee" type="text" /><span></span></li>
+                    <li><label>开始日期：</label> <input class="text a4 datePicker" readonly name="start_date" type="text" /><span></span></li>
+                    <li><label>结束日期：</label> <input class="text a4 datePicker" name="end_date" readonly type="text" /><span></span></li>
+                    <li><label>租赁地址：</label> <input class="text a4" name="address" type="text" /><span></span></li>
+
+                    <li class="entry_button"><input name="" class="button_b async_submit" submitTo="ContractInfoForm" type="button" value="确认提交" /></li>
+                </ul>
+            </div>
+        </div>
+        <!--------房屋租赁合同-------->
+        {%endif %}
+
+        {%if upAudit.OrgcodeInfoForm and  upAduit.OrgcodeInfoForm|length > 0 %}
+        <!--------组织机构代码证4-------->
+        <div id="voucher_container" class="OrgcodeInfoFormDiv">
+            <!------凭证图片------->
+            <div class="voucher">
+                <div class="voucher_d">
+                    <a class='jqzoom' href='/preview/{{upAudit.owner}}/large/{{upAudit.OrgcodeInfoForm.0.name}}'><img src='/preview/{{upAudit.owner}}/middle/{{upAudit.OrgcodeInfoForm.0.name}}' /></a>
+                </div>
+            </div>
+            <!--------需要录入的信息-------->
+            <div class="entry">
+                <ul>
+                    <h3>组织机构代码证</h3>
+                    <li><label>机构码：</label> <input class="text a4" name="orgcode" type="text" /><span></span></li>
+                    <li><label>机构名称：</label> <input class="text a4" name="name" type="text" /><span></span></li>
+                    <li><label>机构类型：</label> <input class="text a4" name="type" type="text" /><span></span></li>
+                    <li><label>地址：</label> <input class="text a4" name="address" type="text" /><span></span></li>
+                    <li><label>有效期-始：</label> <input class="text a4 datePicker" readonly name="start_date" type="text" /><span></span></li>
+                    <li><label>有效期-止：</label> <input class="text a4 datePicker" name="end_date" readonly type="text" /><span></span></li>
+                    <li><label>颁发单位：</label> <input class="text a4" name="grant_org" type="text" /><span></span></li>
+                    <li><label>登记号：</label> <input class="text a4" name="number" type="text" /><span></span></li>
+                    <li class="entry_button"><input name="" class="button_b async_submit" submitTo="OrgcodeInfoForm"  type="button" value="确认提交" /></li>
+                </ul>
+            </div>
+        </div>   	
+        <!--------组织机构代码证-------->
+        {%endif%}
+        
+        {%if upAudit.LicenseInfoForm and upAudit.LicenseInfoForm|length > 0 %}
+        <!--------企业法人营业执照6-------->
+        <div id="voucher_container_f" class="LicenseInfoFormDiv">
+            <!------凭证图片------->
+            <div class="voucher">
+            <div class="voucher_f">
+                <a class='jqzoom' href='/preview/{{upAudit.owner}}/large/{{upAudit.LicenseInfoForm.0.name}}'><img src='/preview/{{upAudit.owner}}/middle/{{upAudit.LicenseInfoForm.0.name}}' /></a>
+            </div>
+            </div>
+            <!--------需要录入的信息-------->
+            <div class="entry">
+                <ul>
+                    <h3>企业法人营业执照</h3>
+                    <li><label>注册号：</label> <input class="text a4" name="number" type="text" /><span></span></li>
+                    <li><label>名称：</label> <input class="text a4" name="name" type="text" /><span></span></li>
+                    <li><label>住所：</label> <input class="text a4" name="address" type="text" /><span></span></li>
+                    <li><label>法人：</label> <input class="text a4" name="legal_person" type="text" /><span></span></li>
+                    <li><label>公司类型：</label> <input class="text a4" name="type" type="text" /><span></span></li>
+                    <li><label>经营范围：</label> <input class="text a4" name="scope" type="text" /><span></span></li>
+                    <li><label>注册资本：</label> <input class="text a4" name="reg_captail" type="text" /><span></span></li>
+                    <li><label>实收资本：</label> <input class="text a4" name="rel_income" type="text" /><span></span></li>
+                    <li><label>成立日期：</label> <input class="text a4 datePicker" readonly name="found_date" type="text" /><span></span></li>
+                    <li><label>营业期限：</label> <input class="text a4 datePicker" name="lc_end_date" readonly type="text" /><span></span></li>
+                    <li><label>审批日期：</label> <input class="text a4 datePicker" name="approved_date" type="text" readonly /><span></span></li>
+                    <li class="entry_button"><input name="" class="button_b async_submit" submitTo="LicenseInfoForm" type="button" value="确认提交" /></li>
+                </ul>
+            </div>
+        </div> 
+        <!--------企业法人营业执照-------->
+        {%endif %}
+        
+    {%else%}
+    <h1>今天没有单据可供录入了！休息一下......</h1>
+    {%endif%}
+</div>
+{%endblock%}
+{%block script %}
+<script type="text/javascript">
+    $(function () {
+        $(".datePicker").datepicker({changeMonth:true,changeYear:true});
+    });
+</script>
+
+<script type="text/javascript">
+var __f = {
+	'ajax_busy':false,
+	'success':0,
+	'counter':'{{upAudit.counter}}'
+};
+__f.func = (function(){
+	return {
+		postback : function(to,postkw){
+			if(!__f.ajax_busy){
+				__f.ajax_busy = true;
+				//异步回传到服务器端，保存数据，保存成功后隐藏当前容器
+				($).ajax({
+					url:'/typist/input/',
+					type:'POST',
+					data:postkw,
+					success:function(data){
+						__f.ajax_busy = false;
+						var result = eval("("+data+")");
+						if(!result){
+							alert('服务器端返回数据异常，请把当前信息截图发给开发人员进行修复验证！')
+							return;
+						}
+						if(result.statusCode && result.statusCode === 200){
+							alert('录入信息成功，当前表单自动隐藏，请继续录入下一个凭证！');
+							
+							__f.success ++;
+							if(__f.success == __f.counter){
+								window.location.href="/typist/list/";
+								return;
+							}
+
+							$("."+to+"Div").hide();
+						}
+						else{
+							//alert(result.statusCode);
+							//debugger
+                            for(x in result.errors){
+								$('input[name=\"'+x+'\"]',$("."+to+"Div")).next('span').html(result.errors[x][0]);
+							} 
+						}
+					},
+					error:function(data){
+						__f.ajax_busy = false;
+					    alert('服务器端发生未知错误，请点击<Next>录入下一个申请人凭证信息。'); 
+					}
+				});
+			}
+		},
+		async_submit : function(){
+            var to = $(this).attr('submitTo'); //提交到哪个后台表单处理-hard cording!
+            var elements = $("input,select",$("."+to+"Div")); //容器div内所有的input和select元素
+            var post = {'__type':to,
+                        '__owner':'{{upAudit.owner}}',
+                        '__level':'{{upAudit.level}}',
+                        '__upid':'{{upAudit.up_id}}'}; //构造post数据
+
+			//用容器div内数据构造出post回传数据
+            var is_valid = true;
+			for(var i = 0,length = elements.length;i<length;i++){
+                post[elements[i].name] = elements[i].value;
+				if(elements[i].value.length == 0){
+					is_valid = false;
+					$(elements[i]).next('span').html("请输入内容");
+				}
+				else{
+					$(elements[i]).next('span').html("");
+				}	
+            }
+
+			if(is_valid){
+				__f.func.postback(to,post);	
+			}
+		}
+	};
+})();
+
+//page_init
+$(function(){
+    $(".async_submit").each(function(){
+        $(this).click(__f.func.async_submit)
+    });
+	
+	$(".jqzoom").jqzoom({
+		zoomWidth:420,
+		zoomHeight:260,
+		preloadText:'加载图片...',
+		title:'',
+		xOffset:5,
+		yOffset:0
+	});
+});
+</script>
+{%endblock%}

@@ -1,0 +1,152 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}{{ block.super }}
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+<script type="text/javascript" charset="utf-8" src="/static/js/jquery-1.7.min.js"></script>
+<script src="http://api.map.baidu.com/api?v=1.3" type="text/javascript"></script>
+<style type="text/css">
+</style>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+	<div class="breadcrumbs">
+		 <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+		 <a href="../../">trade</a> &rsaquo; 
+		 <a href="../">record</a>&rsaquo;
+		 交易地图
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<!--
+<table border=1 width=100% height=100 style="margin-bottom:10px;">
+<tr>
+ <td width=50%>
+
+<table>
+ <th><td>商户ID</td><td>商户名</td><td>金额</td><td>交易时间</td><td>结果</td><td>交易类型</td><td>查询号</td></th>
+{% for r in record %}
+ <tr><td>{{r.userid}}</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+{% endfor %}
+</table>
+
+ </td>
+ <td>
+
+<h1>今日交易: {{txamt_str}}</h1>
+
+ </td>
+</tr>
+</table>
+-->
+<h1 id="txsum">今日交易: {{txamt_str}}元  {{txitem}}笔</h1>
+
+<!--<h1>交易地图</h1>-->
+<div id="content-main">
+<div id="map_canvas" style="width:100%; height:600px"></div>
+<script type="text/javascript">
+
+function addmark(lng, lat, msg) {
+	var point  = new BMap.Point(lng, lat);  // 太原
+	var marker = new BMap.Marker(point);
+	window.map.addOverlay(marker);
+
+	var opts = {
+		width : 200,
+		height: 50,
+		title : "商户信息"
+	}
+	window.map.openInfoWindow(new BMap.InfoWindow(msg, opts), point);
+	window.map.centerAndZoom(point, 11);
+
+	marker.addEventListener("click", function() {
+		var opts = {
+			width : 200,
+			height: 50,
+			title : "商户信息"
+		}
+		this.openInfoWindow(new BMap.InfoWindow(msg, opts));
+	});
+}
+
+$(function initialize() {
+	var map = new BMap.Map('map_canvas');
+	window.map = map;
+	var point  = new BMap.Point(112.5333, 37.86667);  // 太原
+	map.centerAndZoom(point, 7);
+	//var point  = new BMap.Point(108.95000, 34.233); // 西安
+	//var point  = new BMap.Point(103.7333, 36.0333); // 兰州
+	//var point  = new BMap.Point(116.41667, 39.91667); // 北京
+
+
+	/*var marker = new BMap.Marker(point);
+	map.addOverlay(marker);
+
+	marker.addEventListener("click", function() {
+		var opts = {
+			width : 250,
+			height: 100,
+			title : "商户信息"
+		}
+		var info = '';
+		this.openInfoWindow(new BMap.InfoWindow(info, opts));
+	});*/
+	
+	/*lng = '112.5333';
+	lat = '37.86667';
+	msg = '哈哈';
+	addmark(lng, lat, msg);*/
+
+/*{% for r in record %}
+	addmark({{r.longitude}}, {{r.latitude}}, "{{r.msg}}");
+{% endfor %}*/
+
+});
+
+function getdata() {
+	$.get('/admin/trade/record/mapview?m=json', {}, function(data){
+		var x = eval('('+data+')');	
+		var record = x["record"];
+		var i = 0;
+		function showdata() {
+			var row = record[i];
+			addmark(row.longitude, row.latitude, row.msg);
+			i++;
+			if (i < record.length) {
+				setTimeout(showdata, 10000);	
+			}
+		}
+		showdata();
+		setTimeout(showdata, 10000);	
+		$("#txsum").html("今日交易: "+x["txamt"]+"元  "+x["txitem"]+"笔");
+
+		/*if (record.length > 0) {
+			window.map.clearOverlays();
+			var i;
+			for (i=0; i<record.length; i++) {
+				var row = record[i];
+				addmark(row.longitude, row.latitude, row.msg);
+			}
+			$("#txsum").html("今日交易: "+x["txamt"]+"元  "+x["txitem"]+"笔");
+		}*/
+	});
+}
+
+$(document).ready(function(){
+	getdata();
+	setInterval(getdata, 600000);
+});
+
+</script>
+</div>
+{% endblock %}

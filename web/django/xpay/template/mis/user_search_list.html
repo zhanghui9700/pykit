@@ -1,0 +1,123 @@
+﻿{% extends 'mis/base.html'%}
+{%block content%}
+<!---------内容-------->
+<div class="content">
+ 
+<!---搜索条件框--->
+ 
+<div id="searchcondition">
+	<div class="se_s"><span>设置搜索条件</span></div>
+    <div class="se_x">
+            <ul>
+                <li><label class="se90">商户编号：</label><input name="number" class="text se __args" type="text" value="{{srg.number}}"/></li>
+                <li><label class="se90">商户名称：</label><input name="name" class="text se __args" type="text" value="{{srg.name}}" /></li>
+            </ul> 
+             <ul>
+                <li><label class="se90">营业执照号：</label><input name="lcnumber" class="text se __args" type="text" value="{{srg.lcnumber}}"/></li>
+                <li><label class="se90">身份证号：</label><input name="idnumber" class="text se __args" type="text" value="{{srg.idnumber}}"/></li>
+            </ul>
+            <ul>
+                <li><label class="se90">商户类型：</label>
+                <select class="text x1 __args" name="type">
+                    <option value='1' {%if srg.user_type == "1"%}selected{%endif%}>个人</option>
+                    <option value='2' {%if srg.user_type == "2"%}selected{%endif%}>个体户</option>
+                    <option value='3' {%if srg.user_type == "3"%}selected{%endif%}>公司</option>
+                </select>
+                </li>
+                <li><label class="se90">申请方式：</label>
+                <select class="text x1" name="" disabled>
+                    <option>网站申请</option>
+                    <option>渠道申请</option>
+                    <option>关系户</option>
+                </select>
+                </li>
+            </ul> 
+            <ul>
+                <li><label>交易地区：</label><input name="" class="text se1" type="text" disabled/></li>
+                <li><input name="btnSearch" type="button" class="button_c" value=''/></li>
+            </ul>
+    </div>
+</div>
+	<!----------list------->  
+	<div class="list_info">
+    	<ul>
+        	<li class="list_a">商户编号</li>
+            <li class="list_a">申请渠道</li>
+            <li class="list_b">商户名称</li>
+            <li class="list_a">申请时间</li>
+            <li class="list_a">申请级别</li>
+            <li class="list_a">账户类型</li>
+            <li class="list_a">进入操作</li>
+        </ul>
+    </div>
+<!---------list_nei--------> 
+ 
+ 
+<div id="list_nei">
+	<div class="list_content">
+        {%if userList %}
+        
+        {% for item in userList.object_list %}
+    	<ul>
+        	<li class="list_a">{{item.user.pk}}</li>
+            <li class="list_a">{{item.user.get_source_desc}}</li>
+            <li class="list_b">{{item.username}}{{item.company}}</li>
+            <li class="list_a">{{item.user.date_joined|date:"Y-m-d"}}</li>
+            <li class="list_a">{{item.user.get_level_desc}}</li>
+            <li class="list_a">{{item.user.get_type_desc}}</li>
+            <li class="list_c"><a href="/user/detail/{{item.user.id}}/">查看详情</a></li>
+        </ul>
+        {%empty%}
+        <h1>暂无数据请修改查询条件后重试！</h1>
+        {%endfor%}
+
+        {% endif %}
+    </div>
+</div> 
+<!--翻页--> 
+<div class="page">
+    {%if userList and userList.num_pages > 1%}
+	<div class="page_a" mrel="{{userList.num_pages}}|{{userList.number}}">
+		{%if userList.has_previous %} 
+		<a class="pp" href="{{link}}&page=1">首页</a>
+        <a class="pp" href="{{link}}&page={{userList.previous_page_number}}">上一页</a>
+		{%endif %}
+		{%for pageIndex in pagenums %}
+		<a class="pp" href="{{link}}&page={{pageIndex}}">{{pageIndex}}</a>
+		{%endfor%}
+		{%if userList.has_next %}
+		<a class="pp" href="{{link}}&page={{userList.next_page_number}}">下一页</a>
+		<a class="pp" href="{{link}}&page={{userList.paginator.num_pages}}">末页</a>
+		{%endif %}
+
+	</div>
+    {%endif%}
+</div>
+</div>
+{%endblock %}
+{%block script%}
+<script type='text/javascript'>
+var page = {};
+page.func = (function(){
+    var get_args = function(){
+        var s = '';
+        var args = $(".__args");
+        for(var i = 0,length = args.length;i<length;i++){
+            if(i>0)
+                s += "&";
+            s += (args[i].name + "=" + args[i].value)
+        }
+		//alert(s);
+        return s;
+    };
+    return {
+        pageInit:function(){
+            $("input[name='btnSearch']").click(function(){
+                window.location.href = encodeURI('/user/search/?' + get_args());
+            });
+        }
+    };
+})();
+page.func.pageInit();
+</script>
+{%endblock%}

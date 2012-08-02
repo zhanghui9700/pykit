@@ -1,0 +1,196 @@
+{%extends "userportal/base/qfpay_base.html"%}
+{%load core_tags%}
+
+{%block title%} 资金报告 {%endblock%}
+
+{%block resource%}
+{{block.super}}
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/redmond/jquery-ui.css"type="text/css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-timepicker.css" media="screen" />
+<link href="/static/css/style.css" media="screen" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{width:45%;}
+</style>
+<!-- Javascript -->
+<script type="text/javascript" charset="utf-8" src="/static/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-timepicker-addon.js"></script>
+
+<script>
+	$(document).ready(function () {
+		$(".pe_t").datepicker({ showOn:'focus',changeMonth:true,changeYear:true,maxDate:new Date(),dateFormat:'yy-mm-dd',
+		monthNamesShort:["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]});
+	});
+</script>
+
+{%endblock%}
+
+{%block header%}
+		<div class="header">
+		  <div class="navigation">
+			   <ul class="global">
+			   	<li class="selected"><a href="/report">资金报告</a></li>
+			   	<li><a href="/tradelist">交易查询</a></li>
+			   	<li><a href="/account">我的账户</a></li>
+			   </ul>
+			</div>
+		{%include "userportal/base/account_header.html"%}
+		</div>
+{%endblock%}
+
+{%block container%}
+<div class="container">
+	<div class="period_s">
+   		 <div class="title_z">
+    		<h2>本帐期</h2>
+            <div class="time">{{last_account.pid.start|date:"Y/m/d"}}<span></span>--<span>{{last_account.pid.end|date:"Y/m/d"}}</span></div>
+   		 </div> 
+         <div class="container_zm">
+         	<div class="container_zm_zd">
+            	<ul>
+					{%ifequal last_account None%} 
+                	<li><span class="zd_a">交易笔数</span><span>0</span></li>
+                    <li><span class="zd_a">交易本金</span><span>￥0.00</span></li>
+                    <li><span class="zd_a">结算金额</span><span>￥0.00</span></li>
+                    <li><span class="zd_a">手续费</span><span>￥0.00</span></li>
+                    <!--<li><span class="zd_a">未结算金额</span><span>￥0.00</span></li>-->
+					{%else%}
+					<li><span class="zd_a">交易笔数</span><span>{{last_account.settlecnt}}</span></li>
+                    <li><span class="zd_a">交易本金</span><span>￥{{last_account.tradesum|get_money}}</span></li>
+                    <li><span class="zd_a">结算金额</span><span>￥{{last_account.settlesum|get_money}}</span></li>
+                    <li><span class="zd_a">手续费</span><span>￥{{last_account.fee|get_money}}</span></li>
+                    <!--<li><span class="zd_a">未结算金额</span><span>￥0.00</span></li>-->
+					{%endifequal%}
+                </ul>
+            </div>	
+            <div class="container_zm_rl">
+            	<ul>
+                	<li>账单日：<span>{{last_account.pid.end|date:"Y/m/d"}}</span></li>
+                    <li><span><a href="/dlbill?date={{last_account.pid.end|date:"Ymd"}}">下载本期对账单</a></span></li>
+                </ul>
+            </div>
+         </div>
+    </div>
+    
+    <div class="period_s">
+   		 <div class="title_z">
+    		<h2>本月交易</h2>
+            <div class="time"><span>{{month.start|date:"Y/m/d"}}</span>--<span>{{month.end|date:"Y/m/d"}}</span></div>
+   		 </div> 
+         <div class="container_zm">
+         	<div class="container_zm_zd">
+            	<ul>
+                	<li><span class="zd_a">交易笔数</span><span>{{month.settlecnt}}</span></li>
+                    <li><span class="zd_a">交易本金</span><span>￥{{month.tradesum|get_money}}</span></li>
+                    <li><span class="zd_a">结算金额</span><span>￥{{month.settlesum|get_money}}</span></li>
+                    <li><span class="zd_a">手续费</span><span>￥{{month.fee|get_money}}</span></li>
+                    <!--<li><span class="zd_a">未结算金额</span><span>￥0.00</span></li>-->
+                </ul>
+            </div>	
+            <div class="container_zm_rl">
+            	<!--<ul>
+                	<li>为什么有结算交易</li>
+                    <li>为什么当天交易没有全部结算</li>
+                </ul>-->
+            </div>
+         </div>
+    </div>
+     
+    <div class="period_c">
+    	<div class="p_con">
+        	<ul>
+				<form method="get" action="/report">
+            	<li>时间范围：</li>
+                <li><input class="pe_t" readonly="readonly" value="{{start}}" name="s" id="start" type="text"></li>
+                <li>到</li>
+                <li><input class="pe_t" readonly="readonly" value="{{end}}" name="e" id="end" type="text"></li>
+                <li><input class="pe_m" id="search" type="submit" value="搜索"></li>
+				</form>
+            </ul>
+   		</div>
+       
+       <div class="t_tou">
+       		<ul>
+       			<li>结算日期</li>
+            <li>划账日期</li>
+            <li>交易笔数</li>
+            <li>交易本金</li>
+            <li>手续费</li>
+            <!--<li>未结算金额</li>-->
+            <li>结算金额</li>
+            <li>下载本期账单</li>
+          </ul>
+       </div>
+	   {%for settle in settles.object_list%}
+       <div class="t_nei">
+       		<ul>
+       			<li>{{settle.pid.start|date:"Y/m/d"}}~{{settle.pid.end|date:"Y/m/d"}}</li>
+            	<li>{{settle.settlecnt}}</li>
+           		<li>￥{{settle.tradesum|get_money}}</li>
+           		<li>￥{{settle.fee|get_money}}</li>
+            	<li>￥0.00</li>
+                <li class="n11">￥{{settle.settlesum|get_money}}</li>
+                <li><a href="/dlbill?date={{settle.pid.end|date:"Ymd"}}">下载</a></li>
+            </ul>
+       </div>
+		{%empty%}
+		<p>对不起，系统没有查找到对应的结算信息</p>
+		{%endfor%}
+	</div>
+         <!--翻页--> 
+<div class="page">
+	<div class="pagination">
+		{%if settles.has_previous %}
+		<a class="page-next" href="/report?s={{start}}&e={{end}}&page=1">
+		<span class="buttons">首页</span>
+		<a class="page-next" href="/report?s={{start}}&e={{end}}&page={{settles.previous_page_number}}">
+		<span class="buttons">上一页</span>
+		</a>
+		{%endif%}
+
+		{%for page in pages%}
+		{%ifequal page settles.number%}
+			<b> {{page}} </b>
+		{%else%}
+			<a href="/report?s={{start}}&e={{end}}&page={{page}}"> 
+			{{page}}</a>
+		{%endifequal%}
+		{%endfor%}
+		
+		{%if settles.has_next%}
+		<a class="page-next" href="/report?s={{start}}&e={{end}}&page={{settles.next_page_number}}"> <span class="buttons">下一页</span></a>
+		<a class="page-next" href="/report?s={{start}}&e={{end}}&page={{settles.paginator.num_pages}}"> <span class="buttons">末页</span></a>
+		{%endif%}
+
+		<span class="current">
+		   第{{settles.number}}/{{settles.paginator.num_pages}}页
+		</span>
+        <!--a class="pp">1</a-->
+    </div>
+</div>
+
+<script>
+
+	$("#search").click(function(){
+		start = $("#start").val()
+		end = $("#end").val()
+		if(start.length!=0 && end.length==0)
+		{
+			alert("请选择终止日期");
+			return false;
+		}
+		if(start.length==0 && end.length!=0)
+		{
+			alert("请选择起始日期");
+			return false;
+		}
+		if(start>end)
+		{
+			alert("起始日期不能大于终止日期");
+			return false;
+		}
+		return true
+	});
+</script>
+</div>
+{%endblock%}

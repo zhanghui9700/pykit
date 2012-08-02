@@ -1,0 +1,49 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}{{ block.super }}
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+	<div class="breadcrumbs">
+		 <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+		 <a href="../../">{{opts.app_label}}</a> &rsaquo; 
+		 <a href="../">{{opts.module_name}}</a>&rsaquo;
+		 渠道邀请码
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>读卡器出库</h1>
+<div id="content-main">
+<form enctype="multipart/form-data" action="{{ form_url }}" method="post"  id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+<div>
+<fieldset class="module aligned">
+<div class="form-row">
+	{%if errorMsg %}
+	<ul class="errorlist">
+		<li>{{errorMsg}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>选择文件csv(*):</label>
+		<input type="file" name="csvfile" id="csvfile" value = "" />
+		<p class="help">csv文件必须通过excel另存为的方式保存，不可以直接修改文件名。只包含三列：groupid,terminalid,usertype(1,2,3),不需要包含表头！</p>
+	</div>
+</div>
+<input type="submit" value="生成邀请码"/>
+</fieldset>
+</div>
+</form>
+<script type="text/javascript">
+</script>
+</div>
+{% endblock %}

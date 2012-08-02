@@ -1,0 +1,259 @@
+﻿{% extends "mis/base.html" %}
+{%block externaljs %}
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link href="/static/css/jquery.jqzoom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="/static/js/jquery.jqzoom-core.js" ></script>
+{%endblock%}
+
+{%block content %}
+<!---------大内容输入框-------->
+<div class="content_pz">
+	<div id="directory"
+    tips="counter:{{ConfirmList.licenseCounter}};upid:{{ConfirmList.upid}};">
+    		<a href="/"><img src="/static/images/mis/home.jpg" /></a>><a href="/audit/result/">凭证审核</a>><a href="#">单个审核</a>
+    	</div>
+  	<!--审批框-->  
+    {%if ConfirmList.IDCardInfoForm and ConfirmList.IDCardInfoForm|length > 0 %}
+   	<div class="VoucherChecking IDCardInfoFormDiv">
+   		<div class="Voucher_pz">
+        	<div class="Voucher_pz_a">
+            <a class='jqzoom' rel='idcard' href='/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/large/{{VoucherImage.IDCardInfoForm.0.name}}'><img src='/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/middle/{{VoucherImage.IDCardInfoForm.0.name}}' /></a>
+            </div>
+            <div class="Voucher_pz_b">
+            	<span>
+                    <a class='zoomThumbActive' href='javascript:void(0);' rel="{gallery: 'idcard', smallimage: '/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/middle/{{VoucherImage.IDCardInfoForm.0.name}}',largeimage:'/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/large/{{VoucherImage.IDCardInfoForm.0.name}}'}"  ><img src='/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/small/{{VoucherImage.IDCardInfoForm.0.name}}' /></a>
+                </span>
+                <span>
+                    <a class='' href='javascript:void(0);' rel="{gallery: 'idcard', smallimage: '/preview/{{VoucherImage.IDCardInfoForm.1.user_id}}/middle/{{VoucherImage.IDCardInfoForm.1.name}}',largeimage:'/preview/{{VoucherImage.IDCardInfoForm.1.user_id}}/large/{{VoucherImage.IDCardInfoForm.1.name}}'}"  ><img src='/preview/{{VoucherImage.IDCardInfoForm.1.user_id}}/small/{{VoucherImage.IDCardInfoForm.1.name}}' /></a>
+                </span>
+            </div>
+        </div> 
+        <!---显示错误的信息--->
+        <div class="Checking">
+            {%for item in ConfirmList.IDCardInfoForm %}
+        	<ul>
+            	<h3>{{item.desc}}</h3>
+            	<li><span class="info">{{item.input_value}}</span><span class="info_a">注册信息</span></li>
+                <li><span class="info">{{item.typist_value}}</span><span class="info_a">录入信息</span></li>
+                <li>
+                <input name="IDCardInfoForm_{{item.field}}" type="radio" value="1" /><label>注册时信息正确</label>
+                <input name="IDCardInfoForm_{{item.field}}" type="radio" value="2" /><label>录入时信息正确</label>
+                <input name="IDCardInfoForm_{{item.field}}" type="radio" value="3" /><label>更正</label><input name="" type="text" />
+                {%if forloop.last%}
+                <li><input class="button_gx async_submit" submitTo="IDCardInfoForm" lctype="{{item.cert_type}}"  type="button" value="提交" /></li>
+                {%endif%}
+                </li>    
+            </ul>
+            {% empty %}
+            暂无数据!
+            {%endfor%} 	                    
+        </div>
+    </div>
+    {%endif%}
+    <!--审批框-->  
+    {%if ConfirmList.TaxInfoForm and  ConfirmList.TaxInfoForm|length > 0 %}
+   	<div class="VoucherChecking_a TaxInfoFormDiv">
+   		<div class="Voucher_pz">
+        	<div class="Voucher_pz_a1">
+                <a class='jqzoom' href='/preview/{{VoucherImage.TaxInfoForm.0.user_id}}/large/{{VoucherImage.TaxInfoForm.0.name}}'><img src='/preview/{{VoucherImage.TaxInfoForm.0.user_id}}/middle/{{VoucherImage.TaxInfoForm.0.name}}' /></a>
+            </div>
+		</div>
+        	<!---显示错误的信息--->
+        	<div class="Checking">
+			 {%for item in ConfirmList.TaxInfoForm %}
+        	<ul>
+            	<h3>{{item.desc}}</h3>
+            	<li><span class="info">{{item.input_value}}</span><span class="info_a">注册信息</span></li>
+                <li><span class="info">{{item.typist_value}}</span><span class="info_a">录入信息</span></li>
+                <li>
+                <input name="TaxInfoForm_{{item.field}}" type="radio" value="1" /><label>注册时信息正确</label>
+                <input name="TaxInfoForm_{{item.field}}" type="radio" value="2" /><label>录入时信息正确</label>
+                <input name="TaxInfoForm_{{item.field}}" type="radio" value="3" /><label>更正</label><input name="" type="text" />
+                {%if forloop.last%}
+                <li><input class="button_gx async_submit" submitTo="TaxInfoForm" lctype="{{item.cert_type}}"  type="button" value="提交" /></li>
+                {%endif%}
+                </li>    
+            </ul>
+            {% empty %}
+            暂无数据!
+            {%endfor%}
+        </div>
+   	</div>
+	{%endif%}
+	<!--审批框-组织结构代码证-->  
+    {%if ConfirmList.OrgcodeInfoForm and ConfirmList.OrgcodeInfoForm|length > 0 %}
+   	<div class="VoucherChecking_a OrgcodeInfoFormDiv">
+   		<div class="Voucher_pz">
+        	<div class="Voucher_pz_a1">
+                <a class='jqzoom' href='/preview/{{VoucherImage.OrgcodeInfoForm.0.user_id}}/large/{{VoucherImage.OrgcodeInfoForm.0.name}}'><img src='/preview/{{VoucherImage.OrgcodeInfoForm.0.user_id}}/middle/{{VoucherImage.OrgcodeInfoForm.0.name}}' /></a>
+            </div>
+		</div>
+        	<!---显示错误的信息--->
+        	<div class="Checking">
+			 {%for item in ConfirmList.OrgcodeInfoForm %}
+        	<ul>
+            	<h3>{{item.desc}}</h3>
+            	<li><span class="info">{{item.input_value}}</span><span class="info_a">注册信息</span></li>
+                <li><span class="info">{{item.typist_value}}</span><span class="info_a">录入信息</span></li>
+                <li>
+                <input name="OrgcodeInfoForm_{{item.field}}" type="radio" value="1" /><label>注册时信息正确</label>
+                <input name="OrgcodeInfoForm_{{item.field}}" type="radio" value="2" /><label>录入时信息正确</label>
+                <input name="OrgcodeInfoForm_{{item.field}}" type="radio" value="3" /><label>更正</label><input name="" type="text" />
+                {%if forloop.last%}
+                <li><input class="button_gx async_submit" submitTo="OrgcodeInfoForm" lctype="{{item.cert_type}}"  type="button" value="提交" /></li>
+                {%endif%}
+                </li>    
+            </ul>
+            {% empty %}
+            暂无数据!
+            {%endfor%}
+        </div>
+   	</div>
+	{%endif%}
+	<!--审批框-营业执照--->  
+    {%if ConfirmList.LicenseInfoForm and ConfirmList.LicenseInfoForm|length > 0 %}
+   	<div class="VoucherChecking_a LicenseInfoFormDiv">
+   		<div class="Voucher_pz">
+        	<div class="Voucher_pz_a1">
+                <a class='jqzoom' href='/preview/{{VoucherImage.LicenseInfoForm.0.user_id}}/large/{{VoucherImage.LicenseInfoForm.0.name}}'><img src='/preview/{{VoucherImage.LicenseInfoForm.0.user_id}}/middle/{{VoucherImage.LicenseInfoForm.0.name}}' /></a>
+            </div>
+		</div>
+        	<!---显示错误的信息--->
+        	<div class="Checking">
+			 {%for item in ConfirmList.LicenseInfoForm%}
+        	<ul>
+            	<h3>{{item.desc}}</h3>
+            	<li><span class="info">{{item.input_value}}</span><span class="info_a">注册信息</span></li>
+                <li><span class="info">{{item.typist_value}}</span><span class="info_a">录入信息</span></li>
+                <li>
+                <input name="LicenseInfoForm_{{item.field}}" type="radio" value="1" /><label>注册时信息正确</label>
+                <input name="LicenseInfoForm_{{item.field}}" type="radio" value="2" /><label>录入时信息正确</label>
+                <input name="LicenseInfoForm_{{item.field}}" type="radio" value="3" /><label>更正</label><input name="" type="text" />
+                {%if forloop.last%}
+                <li><input class="button_gx async_submit" submitTo="LicenseInfoForm" lctype="{{item.cert_type}}"  type="button" value="提交" /></li>
+                {%endif%}
+                </li>    
+            </ul>
+            {% empty %}
+            暂无数据!
+            {%endfor%}
+        </div>
+   	</div>
+	{%endif%}
+</div>
+{%endblock %}
+{%block script%}
+<script type="text/javascript">
+var page = {'__doc__':'凭证信息手工确认',
+            '__author__':'zhangh',
+			'__version__':'v1.0',
+			'isAjaxBusy':false};
+
+page.func = (function(){
+    var licenseCount = '{{ConfirmList.licenseCounter}}';
+    var confirmCount = 0;
+	var get_post_data = function(elems){
+		var fieldValue = {};//kwargs={'fieldName':'value_desc'}
+		for(var i = 0,length=elems.length;i<length;i++){
+			var field = elems[i].name;
+			if(field in fieldValue)
+				;
+			else
+				fieldValue[field]= false;
+
+			if(elems[i].checked){
+				var v = elems[i].value;
+				if(v == '3'){
+					var fixedValue = $(elems[i]).next('label').next('input[type="text"]')[0].value;
+					if(fixedValue && fixedValue.length > 0)
+						v += ("_"+fixedValue);
+					else
+						v = false;
+				}
+				else
+					v += "_";
+				
+				fieldValue[field] = v;
+			}
+		}
+
+		return fieldValue;
+	};
+	var is_valid = function(kwargs){
+		var result = true;
+		for(var key in kwargs){
+			if(!kwargs[key]){
+				result = false;
+				break;
+			}
+		}
+		return result;
+	};
+	return {
+		pageInit : function(){
+			$(".async_submit").each(function(){
+				$(this).bind('click',function(){
+					var prtDiv = $("."+$(this).attr('submitTo') + "Div");
+					var elems = $('input[type="radio"]',prtDiv);
+					//debugger	
+					var postData = get_post_data(elems);
+					if(is_valid(postData)){
+						postData["__upid"]="{{ConfirmList.upid}}";
+						postData["__type"]=$(this).attr('submitTo');
+						postData["__typekey"]=$(this).attr('lctype');
+						page.func.asyncSubmit(prtDiv,postData);	
+					}
+					else
+						alert("请先确认信息正确性或者填写正确的更正信息后再点击提交按钮！");
+				});
+			});	
+            $(".jqzoom").jqzoom({
+		        zoomWidth:420,
+		        zoomHeight:260,
+		        preloadText:'加载图片...',
+		        title:'',
+		        xOffset:5,
+		        yOffset:0
+	        });
+		},
+		asyncSubmit : function(containerDiv,postData){
+			if(!page.isAjaxBusy){
+				page.isAjaxBusy = true;
+				($).ajax({
+					url:'/audit/voucher/confirm/',
+					type:'POST',
+					data:postData,
+					success:function(msg){
+						page.isAjaxBusy = false;
+						var obj = eval("("+msg+")");
+						if(!obj){
+							alert("服务器返回数据异常，请尝试审核其他凭证！");
+							return;
+						}
+						if(obj.statusCode == "200"){
+                        	containerDiv.hide();
+                            confirmCount ++;
+                            if(confirmCount === parseInt(licenseCount)){
+                                alert('手工审批成功，系统自动返回手工审批列表页面！')
+                                window.location.href = '/audit/result/';
+                            }
+                            else
+                                alert("信息提交成功！"); 
+						}
+						else{
+							alert("服务器发生未知错误，请将当前页面截图发给技术人员！");
+						}
+					},
+					error:function(){
+						page.isAjaxBusy = false;
+					}
+				});		
+			}
+		}
+	};
+})();
+page.func.pageInit();
+</script>
+{%endblock%}

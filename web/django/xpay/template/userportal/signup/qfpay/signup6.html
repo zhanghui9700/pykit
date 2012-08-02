@@ -1,0 +1,39 @@
+﻿{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%}钱方-注册第六步:完成 {%endblock%}
+
+{%block container%}
+
+		<div class="container">
+			<div class="clearfix">
+				<div class="process" id="process6"></div>
+
+			</div>
+            <div class="sucess">
+                <div class="tongguo">    
+                	<h3>欢迎您成为我们的试点商户</h3><br />
+                    <p>你将会在2-6天内收到刷卡器</p>
+                </div>
+                <div id="" class="notes">
+                    <ul>
+                        <h4>以下为我们试点的相关信息：</h4>
+                        <li>手续费：1% </li>
+                        <li>到账时间：T+1-3个工作日(当日累计低于100元不清算，100元以上才清算)</li>
+                        <li>每笔限额：5000元/笔(包含信用卡和借记卡单)</li>
+                    </ul>
+                    <ul>
+                        <h4>手机客户端的下载和安装：</h4>
+                        <li>安卓系统：在手机端默认浏览器中输入app.qfpay.com，下载并安装客户端</li>
+                        <li>苹果手机：请到苹果应用程序商店中搜索“钱方支付”，下载并安装客户端</li>
+                    </ul>
+                    <ul>
+                        <h4>钱方用户网站：</h4>
+                        <li>用户网站登录地址：qfpay.com</li>
+                        <li>主要功能：个人资料管理、查询交易记录；计算本月内的总交易额、资金报告、账户升级(还在开发中)</li>
+                    </ul>
+                </div>
+            </div>  
+            <p class="form_btm mt_20"><input class="submit button" type="button" value="开始使用钱方" onclick="javascript:window.location.href='/account';" /></p>
+		</div>
+
+{%endblock%}

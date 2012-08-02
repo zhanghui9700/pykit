@@ -1,0 +1,42 @@
+﻿{%extends "device_base.html"%}
+		{%block submenu%}
+            	<li><a href="#">读卡器查询</a></li>
+                <li><a href="#">PASM查询</a></li>
+                <li class="yp"><a href="#">读卡器入库</a></li>
+                <li><a href="#">PASM入库</a></li>
+		{%endblock%}
+<!---------内容-------->
+{%block content%}
+<div class="content_g1">
+	<form action="" method="POST">
+	<div class="container_g1">
+		<ul>
+			<li><span class="text a1 a5"></span><span value="终端开始编号"></span>{{form.terminalidstart}}</li>
+            <li><span class="text a1 a5"></span><span value="终端结束编号"></span>{{form.terminalidend}}</span></li>
+            <li><span class="text a1 a5"></span><span value="PASM卡开始卡号"></span>{{form.psamstart}}</span></li>
+            <li><span class="text a1 a5"></span><span value="PASM卡结束卡号"></span>{{form.psamend}}</span></li>
+            <li class="g123">
+            <span class="text x3"></span>{{form.producer}}
+            <span class="text x4"></span>{{form.model}}
+            <span class="text x4"></span>{{form.state}}
+            </li>
+            <li><span class="text a1 a5"></span><span value="生产日期"></span>{{form.produce_date}}</li>
+            <li><span class="text a1 a5"></span><span value="TCK密文"></span>{{form.tck}}</li>
+			<li><input class="button_ban a6" name="" type="submit" value="批量入库" /></li>
+        
+        
+        
+        
+        </ul>
+
+
+
+    
+    
+    
+    </div>
+</form>		
+</div>
+
+{%endblock%}
+  

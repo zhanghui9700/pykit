@@ -1,0 +1,110 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}{{ block.super }}
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/mis/global.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/mis/style.css" />
+{% endblock %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+	<div class="breadcrumbs">
+		 <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+		 <a href="../../">mis</a> &rsaquo; 
+		 <a href="../">psam</a>&rsaquo;
+		 {% trans "Add" %} psam
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="content_g1">
+	<form action="" method="POST">
+	<div class="container_g1">
+		<ul>
+			<li>
+			<span style="font-size:20px;">{{form.psamidstart.label}}</span>
+			</li>
+			<li>
+			{{form.psamidstart}}
+			</li>
+			{{form.errors.psamidstart.as_text}}
+			<li>
+			<span style="font-size:20px;">{{form.psamidend.label}}</span>
+			</li>
+            <li>
+			{{form.psamidend}}
+			</li>
+			{{form.errors.psamidend.as_text}}
+			<li>
+			<span style="font-size:20px;">{{form.produce_date.label}}</span>
+			</li>
+			<li>
+			{{form.produce_date}}
+			</li>
+			{{form.errors.produce_date.as_text}}
+            <li class="g123">
+			{{form.psamtp}}
+            {{form.producer}}
+            </li>
+            <li class="g123">
+            {{form.model}}
+            {{form.state}}
+            </li>
+			<li>
+			<span style="font-size:20px;">{{form.pinkey1.label}}</span>
+			</li>
+			<li>
+			{{form.pinkey1}}
+			</li>
+			{{form.errors.pinkey1.as_text}}
+			<li>
+			<span style="font-size:20px;">{{form.pinkey2.label}}</span>
+			</li>
+			<li>
+			{{form.pinkey2}}
+			</li>
+			
+			{{form.errors.pinkey2.as_text}}
+			<li>
+			<span style="font-size:20px;">{{form.mackey.label}}</span>
+			</li>
+			
+			<li>
+			{{form.mackey}}
+			</li>
+			{{form.errors.mackey.as_text}}
+			<li>
+			<span style="font-size:20px;">{{form.diskey.label}}</span>
+			</li>
+			<li>
+			{{form.diskey}}
+			</li>
+			{{form.errors.diskey.as_text}}
+            
+            
+            
+            
+			<li><input class="button_ban a6" name="" type="submit" value="批量入库" /></li>
+      </li>  
+        
+        
+        
+    </ul>
+
+
+
+    
+    
+    
+  </div>
+  </form>	
+</div>
+{% endblock %}

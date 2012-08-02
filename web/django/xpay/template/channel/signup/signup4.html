@@ -1,0 +1,50 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%}钱方-注册第四步:等待审核 {%endblock%}
+
+{%block container%}
+
+<div class="container">
+	<div class="clearfix">
+        <div class="process" id="process4"></div>
+
+	</div>
+	{%if wait_audit %}
+	<div class="sucess">
+		<div class="tongguo">    
+			<h3>等待审核...</h3><br />
+			<p>我们的工作人员会在1~2个工作日内快速审核通过，到时会以短信和邮件通知您，请您注意查收</p>
+			<p>您也可直接登录<a href="http://my.qfpay.com">my.qfpay.com</a>查看审批进度，通过后获取刷卡器，成为我们的商户。</p>
+		</div>
+	</div>
+	{%else%}
+	<div class="sucess">
+		<div class="tongguo">    
+			<h3>审核未通过</h3><br />
+			<p>抱歉审批未通过，如有问题请联系我们的客服。</p>
+			<p>客服电话：4000-360-180</p>
+		</div> 
+	</div>  
+	{%endif %}
+
+	<div class="downloads">
+		<h3>您现在可以下载手机客户端</h3>
+		<ul class="list">
+			<li>
+				<h4>根据手机平台下载</h4>
+				<div>
+				    <a class="devices" href="http://itunes.apple.com/cn/app/qian-fang-zhi-fu/id495109776?mt=8"><img src="/static/images/download_iphone.png" alt="download_iphone"></a>
+				    <a class="devices" href="http://app.qfpay.com/app/Qianfang.apk"><img src="/static/images/download_android.png" alt="download_android"></a>
+				</div>
+			</li>
+			<li>
+				<h4>手机访问网址下载</h4>
+				<p>1. 在手机上直接访问<a href="http://app.qfpay.com">app.qfpay.com</a></p>
+				<p>2. 用手机上的二维码扫描软件拍摄右侧的二维码直接下载。</p>
+				<img class="qr-code" src="/static/images/qr-code.png" alt="qr-code">
+			</li>
+            <!--li><input type="button" value="现在登录" class="button"/></li-->
+		</ul>
+	</div>
+</div>
+{%endblock%}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if IE 9 ]>   <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>钱方支付收据凭证</title>
+	<!-- Meta -->
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="imagetoolbar" content="no">
+	<meta name="description" content="钱方支付收据凭证">
+	<meta name="keywords" content="">
+	<meta name="author" content="qfpay"> 
+	<meta name="copyright" content="qfpay Inc">
+	<meta name="format-detection" content="telephone=no">
+	
+	<!-- Favicon --> 
+	<link rel="shortcut icon" href="http://dingis.me/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="http://dingis.me/qfpay/icon.png">
+	<link rel="icon" type="image/png" href="http://dingis.me/qfpay/images/favicon.png">
+	
+	<!-- CSS -->  
+	<link href="/static/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	
+	<!--[if IE]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<link href="css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+	<![endif]-->
+					
+</head>
+	
+<body>
+<div id="receipt">
+<!--Header-->
+	<header>
+		<hgroup><h1>钱方收据单</h1></hgroup>
+	</header>
+	<nav class="clearfix">
+	    <p class="left subtitle">{{record.orig.debitacntname}}</p>
+	    <img src="/static/images/unionpay.png" alt=""> 
+	</nav> 
+	<div id="main" class="clearfix">
+<!--Content-->
+    <section class="items left clearfix">
+    	<ul>
+    		<li>用户编号：</li>
+    		<li>终端号：</li>
+    		<li>发卡行：</li>
+    		<li>卡号：</li>
+    		<li>卡有效期：</li>
+    		<li>交易类型：</li>
+    		<li>交易检索号：</li>
+    		<li>交易时间：</li>
+    		<li>授权号：</li>
+    	</ul>
+    </section>
+    <section class="details right">
+    	<ul>
+    		<li>{{record.orig.userid}}&ensp;</li>
+    		<li>{{record.orig.terminalid}}&ensp;</li>
+    		<li>{{record.orig.issuerbank }}&ensp;</li>
+    		<li>{{record.card_alter}} &ensp;</li>
+    		<li>{{record.orig.cardexpire}}&ensp;</li>
+    		<li>
+				{%ifequal record.orig.busicd "000000"%}交易消费&ensp;{%endifequal%}
+		         {%ifequal record.orig.busicd "400000"%}卡对卡转账&ensp;{%endifequal%}
+                {%ifequal record.orig.busicd "210000"%}信用卡还款&ensp;{%endifequal%}
+               {%ifequal record.orig.busicd "300000"%}查询余额&ensp;{%endifequal%}
+                {%ifequal record.orig.busicd "200000"%}退货交易&ensp;{%endifequal%}
+                {%ifequal record.orig.busicd "180300"%}冲正交易&ensp;{%endifequal%}
+                {%ifequal record.orig.busicd "180100"%}存根上传&ensp;{%endifequal%}
+                {%ifequal record.orig.busicd "180200"%}交易统计&ensp;{%endifequal%}
+			</li>
+    		<li>{{record.orig.syssn }}&ensp; </li>
+			<li>{{record.orig.sysdtm|date:"Y-m-d H:i:s"}} &ensp;</li>
+    		<li>{{record.orig.authid }} &ensp;</li>
+    	</ul>
+    </section>
+	</div>
+	<div id="total" class="clearfix">
+	    <h2 class="left">交易金额：</h2>
+	    <p class="right">￥{{record.trade_count}}</p>
+	</div>
+	<div id="map">
+	<img src="http://api.map.baidu.com/staticimage?width=310&height=110&center={{record.orig.longitude}},{{record.orig.latitude}}&zoom=13&markers={{record.orig.longitude}},{{record.orig.latitude}}" title=""/>
+	</div>
+	<!--div class="btn"><a href="javascript:window.print()" onclick="window.print()">打印</a></div-->
+</div>
+<!--Footer-->	
+<footer>
+    <p>钱方支付 Copyright © 2011 qfpay All rights reserved.</p>
+</footer>
+
+</body>
+</html>

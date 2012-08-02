@@ -1,0 +1,112 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}{{ block.super }}
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+	<div class="breadcrumbs">
+		 <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+		 <a href="../../">core</a> &rsaquo; 
+		 <a href="../">terminalbind</a>&rsaquo;
+		 {% trans "Add" %} terminalbind
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>读卡器绑定</h1>
+<div id="content-main">
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" onsubmit="javascript:return page.func.onSubmit();"  id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+<div>
+<fieldset class="module aligned">
+<div class="form-row">
+	{%if errorMsg %}
+	<ul class="errorlist">
+		<li>{{errorMsg}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>登录名(*):</label>
+		<input type="text" name="userid" id="userid" value = "" />
+	</div>
+</div>
+<div class="form-row user_permissions">
+	<div>
+		<p class="help">选择可用读卡器进行绑定...</p>
+		<div class="selector">
+			<div class="selector-available">
+				<h2>待分配读卡器</h2>
+				<select multiple="multiple" class="selectfilter" name="available_terminal" id="available_terminal">
+				{% for item in terminals %}
+					<option value="{{item.id}}">{{item.terminalid}} </option>
+				{%endfor%}
+				</select>
+			</div>
+			<ul class="selector-chooser">
+				<li><a class="selector-add" href="javascript:page.func.move('available_terminal','selected_terminal');">add</a></li>
+				<li><a class="selector-remove" href="javascript:page.func.move('selected_terminal','available_terminal');">remove</a></li>
+			</ul>
+			<div class="selector-chosen">
+				<h2>已选择</h2>
+				<select id="selected_terminal" name="selected_terminal" multiple="multiple" class="filtered"></select>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="selectedTerminalId" id="selectedTerminalId" value="" />
+<input type="submit" value="绑 定"/>
+</fieldset>
+</div>
+</form>
+<script type="text/javascript">
+var page = {};
+page.func = (function(){
+	return {
+		move : function(source,target){
+			var s = document.getElementById(source);
+			var t = document.getElementById(target);
+
+			var _sop = s.options;
+			var _top = t.options;
+			
+			for(var i = _sop.length-1;i>=0;i--){
+				if(_sop[i].selected){
+					var op = new Option(_sop[i].text,_sop[i].value);
+					t.add(op);
+					_sop.remove(i);
+				}	
+			}
+		},
+		onSubmit : function(){
+			var uid = document.getElementById('userid').value;
+			if(uid.length === 0){
+				alert('请输入UID');
+				return false;
+			}
+			var selectedTerminal = document.getElementById('selected_terminal').options;
+			if(selectedTerminal.length < 1){
+				alert('请先选择读卡器');
+				return false;
+			}
+			
+			var str = "";
+			for(var i=0,length=selectedTerminal.length;i<length;i++){
+				str += (selectedTerminal[i].value+",");
+			}	
+
+			document.getElementById("selectedTerminalId").value = str;
+			return true;
+		}
+	};
+})();
+</script>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{%extends "userportal/base/qfpay_base.html"%}
+{% load i18n %}
+
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans "Home" %}</a> &rsaquo; {% trans "Server error" %}</div>{% endblock %}
+
+{% block title %}{% trans 'Server error (500)' %}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="page_404">
+    <img src="/static/images/404.png" alt="" />
+    <p>{% trans "您要查看的页面并不存在!" %}</p>
+  </div>
+</div>
+
+{% endblock %}

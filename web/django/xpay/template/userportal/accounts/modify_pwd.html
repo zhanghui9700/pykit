@@ -1,0 +1,251 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block resource%}
+{{block.super}}
+<link href="/static/css/style.css" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="/static/js/jquery.password.js"></script>
+{%endblock%}
+
+{%block title%}
+修改密码
+{%endblock%}
+
+{%block header%}
+<div class="header">
+<div class="navigation">
+<ul class="global">
+<li><a href="/report">资金报告</a></li> 
+<li><a href="/tradelist">交易查询</a></li> 
+<li class="selected" ><a href="/account">我的账户</a></li> 
+</ul>
+</div>
+{%include "userportal/base/account_header.html"%}
+</div>
+{%endblock%}
+
+{%block container%}
+<div class="container">
+<div class="clearfix">
+<div class="tabs">
+	<ul>
+		 <li><a href="account">账户信息</a></li> 
+		<li class="selected"><a href="modifypwd">修改密码</a></li> 
+		 <!--li><a href="upgrade">升级账户</a></li--> 
+	</ul>
+</div>
+
+<form class="clearfix mt_20" method="post" action="/modifypwd" autocomplete="off">
+                	<div class="clearfix verify">
+						<label class="clearfix">
+							<span class="input_title">输入现有密码</span>
+							{{modifypwdform.oldpassword}}
+						</label>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+                        <span class="errors">{{modifypwdform.errors.oldpassword.as_text}}</span>
+					</div>
+					<div class="clearfix verify">
+						<label class="clearfix">
+							<span class="input_title">绑定的手机 </span>
+							{{modifypwdform.mobile}}
+						</label>
+						<a class="verifyCodeBtn fl">获取验证码</a>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+                        <span class="errors">{{modifypwdform.errors.mobile.as_text}}</span>
+					</div>
+					<div class="clearfix verify">
+						<label class="clearfix">
+							<span class="input_title">验证码</span>
+							{{modifypwdform.verifycode}}
+						</label>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+                        <span class="errors">{{modifypwdform.errors.verifycode.as_text}}</span>
+					</div>
+					<script type="text/javascript">
+					$(function(){
+						$(".holding input").live("paste cut keydown keyup focus", 
+						function() {
+							$.trim($(this).val()) != "" && $(this).parent().addClass("hasome")
+						}),
+						
+						$(".holding input").live("blur",function() {
+							$.trim($(this).val()) == "" && $(this).parent().removeClass("hasome")
+						})
+						$('#id_password').live("paste cut focus blur", function(){
+						$.trim($(this).val()) != "" ? $('.score').show() && 
+						$(this).password() : $('.sidetip .tip').addClass('active').
+						siblings().removeClass('active') && $('.score').hide();
+						})
+					})
+				</script>
+					<div class="clearfix verify">
+					<!--密码强度的消息-->
+					<div class="holding" data-fieldname="password">
+					<div class="sidetip">
+                    <p class="perfect isaok">密码很完美 </p>
+                    <p class="ok isaok">密码复杂度还可以</p>
+                    <p class="weak isaok">密码强度还可以更高</p>
+                    <p class="weak isaok" role="alert">密码不够安全</p>
+                    <p class="obvious isaok" role="alert">密码太明显</p>
+                    <p class="invalid error" role="alert">密码至少为六位，且不包含空格</p>
+                    <p class="blank error" role="alert">密码不能为空!</p>
+                  </div>
+                 
+						<label class="clearfix">
+							<span class="input_title">设置密码</span>
+							{{modifypwdform.password}}
+						</label>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+
+					</div>
+						<div id="id_score" class="score"><span><b></b></span></div>
+						<span class="errors">{{modifypwdform.errors.password.as_text}}</span>
+					</div>
+					<div class="clearfix verify">
+						<label class="clearfix">
+							<span class="input_title">确认密码</span>
+							{{modifypwdform.repassword}}
+						</label>
+						<span class="tipImg"></span>
+						<span class="errTip">输入不能为空</span>
+                        <span class="errors">{{modifypwdform.errors.repassword.as_text}}</span>
+					</div>
+				<p class="form_btm mt_20"><input class="button" type="submit" value="提交申请" /></p>
+				</form>
+		</div> 
+		</div>
+		<script type="text/javascript">
+		function verify_mobile(obj) {
+            if (obj.val().match(/^0{0,1}(13[0-9]|15[0-9]|18[6-9]|180)[0-9]{8}$/)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+		//验证第二次输入的密码
+        $("#id_mobile").add_verify_listener(verify_mobile, "您输入的手机号码格式有误");
+		function verify_repassword(obj) {
+        if (obj.val()==$("#id_password").val()) {
+            return true;
+        } else {
+            return false;
+        }
+		}
+		$("#id_repassword").add_verify_listener(verify_repassword,"您两次输入的密码不一致，请重新输入");
+		
+		function verify_password(obj) {
+			if(obj.val().length < 6) return false;
+			else return true;
+		}
+
+		$("#id_password").add_verify_listener(verify_password, "密码至少为六位，且不包含空格");
+		//验证验证码的格式
+		$("#id_verifycode").add_verify_listener(verify_verifycode,"您输入的邀请码格式有误，请重新输入");
+		function verify_verifycode(obj) {
+        if (obj.val().match(/^\d{6}$/)) {
+            return true;
+        } else {
+            return false;
+        }
+		}
+		function show_msg(obj, has_error, msg){
+		tipImg = obj.parent().nextAll(".tipImg");
+		tipMsg = obj.parent().nextAll(".errTip");
+		if(has_error){
+			tipImg.css({backgroundPosition : "left -26px"}).show();
+			tipMsg.show().html(msg);
+			}
+		else{
+			tipImg.css({display: "inline-block",backgroundPosition : "left top" }).show();
+			tipMsg.show().html("");
+			}
+		}
+
+		$("#id_verifycode").blur(function(){
+		mobile_obj = $("#id_mobile");
+		code_obj = $("#id_verifycode");
+
+		if(verify_verifycode(code_obj))
+			$.post("/validate", {type:'verifycode','mobile':mobile_obj.val(),'code':code_obj.val()},
+			function(data){
+			show_msg(code_obj, !data.ret, data.msg);
+			}, "json");
+		else
+			show_msg(code_obj, true, "验证码只能为六位的数字字符串");
+		}
+		);
+
+		$("#id_oldpassword").blur(function(){
+			oldpwd_obj = $("#id_oldpassword");
+			$.post("/validate", {type:'password','mobile':$("#id_mobile").val(), 'password':oldpwd_obj.val()},
+			function(data){
+				show_msg(oldpwd_obj,!data.ret,"不正确的密码");
+			}, "json");
+		});
+
+		$("#id_password").blur(function(){
+			newpwd_obj = $("#id_password");
+			$.post("/validate", {type:'password', 'mobile':$("#id_mobile").val(),
+			'password':newpwd_obj.val()},
+			function(data){
+				show_msg(newpwd_obj, data.ret, "不能和原密码一样");
+				if(data.ret) $(".sidetip").hide();
+			},"json");
+		});
+		//获取验证码
+		$(".verifyCodeBtn").click(function(){
+				$(this).send_code(60);
+			});
+			(function($){
+				var time_array = []; //用以存放多个定时数值，与每个按钮一一对应
+				
+				$.fn.send_code = function(time){
+					if(!this.hasClass("disabledVCBtn")) {
+						mobile = $("#id_mobile").val();
+						if(mobile=="")
+						{
+							alert("请您输入手机号");
+							return ;
+						}
+					        if (!mobile.match(/^0{0,1}(13[0-9]|15[0-9]|18[6-9]|180)[0-9]{8}$/)) {
+					            return;
+					        } else {
+					            $.ajax({
+					                type:"POST",
+					                url:"/sendmobilecode",
+					                data:{mobile:mobile, type:"modify"}
+					            }).done(function (msg) {
+                                                                alert("验证码已发送成功，请查收。")
+					                    });
+								var $this = $(this);
+								var idx = $(".verifyCodeBtn").index($this);
+								time_array[idx] = time;
+								
+								$this.addClass("disabledVCBtn");
+								refresh_timer(idx, $this);
+								
+								var send_code_timer = setInterval(function(){
+									refresh_timer(idx, $this);
+									if(time_array[idx] < 0) {
+										clearInterval(send_code_timer);
+										$this.text("获取验证码");
+										$this.removeClass("disabledVCBtn");
+									}
+								}, 1000);
+							}
+						} else {return;}
+					}
+					
+					
+					function refresh_timer(idx, obj){
+						obj.text(time_array[idx] + "秒后可重发")
+						time_array[idx] --;
+					}								
+			})(jQuery);	
+    </script>		
+</div>
+{%endblock%}

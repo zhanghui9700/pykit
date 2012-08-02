@@ -1,0 +1,30 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%}钱方-注册第四步:等待审核 {%endblock%}
+
+{%block container%}
+
+<div class="container">
+	<div class="clearfix">
+		<div class="process" id="process4"></div>
+	</div>
+	{%if wait_audit %}
+	<div class="sucess">
+		<div class="tongguo">    
+			<h3>等待审核</h3><br />
+			<p>我们已收到您提交的信息，正在审批中。</p>
+			<p>审批时间为2天，2天后请登录用户网站查看审批结果。</p>
+			<p>审批通过后可在用户网站获取刷卡器，成为我们的试点商户。</p>
+		</div>
+	</div>
+	{%else%}
+	<div class="sucess">
+		<div class="tongguo">    
+			<h3>审核未通过</h3><br />
+			<p>抱歉审批未通过，如有问题请联系我们的客服。</p>
+			<p>客服电话：4000-360-180</p>
+		</div> 
+	</div>  
+	{%endif %}
+</div>
+{%endblock%}

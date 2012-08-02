@@ -1,0 +1,89 @@
+﻿{%extends 'mis/base.html'%}
+{%block content %}
+<!---------商户详细信息-------->
+<div class="content_pz">
+<div id="directory">
+    	<a href="/"><img src="/static/images/mis/home.jpg" /></a>><a href="/user/search/">商户管理</a>><a href="javascript:void(0);">商户信息</a>
+</div>
+
+<div class="if">
+		<h3><span>单个商户信息<span></h3>
+        <div class="if_ol">
+			<div class="if_le">
+				<ul name='__tab'>
+					<li class="if_z"><a href="javascript:void(0);" __target='div_basic'>基本信息</a></li>
+					<li><a href="javascript:void(0);" __target='div_limitation'>限额</a></li>
+					<!--li><a href="javascript:void(0);" __target='div_license'>凭证信息</a></li-->
+				</ul>
+			</div>
+			<!--基本信息-->
+			<div class="if_ri" name='div_basic'>
+				<ul>
+					<li><span class="if_xx">商户编号：</span><spanclass="if_xp">{{core_user.user.id}}</span></li>
+					<li><span class="if_xx">商户名称：</span><spanclass="if_xp">{{core_user.username}}{{core_user.company}}</span></li>
+					<li><span class="if_xx">商户类型：</span><spanclass="if_xp">{{core_user.user.get_type_desc}}</span></li>
+					<li><span class="if_xx">申请方式：</span><spanclass="if_xp">{{core_user.user.get_source_desc}}</span></li>
+					<li><span class="if_xx">级别：</span><spanclass="if_xp">{{core_user.user.get_level_desc}}</span></li>
+					<li><span class="if_xx">状态：</span><spanclass="if_xp">{{core_user.user.get_state_desc}}</span></li>
+					<li><span class="if_xx">读卡器数量：</span><spanclass="if_xp">{{core_user.user.get_terminal_count}}</span></li>
+					<li><span class="if_xx">申请时间：</span><spanclass="if_xp">{{core_user.user.date_joined|date:"Y-m-d H:s"}}</span></li>
+				</ul>          
+			</div>
+			<!--限额--->
+			<div class="if_ri undis" name='div_limitation'>
+				<ul>
+					<li><span class="if_xx">总限额：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">借记卡月限额：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">借记卡天限额：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">借记卡次限额</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">清算时间：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">允许地区：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">允许交易：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">费率：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">封顶:</span><spanclass="if_xp"></span></li>   
+				</ul>
+			</div>
+			<div class="if_ri undis" name='div_limitation'>
+				<ul>
+					<li><span class="if_xx">信用卡月限额：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">信用卡天限额：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">信用卡次限额</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">清算时间：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">允许地区：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">允许交易：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">费率：</span><spanclass="if_xp"></span></li>
+					<li><span class="if_xx">封顶:</span><spanclass="if_xp"></span></li>    
+				</ul>
+			</div>
+		</div>
+</div>
+{%endblock %}
+{%block script %}
+<script type='text/javascript'>
+var page = {}
+page.func = (function(){
+	return {
+		pageInit : function(){
+			$('a',$('ul[name="__tab"]')).each(function(){
+				$(this).click(function(){
+					var clickTab = $(this).parent();
+					if(clickTab.hasClass('if_z'))
+						return;
+					else{
+						var currentTab = $('.if_z');
+						currentTab.removeClass('if_z');
+						clickTab.addClass('if_z');
+						
+						currentDiv = $(currentTab.children()[0]).attr('__target');
+						clickDiv = $(clickTab.children()[0]).attr('__target');
+						$('div[name="'+currentDiv+'"]').hide();
+						$('div[name="'+clickDiv+'"]').show();
+					}
+				});
+			});
+		}	
+	};
+})();
+page.func.pageInit();
+</script>
+{%endblock %}

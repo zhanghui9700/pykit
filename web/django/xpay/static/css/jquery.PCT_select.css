@@ -1,0 +1,8 @@
+.PCT_block{ font-size:12px; float:left;}
+.PCT_block .PCT_select{ padding: 2px 30px 2px 5px; margin: 0 20px 0 0; border: 1px solid #dddddd; color: #aaaaaa; cursor: default; float:left; background:url(../images/PCT_select.gif) no-repeat scroll right 2px;}
+.PCT_block .PCT_enable{ border: 1px solid #c1c1c1; color :#666666; cursor: pointer;}
+.PCT_block .PCT_enable:hover{ border: 1px solid #8dacbe;}
+.PCT_block .PCT_list{ position:absolute; top:0; left:0; z-index:9999; background-color:#d7d7d7; padding:10px; display:none;}
+.PCT_block .PCT_list .list_elem{ display:inline-block; width:6em; margin:2px 5px;}
+.PCT_block .PCT_list .list_elem a{ cursor: pointer;}
+.PCT_block .buff_input{ display: none;}

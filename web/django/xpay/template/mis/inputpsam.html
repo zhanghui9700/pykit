@@ -1,0 +1,46 @@
+﻿{%extends "mis/device_base.html"%}
+		{%block submenu%}
+            	<li><a href="#">读卡器查询</a></li>
+                <li><a href="#">PASM查询</a></li>
+                <li><a href="#">读卡器入库</a></li>
+                <li class="yp"><a href="#">PASM入库</a></li>
+		{%endblock%}
+
+<!---------内容-------->
+{%block content%}
+<div class="content_g1">
+	<form action="" methon="POST">
+	<div class="container_g1">
+		<ul>
+			<li>
+			{{form.psamidstart}}
+            <li><span class="text a1 a5",value="PASM卡结束卡号">{{form.psamidend}}</span></li>
+            <li class="g123">
+			{{form.psamtp}}
+            <span class="text x4">{{form.producer}}</span>
+            </li>
+            <li class="g123">
+            <span class="text x3">{{form.model}}</span>
+            <span class="text x4"><{{form.state}}</span>
+            </li>
+            <li><span class="text a1 a5 a7",value="pinkey1">{{form.pinkey1}}</span><span class="text a1 a5 a7",value="pinkey2">{{form.pinkey2}}</span></li>
+            <li><span class="text a1 a5 a7",value="mackey">{{form.mackey}}</span><span class="text a1 a5 a7",value="diskey">{{form.diskey}}</span></li>
+            
+            
+            
+            
+			<li><input class="button_ban a6" name="" type="submit" value="批量入库" /></li>
+        
+        
+        
+        
+        </ul>
+
+
+
+    
+    
+    
+    </div>
+</form>	
+{%endblock%}

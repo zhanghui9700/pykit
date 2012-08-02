@@ -1,0 +1,61 @@
+﻿{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}{{ block.super }}
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/mis/global.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/mis/style.css" />
+{% endblock %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+	<div class="breadcrumbs">
+		 <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+		 <a href="../../">mis</a> &rsaquo; 
+		 <a href="../">psam</a>&rsaquo;
+		 {% trans "Add" %} terminal
+	</div>
+	{% endif %}
+{% endblock %}
+
+<!---------内容------------>
+{%block content%}
+<div class="content_g1">
+	<form action="" method="POST">
+	<div class="container_g1">
+		<ul>
+			<li>{{form.terminalidstart}}</li>
+            <li>{{form.terminalidend}}</li>
+            <li>{{form.psamstart}}</li>
+            <li><span class="text a1 a5"></span><span value="PASM卡结束卡号"></span>{{form.psamend}}</span></li>
+            <li class="g123">
+            <span class="text x3"></span>{{form.producer}}
+            <span class="text x4"></span>{{form.model}}
+            <span class="text x4"></span>{{form.state}}
+            </li>
+            <li><span class="text a1 a5"></span><span value="生产日期"></span>{{form.produce_date}}</li>
+            <li><span class="text a1 a5"></span><span value="TCK密文"></span>{{form.tck}}</li>
+			<li><input class="button_ban a6" name="" type="submit" value="批量入库" /></li>
+        
+        
+        
+        
+        </ul>
+
+
+
+    
+    
+    
+    </div>
+</form>		
+</div>
+
+{%endblock%}
+  

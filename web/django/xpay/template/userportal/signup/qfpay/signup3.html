@@ -1,0 +1,424 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%}钱方-注册第三步:凭证上传{%endblock%}
+
+{%block resource%}
+	{{block.super}}
+	<script type="text/javascript" charset="utf-8" src="/static/js/jquery.ui.widget.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="/static/js/jquery.iframe-transport.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="/static/js/jquery.fileupload.js"> </script>
+{%endblock%}
+
+{%block container%}	
+	<div class="container">
+	<div class="clearfix">
+	  <div class="process" id="process3"></div>
+	  <form class="clearfix mt_20" enctype="multipart/form-data" method="post" action="" autocomplete="off" onsubmit="javascript:return Page.func.onSubmit();">
+	  	<div class="clearfix tempTip2 verify">
+                <p class="tipContent">*相关执照只用于公司信息审核，不会显示在任何地方。您可以通过照相，扫描的方式获得营业执照的图后再上传。</p>
+                {%if user.user_type == 1 %}<p class="tipContent">*注：收款证明可以是：出售的商品、营业场地、相关签约合同、合法证明等（只上传其中一项就可以）</p>{%endif %}
+                {%if user.user_type == 2 %}<p class="tipContent">*注：其他信用凭证可以是：和出售商品相关的凭证，包含：所出售商品的发票、收据等。</p>{%endif %}
+                {%if user.user_type == 3 %}<p class="tipContent">*注：其他信用凭证可以是：和出售商品相关的凭证，包含：所出售商品的发票、收据等。</p>{%endif %}
+                <p class="tipContent red">*每张图片小于5MB,支持格式：jpg,jpeg,png  尺寸不小于960*480</p>
+        </div>
+	    <!-- 身份证正面-->
+	    <div id="grid">
+	    <div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">{%if user.user_type == 1 %}<b>*</b>身份证(正面)：{%endif %}{%if user.user_type == 2 %}<b>*</b>经营者身份证(正面)：{%endif %}{%if user.user_type == 3 %}<b>*</b>法人代表身份证(正面)：{%endif %}</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="id_front_preview" class="img_previews" />
+				<input type="hidden" value="" id="id_front_hd_value" class="required"/>
+			</div>
+			<span class="delete_btn none" id="id_front_delete">删除</span>
+			<span class="tip_images">上传成功</span>
+            <span class="button gray fileinput-button"><input type="file" name="id_front" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+        <!-- 身份证反面-->
+        <div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">{%if user.user_type == 1 %}<b>*</b>身份证(反面)：{%endif %}{%if user.user_type == 2 %}<b>*</b>经营者身份证(反面)：{%endif %}{%if user.user_type == 3 %}<b>*</b>法人代表身份证(反面)：{%endif %}</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="id_back_preview" class="img_previews" />
+				<input type="hidden" value="" id="id_back_hd_value" class="required"/>
+			</div>
+			<span class="delete_btn none" id="id_back_delete">删除</span>
+			<span class="tip_images failed">上传失败</span>
+            <span class="button gray fileinput-button"><input type="file" name="id_back" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		{%if user.user_type == 1%}
+		<!-- 收款需求证明文件 -->
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2"><b>*</b>收款需求证明：</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="gathering_attest_preview" class="img_previews" />
+				<input type="hidden" value="" id="gathering_attest_hd_value" class="required"/>
+			</div>
+			<span class="delete_btn none" id="gathering_attest_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="gathering_attest" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		{%endif %}
+		<!-- 租赁合同 -->
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">{% if user.user_type > 1 %}<b>*</b>{% endif %}租赁协议(盖章证明)：</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="contract_preview" class="img_previews" />
+				<input type="hidden" value="" id="contract_hd_value" {%if user.user_type > 1 %} class="required"{%endif%}/>
+			</div>
+			<span class="delete_btn none" id="contract_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="contract" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+
+
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">租赁协议(到期日期)：</span>
+            </label>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="contract_enddate_preview" class="img_previews" />
+				<input type="hidden" value="" id="contract_enddate_hd_value" />
+			</div>
+			<span class="delete_btn none" id="contract_enddate_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="contract_enddate" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">租赁协议(租赁地址)：</span>
+            </label>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="contract_address_preview" class="img_previews" />
+				<input type="hidden" value="" id="contract_address_hd_value" />
+			</div>
+			<span class="delete_btn none" id="contract_address_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="contract_address" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">租赁协议(租赁目的)：</span>
+            </label>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="contract_desc_preview" class="img_previews" />
+				<input type="hidden" value="" id="contract_desc_hd_value"/>
+			</div>
+			<span class="delete_btn none" id="contract_desc_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="contract_desc" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+
+		{%if user.user_type > 1%}
+		<!--营业执照-->
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">{%if user.user_type == 2 %}<b>*</b>营业执照：{%endif %}{%if user.user_type == 3 %}<b>*</b>营业执照：{%endif %}</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="license_preview" class="img_previews" />
+				<input type="hidden" value="" id="license_hd_value" class="required"/>
+			</div>
+			<span class="delete_btn none" id="license_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="license" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+        <!-- 营业证明照片 -->
+        <div class="grid">
+            <label class="upload_title">
+                <span class="input_title2"><b>*</b>经营场所(公司环境)：</span>
+            </label>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="business_attest_env_preview" class="img_previews" />
+				<input type="hidden" value="" id="business_attest_env_hd_value" class="required"/>
+			</div>
+			<span class="delete_btn none" id="business_attest_env_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="business_attest_env" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">经营场所(出售商品)：</span>
+            </label>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="business_attest_srv_preview" class="img_previews" />
+				<input type="hidden" value="" id="business_attest_srv_hd_value"/>
+			</div>
+			<span class="delete_btn none" id="business_attest_srv_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="business_attest_srv" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">经营场所(公司轮廓)：</span>
+            </label>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="business_attest_aspect_preview" class="img_previews" />
+				<input type="hidden" value="" id="business_attest_aspect_hd_value"/>
+			</div>
+			<span class="delete_btn none" id="business_attest_aspect_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="business_attest_aspect" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		{%endif %}
+
+		<!-- 其他信用凭证 -->
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">其他信用凭证(照片)：</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div>
+				<img src="/static/images/upload_placeholder.png" id="other_voucher_preview" class="img_previews" />
+				<input type="hidden" value="" id="other_voucher_hd_value" class=""/>
+			</div>
+			<span class="delete_btn none" id="other_voucher_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="other_voucher" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		{%if user.user_type == 2 %}
+		<!-- 完税证明 -->
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">完税证明：</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div><img src="/static/images/upload_placeholder.png" id="payed_tax_preview" class="img_previews" /></div>
+			<span class="delete_btn none" id="payed_tax_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="payed_tax" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+        <!-- 法人授权书 -->
+        <div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">法人授权书：</span>
+            </label>
+            <span id="id_front_progress" class="img_progress" > {{apply.errors.id_front.as_text}}</span>
+            <div><img src="/static/images/upload_placeholder.png" id="legal_person_auth_preview" class="img_previews" /></div>
+			<span class="delete_btn none" id="legal_person_auth_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="legal_person_auth" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+        <!-- 被授权人身份证正面-->
+        <div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">被授权人身份证(正面)：</span>
+            </label>
+            <div><img src="/static/images/upload_placeholder.png" id="legal_person_auth_front_preview" class="img_previews" /></div>
+			<span class="delete_btn none" id="legal_person_auth_front_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="legal_person_auth_front" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+        <!-- 被授权人身份证反面-->
+        <div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">被授权人身份证(反面)：</span>
+            </label>
+            <div><img src="/static/images/upload_placeholder.png" id="legal_person_auth_back_preview" class="img_previews" /></div>
+			<span class="delete_btn none" id="legal_person_auth_back_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="legal_person_auth_back" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		{%endif %}
+		{%if user.user_type == 3 %}
+		<!-- 组织机构代码证-->
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">组织机构代码证：</span>
+            </label>
+            <div><img src="/static/images/upload_placeholder.png" id="org_code_preview" class="img_previews" /></div>
+			<span class="delete_btn none" id="org_code_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="org_code" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+
+		<!-- 税务登记证-->
+		<div class="grid">
+            <label class="upload_title">
+                <span class="input_title2">税务登记证：</span>
+            </label>
+            <div><img src="/static/images/upload_placeholder.png" id="tax_preview" class="img_previews" /></div>
+			<span class="delete_btn none" id="tax_delete">删除</span>
+            <span class="button gray fileinput-button"><input type="file" name="tax" id="" class="upload_btn" style="width:130px;"/>上传图片</span>
+        </div>
+		{%endif %}
+        <!--done-->
+        </div>
+        <p class="upload_btn" tip="{{user.id}}">
+        	<input class="button next" type="submit" value="上传"/>
+        	<!--input class="button skip gray" type="button" value="跳过" onclick="javascript:Page.func.jump_upload();"/-->
+        </p>
+        </form>
+        </div>
+</div>
+{%endblock%}	
+
+{%block script%}
+<script type="text/javascript">
+var Page = {'__doc__':'用户凭证上传页面',
+		    '__author__':'zhangh',
+			'__version__':'v1.0',
+			'isAjaxBusy':false}
+
+if(!Array.prototype.indexOf){
+	Array.prototype.indexOf = function(obj,start){
+			for(var i = (start || 0),length=this.length;i<length;i++){
+				if(this[i] == obj)
+					return i;
+			}
+			return -1;
+		}
+}
+Page.func = (function(){
+	var SUPPORTED_IMG = ['.jpg','.jpeg','.png'];
+	var isSupportedImg = function(file){
+		file = file || '';
+		var lastDotIndex = file.lastIndexOf('.');
+		var fileExt = file.substr(lastDotIndex);
+		if(fileExt && SUPPORTED_IMG.indexOf(fileExt.toLowerCase()) >= 0)
+			return true;
+		else
+			return false;
+	};
+	var show_msg = function(isError,tipImg,tipMsg, msg){
+		if(isError){
+			tipImg.css({backgroundPosition : "left -26px"}).show();
+			tipMsg.show().html(msg);
+		}
+		else{
+			tipImg.css({display: "inline-block",backgroundPosition : "left top" }).show();
+			tipMsg.show().html("");
+		}
+	};
+
+	var hide_msg = function(tipImg,tipMsg){
+		tipImg.hide();
+		tipMsg.hide();
+	};
+    return {
+		init : function(){
+			$('.upload_btn').each(function(){
+				var fileup = $(this);
+				fileup.fileupload({
+					dataType:'json',
+					url:'/upgrade/upload/image/',
+					send:function(event,data){
+						var result = false;
+						if(!Page.isAjaxBusy){
+							var file = data.files[0];
+							var ext = file.name.toLowerCase().substr(file.name.lastIndexOf('.'));
+							var div = $("#"+event.target.name+"_div");
+							var tipImg = $('.tipImg',$(div));
+							var tipMsg = $('.errTip',$(div));
+							var fileup_fake = $("input[name='fakeupload']",div)
+							
+							fileup_fake.val('');
+							if(SUPPORTED_IMG.indexOf(ext) >= 0){
+								var size = file.size || event.target.size;
+								if(size >= 5000000){
+									show_msg(true,tipImg,tipMsg,"上传图片文件不能超过5M")
+								}
+								else{
+									//fileup_fake.val(file.name);
+									//hide_msg(tipImg,tipMsg);
+									Page.isAjaxBusy = true;
+									result = true;
+								}
+							}
+							else{
+								show_msg(true,tipImg,tipMsg,"图片类型："+SUPPORTED_IMG.join('|'))
+							}
+						}
+						
+						return result;
+					},
+					fail:function(e,data){
+						Page.isAjaxBusy = false;
+					},
+
+					done: function(e, data){
+						Page.isAjaxBusy = false;
+						progress_name = "#" + fileup.attr("name")+"_progress";
+						progress_obj= $(progress_name);
+						//progress_obj.html("上传成功");			
+				
+						if(!data.result.succeed){
+							progress_obj.html(data.result.msg);
+							return false;
+						}
+						var b=Math.random()*10
+						img_url = "/preview/{{user.id}}/small/"+ data.result.msg +"?t="+b;
+						img_name = "#" + fileup.attr("name")+"_preview";
+						img_obj = $(img_name);
+						img_obj.attr('src',img_url);
+						img_obj.show();
+						
+						hidden = "#" + fileup.attr("name")+"_hd_value";
+						$(hidden).val(data.result.msg)
+						
+						btnDelete = $("#" + fileup.attr("name")+"_delete");
+						btnDelete.show()
+					},
+
+					progress: function(e,data){
+						//progress_name = "#"+fileup.attr("name")+"_progress";
+						//progress_obj= $(progress_name);
+						//progress = parseInt(data.loaded/data.total*100, 10);
+						//progress_obj.html("已完成:"+progress+"%");
+					}
+				});
+			});
+
+			$(".delete_btn").each(function(){
+				$(this).click(function(){
+					var _id = $(this).attr("id");
+					var _imgName = _id.substr(0,_id.lastIndexOf('_'));
+					$("#"+_imgName+"_preview").attr('src','/static/images/upload_placeholder.png');
+					$("#"+_imgName+"_hd_value").val('')
+					$(this).hide();
+				});
+			});
+		},
+		jump_upload:function(){
+			if(window.confirm("如果您现在选择跳过上传凭证，请您务必在即日起45天之内完成凭证的上传补充，以免对您的正常使用造成不便。"))
+				window.location.href="/smqd/signup3?_jump_upload=1";
+		},
+        onSubmit:function(){
+			if(Page.isAjaxBusy){
+				alert('请等待文件上传完毕后提交申请!');
+				return false;
+			}
+				
+            var isOk = true;
+            $(".required").each(function(){
+				var div = $(this).parent().parent().parent();
+				var tipImg = $('.tipImg',$(div));
+				var tipMsg = $('.errTip',$(div));
+
+                if($(this).val().length == 0){
+                    isOk = false;
+					show_msg(true,tipImg,tipMsg,'请先上传凭证')
+				}
+				else
+					hide_msg(tipImg,tipMsg)
+            });
+			if(!isOk)
+				alert('请先确认红色星号标注的凭证照片已经上传成功！');
+            return isOk;
+		}
+    };
+})();
+Page.func.init();
+
+$(document).ready(function(){
+	$(".upload_btn").each(function(){
+		var f = $(this);
+		try{
+			if(f[0].type == "file"){
+				$(this).removeClass("upload_btn");
+				$(this).attr("style","width:160px;");
+			}
+		}
+		catch(err){}
+	});
+});
+</script>
+{%endblock%}
+

@@ -1,0 +1,31 @@
+{%extends "msg/msg_auto_jump.html"%}
+
+{%block title%} 付款成功  {%endblock%}
+{%block msg%}
+成功付款，请等待审核开通。
+		<span id="jumpto">5</span>秒后自动跳转到账户信息页面。如果您的浏览器长时间没有跳转，请点击
+		<a name="msg" style="color:blur" href="/account">这里。</a>
+
+{%endblock%}
+{%block script %}
+<script type="text/javascript">
+var page = {};
+page.func = (function(){
+	var totalSeconds = 5;
+	return {
+		timeAndRedirect : function(){
+			var seconds = $("#jumpto");
+			seconds.html(--totalSeconds);
+			if(totalSeconds > 1)
+				window.setTimeout("page.func.timeAndRedirect()",1000);
+			else
+				window.location.href = "/account";
+		},
+		init : function(){
+				window.setTimeout("page.func.timeAndRedirect()",1000);
+		}
+    };
+})();	
+page.func.init();
+</script>
+{%endblock %}

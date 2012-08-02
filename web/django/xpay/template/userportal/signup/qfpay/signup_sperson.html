@@ -1,0 +1,323 @@
+{%extends "userportal/base/qfpay_base.html"%}
+
+{%block title%} 钱方-个体户注册 {%endblock%}
+
+{%block resource%}
+{{block.super}}
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+	<style>
+	.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{	
+		width:45%;
+	}
+	</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.initProv("#pro", "#city", "北京市", "东城区");
+        $.initProv("#bpro", "#bcity", "北京市", "东城区");
+    });
+
+    $(document).ready(function () {
+        $(".selector").datepicker({ showOn:'focus',changeMonth:true,changeYear:true, minDate:new Date()});
+    });  
+</script>
+
+{%endblock%}
+
+{%block container%}
+<div class="container">
+    <div class="clearfix">
+		<div class="process" id="process2"></div>
+
+        <form class="clearfix mt_20" method="POST" action="" onsubmit="javascript:return page.func.onsubmit();">
+            <div class="meta">
+                <h2>个体商户信息</h2>
+            </div>
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">字号名称<b>*</b></span> {{spersonform.shopname}} </label>
+                <span class="tipImg"></span>
+                <span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.shopname.as_text}}</span>
+            </div>
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">收据显示名称<b>*</b></span> {{spersonform.nickname}} </label>
+                <span class="tipImg"></span>
+                <span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.nickname.as_text}}</span>
+            </div>
+            <div class="clearfix verify">
+                <label class="clearfix"> <span class="input_title">经营者姓名<b>*</b></span> {{spersonform.legalperson}} </label>
+                <span class="tipImg"></span>
+                <span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.legalperson.as_text}}</span>
+            </div>
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">经营者身份证号<b>*</b></span> {{spersonform.idnumber}} </label>
+				<span class="tipImg"></span>
+                <span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.idnumber.as_text}}</span>
+            </div>
+            <div class="clearfix verify_tip">
+                <span class="input_title">经营地址<b>*</b></span> 
+                <select name="province" class="f1" id="pro"></select> 
+                <select name="city" class="f1" id="city"></select>
+                <span class="errors">{{spersonform.errors.city.as_text}}</span>
+            </div>
+			<div class="clearfix verify_tip">
+                <span class="input_title"></span> 
+                <label class="clearfix"> {{spersonform.businessaddr}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.businessaddr.as_text}}</span>
+            </div>
+
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">营业执照注册号<b>*</b></span> {{spersonform.licensenumber}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.licensenumber.as_text}}</span>
+            </div>
+
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">月交易金额</span> {{spersonform.monthtradeamount}} </label>
+                <span class="errors">{{spersonform.errors.monthtradeamount.as_text}}</span>
+            </div> 
+
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">出售的商品或服务<b>*</b></span> {{spersonform.mcc}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.mcc.as_text}}</span>
+            </div> 
+            <div class="meta">
+                <h2>联系人信息</h2>
+            </div>
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">姓名<b>*</b></span> {{spersonform.legalperson}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.legalperson.as_text}}</span>
+            </div>
+            <div class="clearfix verify">
+                <label class="clearfix"> <span class="input_title">手机<b>*</b></span> {{spersonform.mobile}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.mobile.as_text}}</span>
+            </div>
+            <div class="clearfix verify">
+                <label class="clearfix" for="1"> <span class="input_title">固定电话号码</span>{{spersonform.telephoneregion}} {{spersonform.telephone}}</label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.telephone.as_text}}</span>
+            </div>
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">邮箱</span> {{spersonform.email}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.email.as_text}}</span>
+            </div>
+            <div class="meta">
+                <h2>收款银行信息</h2>
+            </div>
+            <div class="clearfix verify_tip">
+                <span class="input_title">收款银行</span>
+                <select class="fl" name="banknameprefix">
+				{%include "userportal/bank_list.html"%}
+                </select>
+            </div>
+
+            <div class="clearfix verify_tip">
+                <span class="input_title">开户行支行名称<b>*</b></span>
+                <label class="clearfix">
+				{{spersonform.bankname}}
+                </label>
+                <span class="tipImg"></span>
+                <span class="errTip">输入不能为空</span>	
+                <span class="errors">{{spersonform.errors.bankname.as_text}}</span>
+            </div>					
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">银行账户名称<b>*</b></span> {{spersonform.bankuser}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.bankuser.as_text}}</span>
+            </div>
+            <div class="clearfix verify_tip">
+                <label class="clearfix"> <span class="input_title">银行账号<b>*</b></span> {{spersonform.bankaccount}} </label>
+                <span class="tipImg"></span><span class="errTip">输入不能为空</span>
+                <span class="errors">{{spersonform.errors.bankaccount.as_text}}</span>
+            </div>
+            <div class="clearfix verify">
+				<label class="clearfix"> <span class="input_title">确认银行账号<b>*</b></span> {{spersonform.confirmbankaccount}} </label>
+				<span class="tipImg"></span><span class="errTip">输入不能为空</span>
+				<span class="errors">{{spersonform.errors.confirmbankaccount.as_text}}</span>
+			</div>
+			<div class="clearfix verify_tip">
+                <span class="input_title">需要读卡器数量<b>*</b></span>
+                <select name="terminalcount" class="fl">
+                    <option value="1">1台</option>
+                    <option value="2">2台</option>
+                    <option value="3">3台</option>
+                    <option value="4">4台</option>
+                    <option value="5">5台</option>
+                </select>
+            </div>
+            <p class="form_btm mt_20"><input type="submit" class="submit button" value="下一步"></p>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	try{
+		var prefix = "{{spersonform.banknameprefix.value}}";
+		if(prefix.length == 0 || prefix == "None")
+			return;
+		var ops = $("select[name='banknameprefix']")[0].options;	
+		for(var i = 0,length=ops.length;i<length;i++){
+			if(ops[i].value == prefix){
+				ops[i].selected = true;
+				break;
+			}
+		}
+	}
+	catch(err){
+	}
+});
+</script>
+
+<script type="text/javascript">
+
+    function verify_idnumber(obj) {
+        if (obj.val().match(/^((1[1-5])|(2[1-3])|(3[1-7])|(4[1-6])|(5[0-4])|(6[1-5])|71|(8[12])|91)\d{4}((19\d{2}(0[13-9]|1[012])(0[1-9]|[12]\d|30))|(19\d{2}(0[13578]|1[02])31)|(19\d{2}02(0[1-9]|1\d|2[0-8]))|(19([13579][26]|[2468][048]|0[48])0229))\d{3}(\d|X|x)?$/)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function verify_telephone(obj) {
+        if (obj.val().match(/^(\d{2,3}-)?(\d{3}|\d{4})-(\d{7,10})(-\d+)*$/)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+ 	function verify_email(obj) {
+		if(obj.val().match(/^[a-zA-Z0-9_]{1,12}@[a-zA-Z0-9]{1,12}.[a-zA-Z0-9]{1,3}$/)){
+			return true;
+		}else{
+			return false;
+		}
+	} 
+	function verify_post(obj) {
+        if (obj.val().match(/^\d{6}$/)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	function verify_bankaccount(obj){
+
+        if (obj.val().match(/^\d{16,32}$/)) return true 
+		else return false;
+	}
+
+	function verify_confirmbankaccount(obj){
+		if (obj.val()==$("#id_bankaccount").val()){
+			return true;
+		}	else {
+			return false;
+		}
+	
+	
+	}
+	function verify_company(obj) {
+        if (obj.val().match(/^[\u4e00-\u9fa5]+$/)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	function verify_city(obj){
+	if (obj.val() == "-1") return false;
+	else return true;
+	}
+	$("#id_businessaddr").blur(function(){
+		addr_obj = $("#id_businessaddr");
+		city_obj = $("#city");
+		if(!verify_city(city_obj))
+			$.show_msg(city_obj,false, true, "请选择城市");
+		else
+			$.show_msg(city_obj, false, false,"");
+	});
+	$("#id_bankname").blur(function(){
+		addr_obj = $("#id_bankname");
+		city_obj = $("#bcity");
+		if(!verify_city(city_obj))
+			$.show_msg(city_obj,false, true, "请选择城市");
+		else
+			$.show_msg(city_obj, false, false,"");
+	});
+    $("#id_mcc").blur(function(){
+		obj = $("#id_mcc")
+		if (obj.val().length > 0)
+		{
+			$.show_msg(obj,true,false,'')	
+		}
+	})
+
+	$("#id_email").blur(function(){
+		obj = $("#id_email")
+		if (obj.val().length==0)
+		{ 
+			obj = obj.parent();
+			tipImg = obj.nextAll('.tipImg');
+			tipMsg = obj.nextAll('.errTip');
+			tipImg.hide();
+			tipMsg.show().html("");
+		}
+		else{
+			if(obj.val().match(/^[a-zA-Z0-9_]{1,32}@[a-zA-Z0-9]{1,12}.[a-zA-Z0-9]{1,3}$/))
+			{
+				$.show_msg(obj,true,false,'');
+			}
+			else{
+				$.show_msg(obj,true,true,'请输入正确的邮箱');
+			}
+	
+		}
+	})
+
+    //下边是二级校验的调用方法，当然$("#ID")中的ID是需要手动加在对应input元素上的，这里是身份证，所以取名ID。
+
+    $("#manual").click(function () {
+        $(this).hide();
+        $(this).next().show();
+    });
+    $("#id_idnumber").add_verify_listener(verify_idnumber, "您输入的身份证号码格式有误，请重新输入");
+	$("#id_shopname").add_verify_listener(verify_company,"请输入字号的中文名称");
+	$("#id_legalperson").add_verify_listener(verify_company,"请输入经营者的中文姓名");
+	$("#id_bankaccount").add_verify_listener(verify_bankaccount, "请输入16位或32位数字的银行卡号");
+	$("#id_bankname").add_verify_listener(verify_company,"请输入银行中文名称");
+	$("#id_bankuser").add_verify_listener(verify_company,"请输入开户人中文名称");
+    $("#id_confirmbankaccount").add_verify_listener(verify_confirmbankaccount, "您输入的两次银行账号不一致");
+	$("#id_telephone").add_verify_listener(verify_telephone, "格式应为:XXX-XXXXXXX，请重新输入");
+	$("#id_mobile").add_verify_listener(verify_mobile, "请重新输入正确的手机号");
+    //$("#id_post").add_verify_listener(verify_post,"您输入的邮政编码格式有误，请重新输入");
+</script>
+<script type="text/javascript">
+var page = page || {}
+page.func = (function(){
+	return {
+		onsubmit:function(){
+			var result = true;
+			var req_feilds = $(".required");
+			for(var i = 0,length = req_feilds.length; i < length;i++){
+				try{
+					if(qf.validate.isNull($(req_feilds[i]))){
+						qf.validate.showError(req_feilds[i],"输入不能为空");
+						result = false;
+					}
+				}
+				catch(err){
+						
+				}
+			}
+			return result;
+		}
+	}
+})();
+</script>
+
+{%endblock%}

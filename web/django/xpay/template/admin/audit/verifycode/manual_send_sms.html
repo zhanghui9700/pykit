@@ -1,0 +1,55 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+{% load url from future %}
+
+{% block extrahead %}{{ block.super }}
+{% url 'admin:jsi18n' as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+	<div class="breadcrumbs">
+		 <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+		 <a href="../../">{%with opts.app_label as app_label %}{% trans app_label %}{%endwith%}</a> &rsaquo; 
+		 <a href="../">{{opts.verbose_name_plural}}</a>&rsaquo;
+		 手动发送短信
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>手工发送短信</h1>
+<div id="content-main">
+<form enctype="multipart/form-data" action="{{ form_url }}" method="post"  id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+<div>
+<fieldset class="module aligned">
+<div class="form-row">
+	{%if errorMsg %}
+	<ul class="errorlist">
+		<li>{{errorMsg}}</li>
+	</ul>
+	{%endif %}
+	<div>
+		<label>手机号码</label>
+		<textarea name="mobile_list" id="mobile_list" rows="7" cols="40"></textarea>
+		<p class="help">多个手机号码逗号隔开,英文","！！！</p>
+	</div>
+    <div>
+		<label>短信内容</label>
+		<textarea name="sms_content" id="sms_content" rows="7" cols="40">测试短信网关!!!!!</textarea>
+		<p class="help">短信内容最多发送250个字符，越界后发送失败，请注意！</p>
+	</div>
+
+</div>
+<input type="submit" value="发送短信"/>
+</fieldset>
+</div>
+</form>
+<script type="text/javascript">
+</script>
+</div>
+{% endblock %}

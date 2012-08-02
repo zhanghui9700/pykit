@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{%block title%}  {%endblock%}</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/base.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/common.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/jquery.PCT_select.css"/>
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery.verify.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery.PCT_select.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <a class="logo" href="#"></a>
+</div>
+
+<div class="container">
+    <div class="clearfix">
+        <div id="verifying"></div>
+        <div class="clearfix tempTip hasBlank_b">
+            <p class="tipContent2">{%block msg%} {%endblock%}</p>
+        </div>
+    </div>
+</div>
+
+{%include "userportal/base/footer.html"%}
+
+{%block script%} {%endblock%}
+</body>
+</html>
+

@@ -1,0 +1,342 @@
+﻿{% extends 'mis/base.html'%}
+{%block externaljs %}
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link href="/static/css/jquery.jqzoom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="/static/js/jquery.jqzoom-core.js" ></script>
+{%endblock%}
+{% block content %}
+<!---------大内容输入框-------->
+<div class="content_pz">
+    <div id="directory">
+        <a href="#"><img src="/static/images/mis/home.jpg" /></a>><a href="javascript:void(0);">商户管理</a>><a href="#">人工审批</a>
+    </div>  
+    <!--------商户信息,新的版本--------> 
+    <div class="tenant" tips="counter:{{ConfirmList.licenseCounter}};upid:{{ConfirmList.upid}};">
+        <div class="tenant_xx">商户信息</div>
+        <div class="tenant_a">
+            <ul>
+                <li><span>商户编号：</span><span>{{user.id}}</span></li>
+                <li><span>商户等级：</span><span>{{user.user_level}}</span></li>
+                <li><span>商户类型：</span><span>{{user.user_type}}</span></li>
+                <li><span>商户状态：</span><span>{{state}}</span></li>
+                <li><span>注册时间：</span><span>{{user.date_joined}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <!---*****************身份证*********************-->
+	{%if ConfirmList.IDCardInfoForm and ConfirmList.IDCardInfoForm|length%}
+    <div class="tenant one">
+	    <div class="tenant_xx">身份证信息</div>
+        <div class="tenant_rl">
+           <!---*****************小框*********************-->
+            <div class="tenant_xk">
+                <span>
+				 <a class='zoomThumbActive' href='javascript:void(0);' rel="{gallery:'idcard', smallimage: '/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/middle/{{VoucherImage.IDCardInfoForm.0.name}}',largeimage:'/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/large/{{VoucherImage.IDCardInfoForm.0.name}}'}"><img src='/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/small/{{VoucherImage.IDCardInfoForm.0.name}}' /></a>
+				 </span>
+				<span>
+				 <a class='' href='javascript:void(0);' rel="{gallery: 'idcard', smallimage: '/preview/{{VoucherImage.IDCardInfoForm.1.user_id}}/middle/{{VoucherImage.IDCardInfoForm.1.name}}',largeimage:'/preview/{{VoucherImage.IDCardInfoForm.1.user_id}}/large/{{VoucherImage.IDCardInfoForm.1.name}}'}"  ><img src='/preview/{{VoucherImage.IDCardInfoForm.1.user_id}}/small/{{VoucherImage.IDCardInfoForm.1.name}}' /></a>
+				 </span>
+            </div>
+            <!---*****************大框*********************-->   
+            <div class="tenant_dk">
+			 <a class='jqzoom' rel='idcard' href='/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/large/{{VoucherImage.IDCardInfoForm.0.name}}'><img src='/preview/{{VoucherImage.IDCardInfoForm.0.user_id}}/middle/{{VoucherImage.IDCardInfoForm.0.name}}' /></a>
+			</div>
+            <!---*****************判断信息*********************-->  
+            <div class="why compareResult" id = "IDCardInfoForm" title="身份证" >
+                <ul>
+                    <li class="sq">
+						<span>申请时的信息</span>
+						<span>录入时的信息</span>
+                        <span>更正</span>
+					</li>
+					{%for item in ConfirmList.IDCardInfoForm %}
+					<li>
+                        <span>
+                            <span class="ti_a">{{item.desc}}：</span>
+							<input name="IDCardInfoForm_{{item.field}}" type="radio" value="1" checked/>
+							<input name="" class="text a140" type="text" disabled value="{{item.input_value}}"/>
+                        </span>
+                        <span class="s_a">
+							<input name="IDCardInfoForm_{{item.field}}" type="radio" value="2" />
+							<input name="" class="text a140" type="text" disabled value="{{item.typist_value}}"/>
+						</span>
+                        <span class="s_a">
+							<input name="IDCardInfoForm_{{item.field}}" type="radio" value="3" />
+							<input name="" class="text a140" type="text" value=""/>
+						</span>
+
+                    </li>
+					{%endfor%}
+                </ul>
+            </div>
+        </div>
+    </div>
+	{%endif%}
+	
+	<!--******************营业执照********************-->
+	{%if ConfirmList.LicenseInfoForm and ConfirmList.LicenseInfoForm|length > 0 %}
+	<div class="tenant one">
+		<div class="tenant_xx">营业执照</div>
+	    <div class="tenant_rl">
+	       <!---*****************小框*********************-->
+	    	<div class="tenant_xk s104">
+
+	        </div>
+	        <!---*****************大框*********************-->   
+	        <div class="tenant_dk">	        
+			<a class='jqzoom' href='/preview/{{VoucherImage.LicenseInfoForm.0.user_id}}/large/{{VoucherImage.LicenseInfoForm.0.name}}'><img src='/preview/{{VoucherImage.LicenseInfoForm.0.user_id}}/middle/{{VoucherImage.LicenseInfoForm.0.name}}' /></a>
+			</div>
+	        <!---*****************输入框*********************-->  
+	    	<div class="why compareResult" id="LicenseInfoForm" title="营业执照">
+	        	<ul>
+	            	<li class="sq">
+                        <span>申请时的信息</span>
+                        <span>录入时的信息</span>
+                        <span>更正</span>
+                    </li>
+	                {%for item in ConfirmList.LicenseInfoForm %}
+					<li>
+                        <span>
+                            <span class="ti_a">{{item.desc}}：</span>
+							<input name="LicenseInfoForm_{{item.field}}" type="radio" value="1" checked />
+							<input name="" class="text a140" type="text" disabled value="{{item.input_value}}"/>
+                        </span>
+                        <span class="s_a">
+							<input name="LicenseInfoForm_{{item.field}}" type="radio" value="2" />
+							<input name="" class="text a140" type="text" disabled value="{{item.typist_value}}"/>
+						</span>
+                        <span class="s_a">
+							<input name="LicenseInfoForm_{{item.field}}" type="radio" value="3" />
+							<input name="" class="text a140" type="text" value=""/>
+						</span>
+
+                    </li>
+					{%endfor%}
+	            </ul>
+	        </div>
+	    </div>
+	</div>     
+	{%endif %}
+
+    <!--******************税务登记证********************-->
+	{%if ConfirmList.TaxInfoForm and  ConfirmList.TaxInfoForm|length > 0 %}
+	<div class="tenant one">
+		<div class="tenant_xx">税务登记证</div>
+	    <div class="tenant_rl">
+	       <!---*****************小框*********************-->
+	    	<div class="tenant_xk s104">
+
+	        </div>
+	        <!---*****************大框*********************-->   
+	        <div class="tenant_dk">	        
+			<a class='jqzoom' href='/preview/{{VoucherImage.TaxInfoForm.0.user_id}}/large/{{VoucherImage.TaxInfoForm.0.name}}'><img src='/preview/{{VoucherImage.TaxInfoForm.0.user_id}}/middle/{{VoucherImage.TaxInfoForm.0.name}}' /></a>
+			</div>
+	        <!---*****************输入框*********************-->  
+	    	<div class="why compareResult" id="TaxInfoForm" title="税务登记证">
+	        	<ul>
+	            	<li class="sq">
+                        <span>申请时的信息</span>
+                        <span>录入时的信息</span>
+                        <span>更正</span>
+                    </li>
+	                {%for item in ConfirmList.TaxInfoForm %}
+					<li>
+                        <span>
+                            <span class="ti_a">{{item.desc}}：</span>
+							<input name="TaxInfoForm_{{item.field}}" type="radio" value="1" checked />
+							<input name="" class="text a140" type="text" disabled value="{{item.input_value}}"/>
+                        </span>
+                        <span class="s_a">
+							<input name="TaxInfoForm_{{item.field}}" type="radio" value="2" />
+							<input name="" class="text a140" type="text" disabled value="{{item.typist_value}}"/>
+						</span>
+                        <span class="s_a">
+							<input name="TaxInfoForm_{{item.field}}" type="radio" value="3" />
+							<input name="" class="text a140" type="text" value=""/>
+						</span>
+
+                    </li>
+					{%endfor%}
+	            </ul>
+	        </div>
+	    </div>
+	</div>     
+	{%endif %}
+	
+	<!--******************组织结构登记证********************-->
+	{%if ConfirmList.OrgcodeInfoForm and ConfirmList.OrgcodeInfoForm|length > 0 %}
+	<div class="tenant one">
+		<div class="tenant_xx">组织结构证</div>
+	    <div class="tenant_rl">
+	       <!---*****************小框*********************-->
+	    	<div class="tenant_xk s104">
+
+	        </div>
+	        <!---*****************大框*********************-->   
+	        <div class="tenant_dk">	        
+				<a class='jqzoom' href='/preview/{{VoucherImage.OrgcodeInfoForm.0.user_id}}/large/{{VoucherImage.OrgcodeInfoForm.0.name}}'><img src='/preview/{{VoucherImage.OrgcodeInfoForm.0.user_id}}/middle/{{VoucherImage.OrgcodeInfoForm.0.name}}' /></a>
+			</div>
+	        <!---*****************输入框*********************-->  
+	    	<div class="why compareResult" id="OrgcodeInfoForm" title="组织机构代码证">
+	        	<ul>
+	            	<li class="sq">
+                        <span>申请时的信息</span>
+                        <span>录入时的信息</span>
+                        <span>更正</span>
+                    </li>
+	                {%for item in ConfirmList.OrgcodeInfoForm %}
+					<li>
+                        <span>
+                            <span class="ti_a">{{item.desc}}：</span>
+							<input name="OrgcodeInfoForm_{{item.field}}" type="radio" value="1" checked/>
+							<input name="" class="text a140" type="text" disabled value="{{item.input_value}}"/>
+                        </span>
+                        <span class="s_a">
+							<input name="OrgcodeInfoForm_{{item.field}}" type="radio" value="2" />
+							<input name="" class="text a140" type="text" disabled value="{{item.typist_value}}"/>
+						</span>
+                        <span class="s_a">
+							<input name="OrgcodeInfoForm_{{item.field}}" type="radio" value="3" />
+							<input name="" class="text a140" type="text" value=""/>
+						</span>
+
+                    </li>
+					{%endfor%}
+	            </ul>
+	        </div>
+	    </div>
+	</div>     
+   {%endif %} 
+
+	<!--*********************最下面的按钮*******************-->
+	<div class="bottom_zui">
+		<ul>
+	    	<!--li><input  class="button_b async_submit" name="blacklist" type="button" value="加入黑名单" /></li-->
+	        <li><input  class="button_b async_submit" name="refused" type="button" value="拒绝审批"  /></li>
+	        <li><input  class="button_b async_submit" name="approved" type="button" value="审批通过" /></li>
+	    </ul>
+	</div>   
+</div>
+{% endblock %}
+{%block script%}
+<script type="text/javascript">
+var page = {'__doc__':'凭证信息手工确认',
+            '__author__':'zhangh',
+			'__version__':'v1.0',
+			'isAjaxBusy':false};
+
+page.func = (function(){
+    var licenseCount = '{{ConfirmList.licenseCounter}}';
+	var get_post_data = function(){
+        var compareResult = {};
+        var vouchers = $(".compareResult");//找到所有显示凭证对比的容器DIV
+        for(var i = 0,ilength=vouchers.length;i<ilength;i++){
+            var div = vouchers[i];
+            var confirmComplete = true;
+            var confirmResult = {};
+            
+            var fields = $("input[type='radio']",div);//容器内选中的项
+            for(var j = 0,jlength=fields.length;j<jlength;j++){
+				var radio = fields[j];
+                
+                if(radio.checked){
+                    var selectValue = $(radio).next("input[type='text']").val()
+                    if(selectValue && selectValue.length > 0){
+						compareResult[radio.name] = radio.value + "_" + selectValue;
+                    }
+					else{
+                        confirmComplete = false;
+                        break;
+                    }
+                }
+            }
+            
+            if(!confirmComplete){
+                alert("请先确认\""+div.title+"\"的各个信息后提交审批结果！");
+                return false;
+                break;
+            }
+        }
+        return compareResult;
+    };
+    var AuditApproved = function(){
+        postData = get_post_data();
+        console.dir(postData);
+        if(postData)
+            AsyncPostBack(postData,'approved');
+    };
+    var AuditRefused = function(){
+        if(window.confirm("确认拒绝此用户的升级申请？","infomation")){
+            AsyncPostBack({},'refused');         
+        } 
+    };
+    var AuditBlackList = function(){
+        if(window.confirm("确认将此用户加入黑名单？","infomation")){
+            AsyncPostBack({},'blacklist');         
+        }
+    };
+    var AsyncPostBack = function(postData,action,successHandler,errorHandler){
+        if(!page.isAjaxBusy){
+            page.isAjaxBusy = true;
+            postData["__upid"] = "{{ConfirmList.upid}}";
+            postData["__action"] = action;
+            ($).ajax({
+                type:"POST",
+				//contentType:'application/json;charset=utf-8',
+                url : "/audit/manual/submit/",
+                dataType:'json',
+				data : postData,
+                success : function(data){
+                    page.isAjaxBusy = false;
+                    if("200" == data.statusCode){
+                        if(successHandler){
+                            successHandler()
+                        }
+                        else{
+                            alert("信息提交成功，系统自动返回手工审批列表页面！");
+                            //window.location.href='/audit/result/';
+                        }
+                    }
+                    else{
+                        alert("信息提交失败，错误信息："+data.msg);
+                    }
+                },
+                error : function(){
+                    page.isAjaxBusy = false;
+                    if(errorHandler)
+                        errorHandler()
+                }
+            });
+        }
+        else
+            alert('服务器正在处理请求，请稍后提交，休息30秒先！')
+    }
+
+    var actionList = {'approved':AuditApproved,
+                      'refused':AuditRefused,
+                      'blacklist':AuditBlackList};
+
+	return {
+		pageInit : function(){
+			$(".async_submit").each(function(){
+				$(this).bind('click',function(){
+				    var action = $(this).attr('name')
+                    actionList[action]();
+                });
+			});	
+            $(".jqzoom").jqzoom({
+		        zoomWidth:420,
+		        zoomHeight:260,
+		        preloadText:'加载图片...',
+		        title:'',
+		        xOffset:5,
+		        yOffset:0
+	        });
+		}
+	};
+})();
+page.func.pageInit();
+</script>
+{%endblock%}

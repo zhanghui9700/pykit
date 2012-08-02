@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户登录</title>
+<link rel="stylesheet" type="text/css" href="/static/css/mis/global.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/mis/style.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+</head>
+<body>
+<!---------头部-------->
+<div class="header"></div>
+<!--------中间的那个logo------------>
+<div class="logo_a"><img src="/static/images/mis/logo_a.png" /></div>
+
+<!---------内容-------->
+<div class="content_a">
+    <form action='/login/' method="POST" autocomplete="off" onsubmit="javascript:return login.func.valid()"> 
+	<div class="login">
+    	<ul>
+        	<li>用户名</li>
+            <li><input class="text a1" name="userName" type="text" value="{{form.data.userName}}" /></li>
+            <li>密码</li>
+            <li><input class="text a1" name="password" oncut="return false;" onpaste="return false;"  oncopy="return false;" type="password" maxlength="16"/></li>
+            <li><input class="button_a" name="" type="submit" value=""/></li>
+            <li><span id='errspan'>    
+            {%if form.errors %}
+                {%if form.errors.userName%}
+                {{form.errors.userName.as_text}}                
+                {%endif%}
+            {%endif%}           
+            </span></li>
+
+        </ul>
+    </div>
+    </form>
+<!---------版权-------->
+	<div class="footer">
+			<div class="copyright">Copyright © 2011-2012 北京钱方科技网络技术有限公司 京ICP证11044451号</div>
+	</div>
+ <!---->   
+</div>
+<script type='text/javascript'>
+var login = {};
+login.func = (function(){
+    _u   = $('input[name="userName"]');
+	_pwd = $('input[name="password"]');
+	_err = $('#errspan')
+	showError = function(errMsg){
+		_err.html(errMsg);
+	}
+	clearError = function(){
+		_err.html('');
+	}
+	return {
+		valid : function(){
+			if(_u.val().length === 0){
+				showError('请输入用户名！');
+				_u.focus();
+				return false;
+			}
+			if(_pwd.val().length === 0){
+				showError('请输入密码！:');
+				_pwd.focus();
+				return false;
+			}
+			clearError();
+			return true;
+		}
+    }
+})();
+</script>
+
+</body>
+</html>
