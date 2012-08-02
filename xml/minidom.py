@@ -20,3 +20,4 @@ if __name__ == "__main__":
     f = open(CHANGED_LIBVIRT_PATH,'w')
     f.write(root.toxml())
     f.close()
+#http://boyeestudio.cnblogs.com/archive/2005/08/16/216408.html
