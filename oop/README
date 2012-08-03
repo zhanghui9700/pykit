@@ -1,0 +1,19 @@
+class是type或者metaclass的实例，一切皆是对象！
+
+简单解释一下，用 class 定义的类通常是由 type 来建立的，但是如果类定义了__metaclass__属性，那么这个类将由这个属性值指向的东西来创建，而不是默认的type。
+
+一个用 class 关键字定义的类在执行a = ClassA(arg1, arg2,...)（初始化其实例）的时候，会发生 :::
+
+a = type(ClassA).__call__(ClassA, arg1, arg2,...)
+
+type(ClassA)实际上返回的是ClassA的metaclass，默认值为type。这个type.__call__的实现可以用如下代码表示（只能表示表示，实际代码都是用C实现的）。
+
+def __call__(cls, *args, **kwargs):
+    result = cls.__new__(cls, *args, **kwargs)
+    if isinstance(result, cls):
+        type(result).__init__(result,*args,**kwargs)
+    return result
+
+也就是说type.__call__先尝试用__new__来创建类的实例，只有__new__返回了类的实例，__init__才会得以应用到实例上。
+
+回到 MetaClass 的实现上，__init__得到调用的时候，OfTheDarkLord经由 Metaclass 用默认的__new__ 生成了，这时__init__给他安方一个precious属性。等到OfTheDarkLord 子类初始化的时候，__init__ （还是由默认 __new__ 生成的）类定义里通过继承链找到了 OfTheDarkLord 的 precious 属性，所以这次子类不会再创建 precious 属性，而是把自己加入到 OfTheDarkLord 的 precious 列表里。一切都是在 __new__ 运行完之后完成的，在那之前，MetaClass 还没法判断 precious 是否已经存在于继承链中，所以相同的代码会给每一个 OfTheDarkLord 的子类都安插一个空白的 precious 属性，达不成预期的效果。
