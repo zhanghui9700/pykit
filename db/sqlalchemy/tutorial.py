@@ -10,14 +10,16 @@ from sqlalchemy import __version__, create_engine
 print 'sqlalchemy.version:',__version__
 
 #absiolute path
-#engine = create_engine("sqlite:////home/zhanghui/temp/tutorial.db",echo=True)
+engine = create_engine("sqlite:////home/zhanghui/temp/tutorial.db",echo=True)
 #relatie path
-engine = create_engine("sqlite:///../tutorial.db",echo=True)
+#engine = create_engine("sqlite:///../tutorial.db",echo=True)
+
 from sqlalchemy import Table,Column,Integer,String,MetaData,ForeignKey
 
 metadata = MetaData()
 
-users = Table('users',metadata,
+#define a table
+t_users = Table('users',metadata,
         Column('user_id',Integer,primary_key=True),
         Column('name',String),
         Column('age',Integer),
@@ -25,6 +27,48 @@ users = Table('users',metadata,
 )
 
 metadata.create_all(engine)
+
+#define an object 
+class User(object):
+    def __init__(self,name,age,passwd):
+        self.name = name
+        self.age = age
+        self.passwd = passwd
+
+    def __repr__(self):
+        return "<User(%s,%s,%s)>"%(self.name,self.age,self.passwd)
+
+#map an object to a table
+from sqlalchemy.orm import mapper
+mapper(User,t_users)
+
+u = User(name="python",age=18,passwd="amigO123")
+print u
+
+#define an table,object,map all in one declaratively
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base()
+
+class Author(Base):
+    __table__ = 'authors'
+
+    id = Column(Integer,primary_key=True)
+    name = Column(String)
+    fullname = Column(String)
+    passwd = Column(String)
+
+    def __init__(self,name,fullname,passwd):
+        self.name = name
+        self.fullname = fullname
+        self.passwd = passwd
+
+    def __repr__(self):
+        return "<Author(%s,%s,%s)>"%(self.name,self.fullname,self.passwd)
+
+print Author.__table__
+#print Base.metadata
+
+
 #
 #
 #u = users.insert()
