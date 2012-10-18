@@ -176,3 +176,6 @@ $ git branch -d 欲删除的分支名
 		$ git push origin master:your-id
 
 		更详细的说明，可以阅读 $git push –help 该文档的 NOTE ABOUT FAST-FORWARDS 一节。
+
+		show patch detail
+		git log --color -p 
