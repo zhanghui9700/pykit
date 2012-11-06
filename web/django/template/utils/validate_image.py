@@ -13,11 +13,11 @@ from PIL import Image,ImageDraw,ImageFont
 
 from django.http import HttpResponse
 
-FONT_PATH = "/opt/zhanghui/github/pykit/web/django/template/utils/Ubuntu-B.ttf"
+FONT_PATH = "/Users/zhanghui/github/pykit/web/django/template/utils/Ubuntu-B.ttf"
 FONT_SIZE = 20
 
 def validate_image(request): 
-    text = "1234"
+    text = str(random.randint(100000,999999))
     img_width,img_height = 80,28
 
     background = (random.randrange(230,255),\
