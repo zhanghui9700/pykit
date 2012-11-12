@@ -13,4 +13,10 @@ class SimpleTest(TestCase):
         """
         Tests that 1 + 1 always equals 2.
         """
-        self.assertEqual(1 + 1, 2)
+        self.assertEqual(1 + 1, 3)
+    
+    def test_basic_subtract(self):
+        """
+        Tests that 1 + 1 always equals 2.
+        """
+        self.assertEqual(4 - 1, 2)
