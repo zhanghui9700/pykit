@@ -4,11 +4,13 @@ find
 |---find / -name nginx.conf
 |---find /usr/local -name '*nginx*'
 |---find /usr/local/ -name nginx.conf -ls
+|---find /tmp -type f -name "*.pyc"|xargs rm -rf
 fdisk
 |--fdisk -l
 grep
 |---grep -Rn 'OpLog' ./
 |---find -name '*.py'|xargs grep -rn 'OpLog'
+|---find -name '*.py'|xargs grep -rn 'OpLog'|xargs grep -v grep
 mount
 |--mount [-t vfstype] [-o options] device dir
 |--mount -o loop -t iso9660 /opt/nfs/cdrom/testmt.iso /mnt/cdrom
