@@ -1,0 +1,7 @@
+
+      [paste.app_factory]
+      main = minimal:main
+
+      [paste.filter_factory]
+      main = minimal:middleware
+      

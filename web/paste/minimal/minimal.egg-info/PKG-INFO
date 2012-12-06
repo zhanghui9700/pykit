@@ -1,0 +1,13 @@
+Metadata-Version: 1.0
+Name: minimal
+Version: 1.0
+Summary: UNKNOWN
+Home-page: http://lionfacelemonface.wordpress.com
+Author: Josh Johnson
+Author-email: none of your beeswax@somehost.com
+License: BSD
+Description: 
+                 Very, very minimal example of a WSGI application and middleware.
+              
+Platform: UNKNOWN
+Classifier: Programming Language :: Python

@@ -1,0 +1,14 @@
+Metadata-Version: 1.0
+Name: minimal
+Version: 1.0
+Summary: UNKNOWN
+Home-page: UNKNOWN
+Author: pykit
+Author-email: zhanghui9700@gmail.com
+License: BSD
+Description: 
+                very, very minimal example of a WSGI application and middleware.
+              
+Keywords: wsgi paste
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
