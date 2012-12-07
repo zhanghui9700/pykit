@@ -1,6 +1,6 @@
 #compiled source#
 *.pyc
-
+*.swp
 *.log
 
 *.out
