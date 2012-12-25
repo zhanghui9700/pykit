@@ -1,0 +1,11 @@
+CHAPTER-1
+    assertEquals is preferred over assertTrue and assertFalse
+
+    When an assertEquals fails, the first and second values are printed in the error report,
+    giving better feedback of what went wrong. assertTrue and assertFalse simply report
+    failure. Not all testable results fit this but, if possible, use assertEquals.
+
+    setUp method that unittest runs before every test method
+
+    tearDown method that unittest runs after every test method
+
